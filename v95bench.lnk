@@ -1,0 +1,18 @@
+
+# v95bench.EXE Linker directive file
+
+option map
+option stack=65536
+option stub=wstub
+option statics
+option symfile
+option verbose
+libpath %WATCOM%/lib386
+libpath %WATCOM%/lib386/dos
+lib emu387.lib
+format os2 le
+name v95bench
+
+file timer.obj
+file cga.obj
+file main.obj
