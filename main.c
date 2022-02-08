@@ -20,13 +20,26 @@
 #include <dos.h>
 
 #include "main.h"
-#include "cga.h"
+#include "mode4.h"
+#include "mode13.h"
 
 int videomode;
 
+unsigned char do_bench_mode4 = 0;
+unsigned char do_bench_mode13 = 0;
+
+void launch_bench_mode4(void){
+    do_bench_mode4 = 1;
+    execute_bench_mode4();
+}
+
+void launch_bench_mode13(void){
+    do_bench_mode13 = 1;
+    execute_bench_mode13();
+}
+
 void select_benchmark(void)
 {
-
     switch (videomode)
     {
     case MDA:
@@ -34,13 +47,18 @@ void select_benchmark(void)
     case HGC:
         break;
     case CGA:
-        execute_bench_CGA_mode4();
+        launch_bench_mode4();
         break;
     case EGA:
+        launch_bench_mode4();
         break;
     case MCGA:
+        launch_bench_mode4();
+        launch_bench_mode13();
         break;
     case VGA:
+        launch_bench_mode4();
+        launch_bench_mode13();
         break;
     case VESA:
         break;
@@ -49,8 +67,10 @@ void select_benchmark(void)
     case PCjr:
         break;
     case ATI:
+        launch_bench_mode4();
         break;
     case Plantronics:
+        launch_bench_mode4();
         break;
     default:
         printf("Invalid option :(");
@@ -68,35 +88,11 @@ void reset_video(void){
 
 void show_results(void){
 
-    switch (videomode)
-    {
-    case MDA:
-        break;
-    case HGC:
-        break;
-    case CGA:
-        show_results_CGA_mode4();
-        break;
-    case EGA:
-        break;
-    case MCGA:
-        break;
-    case VGA:
-        break;
-    case VESA:
-        break;
-    case Tandy:
-        break;
-    case PCjr:
-        break;
-    case ATI:
-        break;
-    case Plantronics:
-        break;
-    default:
-        printf("Invalid option :(");
-        return;
-    }
+    if (do_bench_mode4)
+        show_results_mode4();
+
+    if (do_bench_mode13)
+        show_results_mode13();
 
 }
 

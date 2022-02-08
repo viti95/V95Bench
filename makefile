@@ -37,7 +37,8 @@ CCOPTS = $(EXTERNOPT) -omaxet -oh -ol+ -zp4 -3r -ei -j -zq
 
 GLOBOBJS = &
  timer.obj &
- cga.obj &
+ mode4.obj &
+ mode13.obj &
  main.obj
 
 v95bench.exe : $(GLOBOBJS)

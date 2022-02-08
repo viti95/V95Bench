@@ -14,5 +14,6 @@ format os2 le
 name v95bench
 
 file timer.obj
-file cga.obj
+file mode4.obj
+file mode13.obj
 file main.obj

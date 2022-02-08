@@ -15,8 +15,8 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-void init_CGA_mode4(void);
-void preheat_CGA_mode4(void);
-void bench_CGA_mode4(void);
-void execute_bench_CGA_mode4(void);
-void show_results_CGA_mode4(void);
+void init_mode4(void);
+void preheat_mode4(void);
+void bench_mode4(void);
+void execute_bench_mode4(void);
+void show_results_mode4(void);
