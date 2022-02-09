@@ -23,6 +23,7 @@
 #include "mode13.h"
 #include "modeD.h"
 #include "modePCP.h"
+#include "modeHGC.h"
 
 int videomode;
 
@@ -30,6 +31,7 @@ unsigned char do_bench_mode4 = 0;
 unsigned char do_bench_mode13 = 0;
 unsigned char do_bench_modeD = 0;
 unsigned char do_bench_modePCP = 0;
+unsigned char do_bench_modeHGC = 0;
 
 void launch_bench_mode4(void){
     do_bench_mode4 = 1;
@@ -51,6 +53,11 @@ void launch_bench_modePCP(void){
     execute_bench_modePCP();
 }
 
+void launch_bench_modeHGC(void){
+    do_bench_modeHGC = 1;
+    execute_bench_modeHGC();
+}
+
 void select_benchmark(void)
 {
     switch (videomode)
@@ -58,6 +65,7 @@ void select_benchmark(void)
     case MDA:
         break;
     case HGC:
+        launch_bench_modeHGC();
         break;
     case CGA:
         launch_bench_mode4();
@@ -104,6 +112,9 @@ void reset_video(void){
 }
 
 void show_results(void){
+
+    if (do_bench_modeHGC)
+        show_results_modeHGC();
 
     if (do_bench_mode4)
         show_results_mode4();
