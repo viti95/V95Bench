@@ -22,12 +22,14 @@
 #include "mode4.h"
 #include "mode13.h"
 #include "modeD.h"
+#include "modePCP.h"
 
 int videomode;
 
 unsigned char do_bench_mode4 = 0;
 unsigned char do_bench_mode13 = 0;
 unsigned char do_bench_modeD = 0;
+unsigned char do_bench_modePCP = 0;
 
 void launch_bench_mode4(void){
     do_bench_mode4 = 1;
@@ -42,6 +44,11 @@ void launch_bench_mode13(void){
 void launch_bench_modeD(void){
     do_bench_modeD = 1;
     execute_bench_modeD();
+}
+
+void launch_bench_modePCP(void){
+    do_bench_modePCP = 1;
+    execute_bench_modePCP();
 }
 
 void select_benchmark(void)
@@ -76,9 +83,11 @@ void select_benchmark(void)
         break;
     case ATI:
         launch_bench_mode4();
+        launch_bench_modePCP();
         break;
     case Plantronics:
         launch_bench_mode4();
+        launch_bench_modePCP();
         break;
     default:
         printf("Invalid option :(");
@@ -99,11 +108,14 @@ void show_results(void){
     if (do_bench_mode4)
         show_results_mode4();
 
-    if (do_bench_mode13)
-        show_results_mode13();
+    if (do_bench_modePCP)
+        show_results_modePCP();
 
     if (do_bench_modeD)
         show_results_modeD();
+
+    if (do_bench_mode13)
+        show_results_mode13();
 
 }
 
