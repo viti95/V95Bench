@@ -22,7 +22,6 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
-#include <time.h>
 
 #define PREHEAT_LOOPS 100
 #define BENCH_TIME 5000

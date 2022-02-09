@@ -2,7 +2,6 @@
 # v95bench.EXE Linker directive file
 
 option map
-option stack=65536
 option stub=wstub
 option statics
 option symfile
@@ -16,4 +15,5 @@ name v95bench
 file timer.obj
 file mode4.obj
 file mode13.obj
+file modeD.obj
 file main.obj

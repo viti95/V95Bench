@@ -22,7 +22,6 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
-#include <time.h>
 
 #define PREHEAT_LOOPS 25
 #define BENCH_TIME 5000
@@ -90,7 +89,7 @@ void execute_bench_mode13(void)
 
     // PRE-HEAT
     timespent_mode13 = profile_function(preheat_mode13);
-    total_loops_mode13 = PREHEAT_LOOPS * BENCH_TIME / timespent_mode13; // 10 secs
+    total_loops_mode13 = PREHEAT_LOOPS * BENCH_TIME / timespent_mode13;
 
     // BENCHMARK
     timespent_mode13 = profile_function(bench_mode13);

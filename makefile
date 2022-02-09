@@ -39,6 +39,7 @@ GLOBOBJS = &
  timer.obj &
  mode4.obj &
  mode13.obj &
+ modeD.obj &
  main.obj
 
 v95bench.exe : $(GLOBOBJS)
@@ -46,9 +47,6 @@ v95bench.exe : $(GLOBOBJS)
 
 .c.obj :
  wcc386 $(CCOPTS) -fo=$[*.obj $[*.c
-
-.asm.obj :
- nasm -f obj -o $[*.obj $[*.asm
 
 DELCMD = del
 

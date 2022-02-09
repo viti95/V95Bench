@@ -16,17 +16,18 @@
  */
 
 #include <stdio.h>
-#include <time.h>
 #include <dos.h>
 
 #include "main.h"
 #include "mode4.h"
 #include "mode13.h"
+#include "modeD.h"
 
 int videomode;
 
 unsigned char do_bench_mode4 = 0;
 unsigned char do_bench_mode13 = 0;
+unsigned char do_bench_modeD = 0;
 
 void launch_bench_mode4(void){
     do_bench_mode4 = 1;
@@ -36,6 +37,11 @@ void launch_bench_mode4(void){
 void launch_bench_mode13(void){
     do_bench_mode13 = 1;
     execute_bench_mode13();
+}
+
+void launch_bench_modeD(void){
+    do_bench_modeD = 1;
+    execute_bench_modeD();
 }
 
 void select_benchmark(void)
@@ -51,6 +57,7 @@ void select_benchmark(void)
         break;
     case EGA:
         launch_bench_mode4();
+        launch_bench_modeD();
         break;
     case MCGA:
         launch_bench_mode4();
@@ -58,6 +65,7 @@ void select_benchmark(void)
         break;
     case VGA:
         launch_bench_mode4();
+        launch_bench_modeD();
         launch_bench_mode13();
         break;
     case VESA:
@@ -93,6 +101,9 @@ void show_results(void){
 
     if (do_bench_mode13)
         show_results_mode13();
+
+    if (do_bench_modeD)
+        show_results_modeD();
 
 }
 
