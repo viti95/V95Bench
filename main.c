@@ -27,6 +27,7 @@
 #include "mode6.h"
 #include "mode7.h"
 #include "mode13.h"
+#include "modeY.h"
 #include "modeD.h"
 #include "modeE.h"
 #include "modeF.h"
@@ -44,6 +45,7 @@ unsigned char do_bench_modeV16 = 0;
 unsigned char do_bench_mode6 = 0;
 unsigned char do_bench_mode7 = 0;
 unsigned char do_bench_mode13 = 0;
+unsigned char do_bench_modeY = 0;
 unsigned char do_bench_modeD = 0;
 unsigned char do_bench_modeE = 0;
 unsigned char do_bench_modeF = 0;
@@ -89,6 +91,11 @@ void launch_bench_mode7(void){
 void launch_bench_mode13(void){
     do_bench_mode13 = 1;
     execute_bench_mode13();
+}
+
+void launch_bench_modeY(void){
+    do_bench_modeY = 1;
+    execute_bench_modeY();
 }
 
 void launch_bench_modeD(void){
@@ -166,6 +173,7 @@ void select_benchmark(void)
         launch_bench_modeF();
         launch_bench_modeV16();
         launch_bench_mode13();
+        launch_bench_modeY();
         break;
     case VESA:
         break;
@@ -253,6 +261,9 @@ void show_results(void){
 
     if (do_bench_mode13)
         show_results_mode13();
+
+    if (do_bench_modeY)
+        show_results_modeY();
 
 }
 
