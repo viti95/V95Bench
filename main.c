@@ -20,6 +20,7 @@
 
 #include "main.h"
 #include "mode4.h"
+#include "mode6.h"
 #include "mode13.h"
 #include "modeD.h"
 #include "modeE.h"
@@ -31,6 +32,7 @@
 int videomode;
 
 unsigned char do_bench_mode4 = 0;
+unsigned char do_bench_mode6 = 0;
 unsigned char do_bench_mode13 = 0;
 unsigned char do_bench_modeD = 0;
 unsigned char do_bench_modeE = 0;
@@ -42,6 +44,11 @@ unsigned char do_bench_modeATI = 0;
 void launch_bench_mode4(void){
     do_bench_mode4 = 1;
     execute_bench_mode4();
+}
+
+void launch_bench_mode6(void){
+    do_bench_mode6 = 1;
+    execute_bench_mode6();
 }
 
 void launch_bench_mode13(void){
@@ -90,19 +97,23 @@ void select_benchmark(void)
         break;
     case CGA:
         launch_bench_mode4();
+        launch_bench_mode6();
         break;
     case EGA:
         launch_bench_mode4();
+        launch_bench_mode6();
         launch_bench_modeD();
         launch_bench_modeE();
         launch_bench_modeF();
         break;
     case MCGA:
         launch_bench_mode4();
+        launch_bench_mode6();
         launch_bench_mode13();
         break;
     case VGA:
         launch_bench_mode4();
+        launch_bench_mode6();
         launch_bench_modeD();
         launch_bench_modeE();
         launch_bench_modeF();
@@ -116,11 +127,13 @@ void select_benchmark(void)
         break;
     case ATI:
         launch_bench_mode4();
+        launch_bench_mode6();
         launch_bench_modePCP();
         launch_bench_modeATI();
         break;
     case Plantronics:
         launch_bench_mode4();
+        launch_bench_mode6();
         launch_bench_modePCP();
         break;
     default:
@@ -150,6 +163,9 @@ void show_results(void){
 
     if (do_bench_mode4)
         show_results_mode4();
+
+    if (do_bench_mode6)
+        show_results_mode6();
 
     if (do_bench_modePCP)
         show_results_modePCP();
