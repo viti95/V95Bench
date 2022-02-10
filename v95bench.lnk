@@ -15,6 +15,7 @@ name v95bench
 file timer.obj
 file mode4.obj
 file mode6.obj
+file mode7.obj
 file mode13.obj
 file modeD.obj
 file modeE.obj

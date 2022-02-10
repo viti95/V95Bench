@@ -39,6 +39,7 @@ GLOBOBJS = &
  timer.obj &
  mode4.obj &
  mode6.obj &
+ mode7.obj &
  mode13.obj &
  modeD.obj &
  modeE.obj &

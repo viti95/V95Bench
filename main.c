@@ -21,6 +21,7 @@
 #include "main.h"
 #include "mode4.h"
 #include "mode6.h"
+#include "mode7.h"
 #include "mode13.h"
 #include "modeD.h"
 #include "modeE.h"
@@ -33,6 +34,7 @@ int videomode;
 
 unsigned char do_bench_mode4 = 0;
 unsigned char do_bench_mode6 = 0;
+unsigned char do_bench_mode7 = 0;
 unsigned char do_bench_mode13 = 0;
 unsigned char do_bench_modeD = 0;
 unsigned char do_bench_modeE = 0;
@@ -49,6 +51,11 @@ void launch_bench_mode4(void){
 void launch_bench_mode6(void){
     do_bench_mode6 = 1;
     execute_bench_mode6();
+}
+
+void launch_bench_mode7(void){
+    do_bench_mode7 = 1;
+    execute_bench_mode7();
 }
 
 void launch_bench_mode13(void){
@@ -91,6 +98,7 @@ void select_benchmark(void)
     switch (videomode)
     {
     case MDA:
+        launch_bench_mode7();
         break;
     case HGC:
         launch_bench_modeHGC();
@@ -157,6 +165,9 @@ void reset_video(void){
 }
 
 void show_results(void){
+
+    if (do_bench_mode7)
+        show_results_mode7();
 
     if (do_bench_modeHGC)
         show_results_modeHGC();
