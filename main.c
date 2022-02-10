@@ -22,6 +22,8 @@
 #include "mode4.h"
 #include "mode13.h"
 #include "modeD.h"
+#include "modeE.h"
+#include "modeF.h"
 #include "modePCP.h"
 #include "modeHGC.h"
 #include "modeATI.h"
@@ -31,6 +33,8 @@ int videomode;
 unsigned char do_bench_mode4 = 0;
 unsigned char do_bench_mode13 = 0;
 unsigned char do_bench_modeD = 0;
+unsigned char do_bench_modeE = 0;
+unsigned char do_bench_modeF = 0;
 unsigned char do_bench_modePCP = 0;
 unsigned char do_bench_modeHGC = 0;
 unsigned char do_bench_modeATI = 0;
@@ -48,6 +52,16 @@ void launch_bench_mode13(void){
 void launch_bench_modeD(void){
     do_bench_modeD = 1;
     execute_bench_modeD();
+}
+
+void launch_bench_modeE(void){
+    do_bench_modeE = 1;
+    execute_bench_modeE();
+}
+
+void launch_bench_modeF(void){
+    do_bench_modeF = 1;
+    execute_bench_modeF();
 }
 
 void launch_bench_modePCP(void){
@@ -80,6 +94,8 @@ void select_benchmark(void)
     case EGA:
         launch_bench_mode4();
         launch_bench_modeD();
+        launch_bench_modeE();
+        launch_bench_modeF();
         break;
     case MCGA:
         launch_bench_mode4();
@@ -88,6 +104,8 @@ void select_benchmark(void)
     case VGA:
         launch_bench_mode4();
         launch_bench_modeD();
+        launch_bench_modeE();
+        launch_bench_modeF();
         launch_bench_mode13();
         break;
     case VESA:
@@ -141,6 +159,12 @@ void show_results(void){
 
     if (do_bench_modeD)
         show_results_modeD();
+
+    if (do_bench_modeE)
+        show_results_modeE();
+
+    if (do_bench_modeF)
+        show_results_modeF();
 
     if (do_bench_mode13)
         show_results_mode13();

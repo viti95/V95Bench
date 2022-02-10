@@ -40,6 +40,8 @@ GLOBOBJS = &
  mode4.obj &
  mode13.obj &
  modeD.obj &
+ modeE.obj &
+ modeF.obj &
  modePCP.obj &
  modeHGC.obj &
  modeATI.obj &
