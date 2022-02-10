@@ -22,6 +22,8 @@
 #include "mode1.h"
 #include "mode3.h"
 #include "mode4.h"
+#include "modeC16.h"
+#include "modeV16.h"
 #include "mode6.h"
 #include "mode7.h"
 #include "mode13.h"
@@ -37,6 +39,8 @@ int videomode;
 unsigned char do_bench_mode1 = 0;
 unsigned char do_bench_mode3 = 0;
 unsigned char do_bench_mode4 = 0;
+unsigned char do_bench_modeC16 = 0;
+unsigned char do_bench_modeV16 = 0;
 unsigned char do_bench_mode6 = 0;
 unsigned char do_bench_mode7 = 0;
 unsigned char do_bench_mode13 = 0;
@@ -60,6 +64,16 @@ void launch_bench_mode3(void){
 void launch_bench_mode4(void){
     do_bench_mode4 = 1;
     execute_bench_mode4();
+}
+
+void launch_bench_modeC16(void){
+    do_bench_modeC16 = 1;
+    execute_bench_modeC16();
+}
+
+void launch_bench_modeV16(void){
+    do_bench_modeV16 = 1;
+    execute_bench_modeV16();
 }
 
 void launch_bench_mode6(void){
@@ -122,6 +136,7 @@ void select_benchmark(void)
         launch_bench_mode1();
         launch_bench_mode3();
         launch_bench_mode4();
+        launch_bench_modeC16();
         launch_bench_mode6();
         break;
     case EGA:
@@ -137,6 +152,7 @@ void select_benchmark(void)
         launch_bench_mode1();
         launch_bench_mode3();
         launch_bench_mode4();
+        launch_bench_modeC16(); // ??
         launch_bench_mode6();
         launch_bench_mode13();
         break;
@@ -148,6 +164,7 @@ void select_benchmark(void)
         launch_bench_modeD();
         launch_bench_modeE();
         launch_bench_modeF();
+        launch_bench_modeV16();
         launch_bench_mode13();
         break;
     case VESA:
@@ -160,6 +177,7 @@ void select_benchmark(void)
         launch_bench_mode1();
         launch_bench_mode3();
         launch_bench_mode4();
+        launch_bench_modeC16();
         launch_bench_mode6();
         launch_bench_modePCP();
         launch_bench_modeATI();
@@ -168,6 +186,7 @@ void select_benchmark(void)
         launch_bench_mode1();
         launch_bench_mode3();
         launch_bench_mode4();
+        launch_bench_modeC16();
         launch_bench_mode6();
         launch_bench_modePCP();
         break;
@@ -208,6 +227,9 @@ void show_results(void){
     if (do_bench_mode4)
         show_results_mode4();
 
+    if (do_bench_modeC16)
+        show_results_modeC16();
+
     if (do_bench_mode6)
         show_results_mode6();
 
@@ -225,6 +247,9 @@ void show_results(void){
 
     if (do_bench_modeF)
         show_results_modeF();
+
+    if (do_bench_modeV16)
+        show_results_modeV16();
 
     if (do_bench_mode13)
         show_results_mode13();
