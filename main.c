@@ -142,8 +142,8 @@ void select_benchmark(void)
     case CGA:
         launch_bench_mode1();
         launch_bench_mode3();
-        launch_bench_mode4();
         launch_bench_modeC16();
+        launch_bench_mode4();
         launch_bench_mode6();
         break;
     case EGA:
@@ -158,8 +158,8 @@ void select_benchmark(void)
     case MCGA:
         launch_bench_mode1();
         launch_bench_mode3();
-        launch_bench_mode4();
         launch_bench_modeC16(); // ??
+        launch_bench_mode4();
         launch_bench_mode6();
         launch_bench_mode13();
         break;
@@ -232,11 +232,11 @@ void show_results(void){
     if (do_bench_mode3)
         show_results_mode3();
 
-    if (do_bench_mode4)
-        show_results_mode4();
-
     if (do_bench_modeC16)
         show_results_modeC16();
+
+    if (do_bench_mode4)
+        show_results_mode4();
 
     if (do_bench_mode6)
         show_results_mode6();
@@ -282,9 +282,9 @@ int main(int argc, char **argv)
     printf("    4.  EGA\n");
     printf("    5.  MCGA\n");
     printf("    6.  VGA\n");
-    printf("    7.  VESA\n");
-    printf("    8.  Tandy\n");
-    printf("    9.  IBM PCjr\n");
+    printf("    7.  VESA (not available)\n");
+    printf("    8.  Tandy (not available)\n");
+    printf("    9.  IBM PCjr (not available)\n");
     printf("    10. ATI Small Wonder\n");
     printf("    11. Plantronics ColorPlus\n");
     printf("\n");
