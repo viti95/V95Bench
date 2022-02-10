@@ -1,17 +1,17 @@
-/* 
+/*
  * This file is part of the V95bench distribution (https://github.com/viti95/V95bench).
  * Copyright (c) 2022 Víctor Nieto.
- * 
- * This program is free software: you can redistribute it and/or modify  
- * it under the terms of the GNU General Public License as published by  
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, version 3.
  *
- * This program is distributed in the hope that it will be useful, but 
- * WITHOUT ANY WARRANTY; without even the implied warranty of 
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU 
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  * General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License 
+ * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
@@ -53,77 +53,92 @@ unsigned char do_bench_modePCP = 0;
 unsigned char do_bench_modeHGC = 0;
 unsigned char do_bench_modeATI = 0;
 
-void launch_bench_mode1(void){
+void launch_bench_mode1(void)
+{
     do_bench_mode1 = 1;
     execute_bench_mode1();
 }
 
-void launch_bench_mode3(void){
+void launch_bench_mode3(void)
+{
     do_bench_mode3 = 1;
     execute_bench_mode3();
 }
 
-void launch_bench_mode4(void){
+void launch_bench_mode4(void)
+{
     do_bench_mode4 = 1;
     execute_bench_mode4();
 }
 
-void launch_bench_modeC16(void){
+void launch_bench_modeC16(void)
+{
     do_bench_modeC16 = 1;
     execute_bench_modeC16();
 }
 
-void launch_bench_modeV16(void){
+void launch_bench_modeV16(void)
+{
     do_bench_modeV16 = 1;
     execute_bench_modeV16();
 }
 
-void launch_bench_mode6(void){
+void launch_bench_mode6(void)
+{
     do_bench_mode6 = 1;
     execute_bench_mode6();
 }
 
-void launch_bench_mode7(void){
+void launch_bench_mode7(void)
+{
     do_bench_mode7 = 1;
     execute_bench_mode7();
 }
 
-void launch_bench_mode13(void){
+void launch_bench_mode13(void)
+{
     do_bench_mode13 = 1;
     execute_bench_mode13();
 }
 
-void launch_bench_modeY(void){
+void launch_bench_modeY(void)
+{
     do_bench_modeY = 1;
     execute_bench_modeY();
 }
 
-void launch_bench_modeD(void){
+void launch_bench_modeD(void)
+{
     do_bench_modeD = 1;
     execute_bench_modeD();
 }
 
-void launch_bench_modeE(void){
+void launch_bench_modeE(void)
+{
     do_bench_modeE = 1;
     execute_bench_modeE();
 }
 
-void launch_bench_modeF(void){
+void launch_bench_modeF(void)
+{
     do_bench_modeF = 1;
     execute_bench_modeF();
 }
 
-void launch_bench_modePCP(void){
+void launch_bench_modePCP(void)
+{
     do_bench_modePCP = 1;
     execute_bench_modePCP();
 }
 
-void launch_bench_modeHGC(void){
+void launch_bench_modeHGC(void)
+{
     do_bench_modeHGC = 1;
     execute_bench_modeHGC();
 }
 
-void launch_bench_modeATI(void){
+void launch_bench_modeATI(void)
+{
     do_bench_modeATI = 1;
     execute_bench_modeATI();
 }
@@ -204,21 +219,30 @@ void select_benchmark(void)
     }
 }
 
-void reset_video(void){
+void reset_video(void)
+{
 
     union REGS regs;
 
     if (videomode == HGC)
     {
         regs.w.ax = 7;
-    }else{
+    }
+    else
+    {
         regs.w.ax = 3;
     }
 
-    int386(0x10, &regs, &regs); // back to text mode
+// back to text mode
+#ifdef __386__
+    int386(0x10, &regs, &regs);
+#else
+    int86(0x10, &regs, &regs);
+#endif
 }
 
-void show_results(void){
+void show_results(void)
+{
 
     if (do_bench_mode7)
         show_results_mode7();
@@ -264,7 +288,6 @@ void show_results(void){
 
     if (do_bench_modeY)
         show_results_modeY();
-
 }
 
 int main(int argc, char **argv)
@@ -300,5 +323,3 @@ int main(int argc, char **argv)
 
     return 0;
 }
-
-

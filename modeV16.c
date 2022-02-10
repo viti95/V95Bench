@@ -1,17 +1,17 @@
-/* 
+/*
  * This file is part of the V95bench distribution (https://github.com/viti95/V95bench).
  * Copyright (c) 2022 Víctor Nieto.
- * 
- * This program is free software: you can redistribute it and/or modify  
- * it under the terms of the GNU General Public License as published by  
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, version 3.
  *
- * This program is distributed in the hope that it will be useful, but 
- * WITHOUT ANY WARRANTY; without even the implied warranty of 
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU 
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  * General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License 
+ * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
@@ -38,19 +38,30 @@ void init_modeV16(void)
 
     // Set 80x25 color mode
     regs.w.ax = 0x03;
-    int386(0x10, (union REGS *)&regs, &regs);
-
+#ifdef __386__
+    int386(0x10, &regs, &regs);
+#else
+    int86(0x10, &regs, &regs);
+#endif
     // Disable cursor
     regs.h.ah = 0x01;
     regs.h.ch = 0x3F;
+#ifdef __386__
     int386(0x10, &regs, &regs);
+#else
+    int86(0x10, &regs, &regs);
+#endif
 
     // Disable blinking
     regs.h.ah = 0x10;
     regs.h.al = 0x03;
     regs.h.bl = 0x00;
     regs.h.bh = 0x00;
+#ifdef __386__
     int386(0x10, &regs, &regs);
+#else
+    int86(0x10, &regs, &regs);
+#endif
 
     /* set mode control register for 80x25 text mode and disable video output */
     outp(0x3D8, 1);

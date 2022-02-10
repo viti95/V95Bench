@@ -36,7 +36,11 @@ void init_modeF(void)
 
     // Set video mode F
     regs.w.ax = 0x0F;
-    int386(0x10, (union REGS *)&regs, &regs);
+#ifdef __386__
+    int386(0x10, &regs, &regs);
+#else
+    int86(0x10, &regs, &regs);
+#endif
 
     outp(0x3C4, 0x2);
 }

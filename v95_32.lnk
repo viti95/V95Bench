@@ -1,5 +1,5 @@
 
-# v95bench.EXE Linker directive file
+# v95_32.EXE Linker directive file
 
 option map
 option stub=wstub
@@ -10,7 +10,7 @@ libpath %WATCOM%/lib386
 libpath %WATCOM%/lib386/dos
 lib emu387.lib
 format os2 le
-name v95bench
+name v95_32
 
 file timer.obj
 file mode1.obj

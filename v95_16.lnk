@@ -1,0 +1,30 @@
+
+# v95_16.EXE Linker directive file
+
+option map
+option statics
+option symfile
+option verbose
+libpath %WATCOM%/lib286
+libpath %WATCOM%/lib286/dos
+lib emu87.lib
+format dos
+name v95_16
+
+file timer.obj
+file mode1.obj
+file mode3.obj
+file mode4.obj
+file modeC16.obj
+file modeV16.obj
+file mode6.obj
+file mode7.obj
+file mode13.obj
+file modeY.obj
+file modeD.obj
+file modeE.obj
+file modeF.obj
+file modePCP.obj
+file modeHGC.obj
+file modeATI.obj
+file main.obj

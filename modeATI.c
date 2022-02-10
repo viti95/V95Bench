@@ -1,17 +1,17 @@
-/* 
+/*
  * This file is part of the V95bench distribution (https://github.com/viti95/V95bench).
  * Copyright (c) 2022 Víctor Nieto.
- * 
- * This program is free software: you can redistribute it and/or modify  
- * it under the terms of the GNU General Public License as published by  
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, version 3.
  *
- * This program is distributed in the hope that it will be useful, but 
- * WITHOUT ANY WARRANTY; without even the implied warranty of 
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU 
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  * General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License 
+ * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
@@ -38,8 +38,8 @@ void init_modeATI(void)
                             0x00, 0x00, 0x00, 0x00};
     int i;
 
-    /* Set the Graphics Solution to 640 x 200 with 16 colors in 
-	   Color Mode */
+    /* Set the Graphics Solution to 640 x 200 with 16 colors in
+       Color Mode */
     outp(0x3D8, 0x2);
 
     /* Set extended graphics registers */
@@ -65,7 +65,8 @@ void preheat_modeATI(void)
 
     for (loops = 0; loops < PREHEAT_LOOPS; loops++)
     {
-        for (vram = (unsigned char *)0xB0000; vram < (unsigned char *)0xB1F40; vram++){
+        for (vram = (unsigned char *)0xB0000; vram < (unsigned char *)0xB1F40; vram++)
+        {
             *(vram) = 0x55;
             *(vram + 0x2000) = 0x55;
             *(vram + 0x4000) = 0x55;
@@ -87,7 +88,8 @@ void bench_modeATI(void)
 
     for (loops = 0; loops < num_loops; loops++)
     {
-        for (vram = (unsigned char *)0xB0000; vram < (unsigned char *)0xB1F40; vram++){
+        for (vram = (unsigned char *)0xB0000; vram < (unsigned char *)0xB1F40; vram++)
+        {
             *(vram) = 0x55;
             *(vram + 0x2000) = 0x55;
             *(vram + 0x4000) = 0x55;

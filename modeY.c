@@ -1,17 +1,17 @@
-/* 
+/*
  * This file is part of the V95bench distribution (https://github.com/viti95/V95bench).
  * Copyright (c) 2022 Víctor Nieto.
- * 
- * This program is free software: you can redistribute it and/or modify  
- * it under the terms of the GNU General Public License as published by  
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, version 3.
  *
- * This program is distributed in the hope that it will be useful, but 
- * WITHOUT ANY WARRANTY; without even the implied warranty of 
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU 
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  * General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License 
+ * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
@@ -52,7 +52,11 @@ void init_modeY(void)
 
     // Set video mode 13
     regs.w.ax = 0x13;
-    int386(0x10, (union REGS *)&regs, &regs);
+#ifdef __386__
+    int386(0x10, &regs, &regs);
+#else
+    int86(0x10, &regs, &regs);
+#endif
 
     outp(SC_INDEX, SC_MEMMODE);
     outp(SC_DATA, (inp(SC_DATA) & ~8) | 4);
@@ -61,7 +65,7 @@ void init_modeY(void)
     outp(GC_INDEX, GC_MISCELLANEOUS);
     outp(GC_DATA, inp(GC_DATA) & ~2);
     outpw(SC_INDEX, 0xf02);
-    
+
     outp(CRTC_INDEX, CRTC_UNDERLINE);
     outp(CRTC_DATA, inp(CRTC_DATA) & ~0x40);
     outp(CRTC_INDEX, CRTC_MODE);

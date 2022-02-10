@@ -23,17 +23,8 @@
 #
 # --------------------------------------------------------------------------
 
-# Build options for 486DX/SX
-#CCOPTS = $(EXTERNOPT) -omaxet -oh -ol+ -zp4 -4r -ei -j -zq
-
-# Build options for 386DX/SX
-CCOPTS = $(EXTERNOPT) -omaxet -oh -ol+ -zp4 -3r -ei -j -zq
-
-# Build options for Pentium
-#CCOPTS = $(EXTERNOPT) -omaxet -oh -ol+ -zp4 -5r -ei -j -zq
-
-# Build options for profiling (Pentium required)
-#CCOPTS = $(EXTERNOPT) -omaxet -oh -ol+ -zp4 -5r -ei -j -zq -et
+# Build options for 8088/8086
+CCOPTS = $(EXTERNOPT) -omaxet -oh -ol+ -zp4 -0 -ei -j -zq -fpi
 
 GLOBOBJS = &
  timer.obj &
@@ -54,11 +45,11 @@ GLOBOBJS = &
  modeATI.obj &
  main.obj
 
-v95bench.exe : $(GLOBOBJS)
- wlink @v95bench.lnk
+v95_16.exe : $(GLOBOBJS)
+ wlink @v95_16.lnk
 
 .c.obj :
- wcc386 $(CCOPTS) -fo=$[*.obj $[*.c
+ wcc $(CCOPTS) -fo=$[*.obj $[*.c
 
 DELCMD = del
 
