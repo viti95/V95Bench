@@ -19,6 +19,7 @@
 #include <dos.h>
 
 #include "main.h"
+#include "mode1.h"
 #include "mode3.h"
 #include "mode4.h"
 #include "mode6.h"
@@ -33,6 +34,7 @@
 
 int videomode;
 
+unsigned char do_bench_mode1 = 0;
 unsigned char do_bench_mode3 = 0;
 unsigned char do_bench_mode4 = 0;
 unsigned char do_bench_mode6 = 0;
@@ -44,6 +46,11 @@ unsigned char do_bench_modeF = 0;
 unsigned char do_bench_modePCP = 0;
 unsigned char do_bench_modeHGC = 0;
 unsigned char do_bench_modeATI = 0;
+
+void launch_bench_mode1(void){
+    do_bench_mode1 = 1;
+    execute_bench_mode1();
+}
 
 void launch_bench_mode3(void){
     do_bench_mode3 = 1;
@@ -112,11 +119,13 @@ void select_benchmark(void)
         launch_bench_modeHGC();
         break;
     case CGA:
+        launch_bench_mode1();
         launch_bench_mode3();
         launch_bench_mode4();
         launch_bench_mode6();
         break;
     case EGA:
+        launch_bench_mode1();
         launch_bench_mode3();
         launch_bench_mode4();
         launch_bench_mode6();
@@ -125,12 +134,14 @@ void select_benchmark(void)
         launch_bench_modeF();
         break;
     case MCGA:
+        launch_bench_mode1();
         launch_bench_mode3();
         launch_bench_mode4();
         launch_bench_mode6();
         launch_bench_mode13();
         break;
     case VGA:
+        launch_bench_mode1();
         launch_bench_mode3();
         launch_bench_mode4();
         launch_bench_mode6();
@@ -146,6 +157,7 @@ void select_benchmark(void)
     case PCjr:
         break;
     case ATI:
+        launch_bench_mode1();
         launch_bench_mode3();
         launch_bench_mode4();
         launch_bench_mode6();
@@ -153,6 +165,7 @@ void select_benchmark(void)
         launch_bench_modeATI();
         break;
     case Plantronics:
+        launch_bench_mode1();
         launch_bench_mode3();
         launch_bench_mode4();
         launch_bench_mode6();
@@ -185,6 +198,9 @@ void show_results(void){
 
     if (do_bench_modeHGC)
         show_results_modeHGC();
+
+    if (do_bench_mode1)
+        show_results_mode1();
 
     if (do_bench_mode3)
         show_results_mode3();

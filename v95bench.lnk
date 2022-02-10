@@ -13,6 +13,7 @@ format os2 le
 name v95bench
 
 file timer.obj
+file mode1.obj
 file mode3.obj
 file mode4.obj
 file mode6.obj
