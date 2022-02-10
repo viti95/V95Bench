@@ -111,5 +111,5 @@ void show_results_modeHGC(void)
     double total_result;
 
     total_result = ((double)total_loops_modeHGC * 31.25 * 1000) / ((double)timespent_modeHGC);
-    printf("Hercules: %.2lf kb/s\n", total_result);
+    printf("Hercules 640x400 2c: %.2lf kb/s\n", total_result);
 }

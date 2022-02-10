@@ -42,6 +42,7 @@ GLOBOBJS = &
  modeD.obj &
  modePCP.obj &
  modeHGC.obj &
+ modeATI.obj &
  main.obj
 
 v95bench.exe : $(GLOBOBJS)

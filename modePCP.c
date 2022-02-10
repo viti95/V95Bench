@@ -100,5 +100,5 @@ void show_results_modePCP(void)
     double total_result;
 
     total_result = ((double)total_loops_modePCP * 31.25 * 1000) / ((double)timespent_modePCP);
-    printf("Plantronics ColorPlus: %.2lf kb/s\n", total_result);
+    printf("Plantronics 320x200 16c: %.2lf kb/s\n", total_result);
 }

@@ -100,5 +100,5 @@ void show_results_mode13(void)
     double total_result;
 
     total_result = ((double)total_loops_mode13 * 62.5 * 1000) / ((double)timespent_mode13);
-    printf("VGA Mode 13: %.2lf kb/s\n", total_result);
+    printf("VGA 320x200 256c (13h): %.2lf kb/s\n", total_result);
 }

@@ -199,5 +199,5 @@ void show_results_modeD(void)
     double total_result;
 
     total_result = ((double)total_loops_modeD * 31.25 * 1000) / ((double)timespent_modeD);
-    printf("EGA Mode D: %.2lf kb/s\n", total_result);
+    printf("EGA 320x200 16c: %.2lf kb/s\n", total_result);
 }

@@ -100,5 +100,5 @@ void show_results_mode4(void)
     double total_result;
 
     total_result = ((double)total_loops_mode4 * 15.625 * 1000) / ((double)timespent_mode4);
-    printf("CGA Mode 4: %.2lf kb/s\n", total_result);
+    printf("CGA 320x200 4c: %.2lf kb/s\n", total_result);
 }
