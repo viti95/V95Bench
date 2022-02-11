@@ -60,7 +60,7 @@ void preheat_modePCP(void)
 #ifdef __386__
         for (vram = (unsigned char *)0xB8000; vram < (unsigned char *)0xB9F40; vram += 2)
 #else
-        for (vram = MK_FP(0xB000, 0); vram < MK_FP(0xB000, 0x9F40); vram += 2)
+        for (vram = MK_FP(0xB800, 0); vram < MK_FP(0xB800, 0x1F40); vram += 2)
 #endif
         {
             *(vram) = 0x55;
@@ -92,7 +92,7 @@ void bench_modePCP(void)
 #ifdef __386__
         for (vram = (unsigned char *)0xB8000; vram < (unsigned char *)0xB9F40; vram += 2)
 #else
-        for (vram = MK_FP(0xB000, 0); vram < MK_FP(0xB000, 0x9F40); vram += 2)
+        for (vram = MK_FP(0xB800, 0); vram < MK_FP(0xB800, 0x1F40); vram += 2)
 #endif
         {
             *(vram) = 0x55;
