@@ -45,11 +45,20 @@ void init_mode3(void)
 void preheat_mode3(void)
 {
     unsigned int loops;
+
+#ifdef __386__
     unsigned char *vram;
+#else
+    unsigned char far *vram;
+#endif
 
     for (loops = 0; loops < PREHEAT_LOOPS; loops++)
     {
+#ifdef __386__
         for (vram = (unsigned char *)0xB8000; vram < (unsigned char *)0xB8FA0; vram += 8)
+#else
+        for (vram = MK_FP(0xB800, 0); vram < MK_FP(0xB800, 0x0FA0); vram += 8)
+#endif
         {
             *(vram) = 0xA4;
             *(vram + 1) = 0xA4;
@@ -65,14 +74,22 @@ void preheat_mode3(void)
 
 void bench_mode3(void)
 {
+#ifdef __386__
     unsigned char *vram;
+#else
+    unsigned char far *vram;
+#endif
 
     unsigned int loops;
     unsigned int num_loops = total_loops_mode3;
 
     for (loops = 0; loops < num_loops; loops++)
     {
+#ifdef __386__
         for (vram = (unsigned char *)0xB8000; vram < (unsigned char *)0xB8FA0; vram += 8)
+#else
+        for (vram = MK_FP(0xB800, 0); vram < MK_FP(0xB800, 0x0FA0); vram += 8)
+#endif
         {
             *(vram) = 0xA4;
             *(vram + 1) = 0xA4;
