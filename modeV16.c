@@ -32,7 +32,12 @@ unsigned long timespent_modeV16;
 
 void init_modeV16(void)
 {
+#ifdef __386__
     unsigned char *vram = (unsigned char *)0xB8000;
+#else
+    unsigned char far *vram = MK_FP(0xB800, 0);
+#endif
+
     unsigned int i;
     union REGS regs;
 
