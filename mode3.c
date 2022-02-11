@@ -23,10 +23,10 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-#define PREHEAT_LOOPS 400
-#define BENCH_TIME 5000
+#define PREHEAT_LOOPS 400L
+#define BENCH_TIME 5000L
 
-unsigned int total_loops_mode3;
+unsigned long total_loops_mode3;
 unsigned long timespent_mode3;
 
 void init_mode3(void)
@@ -120,6 +120,6 @@ void show_results_mode3(void)
 {
     double total_result;
 
-    total_result = ((double)total_loops_mode3 * 3.90625 * 1000) / ((double)timespent_mode3);
+    total_result = ((double)total_loops_mode3 * 3.90625 * 1000.0) / ((double)timespent_mode3);
     printf("TXT 80x25 16c: %.2lf kb/s\n", total_result);
 }

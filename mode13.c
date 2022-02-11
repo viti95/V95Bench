@@ -23,10 +23,10 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-#define PREHEAT_LOOPS 25
-#define BENCH_TIME 5000
+#define PREHEAT_LOOPS 25L
+#define BENCH_TIME 5000L
 
-unsigned int total_loops_mode13;
+unsigned long total_loops_mode13;
 unsigned long timespent_mode13;
 
 void init_mode13(void)
@@ -45,11 +45,21 @@ void init_mode13(void)
 void preheat_mode13(void)
 {
     unsigned int loops;
+
+#ifdef __386__
     unsigned char *vram;
+#else
+    unsigned char far *vram;
+#endif
 
     for (loops = 0; loops < PREHEAT_LOOPS; loops++)
     {
+
+#ifdef __386__
         for (vram = (unsigned char *)0xA0000; vram < (unsigned char *)0xAFA00; vram += 8)
+#else
+        for (vram = MK_FP(0xA000, 0); vram < MK_FP(0xA000, 0xFA00); vram += 8)
+#endif
         {
             *(vram) = 0x01;
             *(vram + 1) = 0x01;
@@ -65,14 +75,23 @@ void preheat_mode13(void)
 
 void bench_mode13(void)
 {
+#ifdef __386__
     unsigned char *vram;
+#else
+    unsigned char far *vram;
+#endif
 
     unsigned int loops;
     unsigned int num_loops = total_loops_mode13;
 
     for (loops = 0; loops < num_loops; loops++)
     {
+
+#ifdef __386__
         for (vram = (unsigned char *)0xA0000; vram < (unsigned char *)0xAFA00; vram += 8)
+#else
+        for (vram = MK_FP(0xA000, 0); vram < MK_FP(0xA000, 0xFA00); vram += 8)
+#endif
         {
             *(vram) = 0x01;
             *(vram + 1) = 0x01;
@@ -103,6 +122,6 @@ void show_results_mode13(void)
 {
     double total_result;
 
-    total_result = ((double)total_loops_mode13 * 62.5 * 1000) / ((double)timespent_mode13);
+    total_result = ((double)total_loops_mode13 * 62.5 * 1000.0) / ((double)timespent_mode13);
     printf("VGA 320x200 256c (13h): %.2lf kb/s\n", total_result);
 }

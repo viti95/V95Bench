@@ -24,10 +24,10 @@
 #include <stdlib.h>
 #include <conio.h>
 
-#define PREHEAT_LOOPS 50
-#define BENCH_TIME 5000
+#define PREHEAT_LOOPS 50L
+#define BENCH_TIME 5000L
 
-unsigned int total_loops_modeHGC;
+unsigned long total_loops_modeHGC;
 unsigned long timespent_modeHGC;
 
 void init_modeHGC(void)
@@ -52,11 +52,21 @@ void init_modeHGC(void)
 void preheat_modeHGC(void)
 {
     unsigned int loops;
+
+#ifdef __386__
     unsigned char *vram;
+#else
+    unsigned char far *vram;
+#endif
 
     for (loops = 0; loops < PREHEAT_LOOPS; loops++)
     {
+
+#ifdef __386__
         for (vram = (unsigned char *)0xB0000; vram < (unsigned char *)0xB1F40; vram += 2)
+#else
+        for (vram = MK_FP(0xB000, 0); vram < MK_FP(0xB000, 0x1F40); vram += 2)
+#endif
         {
             *(vram) = 0x55;
             *(vram + 1) = 0x55;
@@ -72,14 +82,23 @@ void preheat_modeHGC(void)
 
 void bench_modeHGC(void)
 {
+#ifdef __386__
     unsigned char *vram;
+#else
+    unsigned char far *vram;
+#endif
 
     unsigned int loops;
     unsigned int num_loops = total_loops_modeHGC;
 
     for (loops = 0; loops < num_loops; loops++)
     {
+
+#ifdef __386__
         for (vram = (unsigned char *)0xB0000; vram < (unsigned char *)0xB1F40; vram += 2)
+#else
+        for (vram = MK_FP(0xB000, 0); vram < MK_FP(0xB000, 0x1F40); vram += 2)
+#endif
         {
             *(vram) = 0x55;
             *(vram + 1) = 0x55;
@@ -110,6 +129,6 @@ void show_results_modeHGC(void)
 {
     double total_result;
 
-    total_result = ((double)total_loops_modeHGC * 31.25 * 1000) / ((double)timespent_modeHGC);
+    total_result = ((double)total_loops_modeHGC * 31.25 * 1000.0) / ((double)timespent_modeHGC);
     printf("Hercules 640x400 2c: %.2lf kb/s\n", total_result);
 }

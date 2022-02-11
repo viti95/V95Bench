@@ -24,10 +24,10 @@
 #include <stdlib.h>
 #include <conio.h>
 
-#define PREHEAT_LOOPS 25
-#define BENCH_TIME 5000
+#define PREHEAT_LOOPS 25L
+#define BENCH_TIME 5000L
 
-unsigned int total_loops_modeATI;
+unsigned long total_loops_modeATI;
 unsigned long timespent_modeATI;
 
 void init_modeATI(void)
@@ -61,11 +61,21 @@ void init_modeATI(void)
 void preheat_modeATI(void)
 {
     unsigned int loops;
+
+#ifdef __386__
     unsigned char *vram;
+#else
+    unsigned char far *vram;
+#endif
 
     for (loops = 0; loops < PREHEAT_LOOPS; loops++)
     {
+
+#ifdef __386__
         for (vram = (unsigned char *)0xB0000; vram < (unsigned char *)0xB1F40; vram++)
+#else
+        for (vram = MK_FP(0xB000, 0); vram < MK_FP(0xB000, 0x1F40); vram++)
+#endif
         {
             *(vram) = 0x55;
             *(vram + 0x2000) = 0x55;
@@ -81,14 +91,23 @@ void preheat_modeATI(void)
 
 void bench_modeATI(void)
 {
+#ifdef __386__
     unsigned char *vram;
+#else
+    unsigned char far *vram;
+#endif
 
     unsigned int loops;
     unsigned int num_loops = total_loops_modeATI;
 
     for (loops = 0; loops < num_loops; loops++)
     {
+
+#ifdef __386__
         for (vram = (unsigned char *)0xB0000; vram < (unsigned char *)0xB1F40; vram++)
+#else
+        for (vram = MK_FP(0xB000, 0); vram < MK_FP(0xB000, 0x1F40); vram++)
+#endif
         {
             *(vram) = 0x55;
             *(vram + 0x2000) = 0x55;
@@ -119,6 +138,6 @@ void show_results_modeATI(void)
 {
     double total_result;
 
-    total_result = ((double)total_loops_modeATI * 62.5 * 1000) / ((double)timespent_modeATI);
+    total_result = ((double)total_loops_modeATI * 62.5 * 1000.0) / ((double)timespent_modeATI);
     printf("ATI 640x200 16c: %.2lf kb/s\n", total_result);
 }

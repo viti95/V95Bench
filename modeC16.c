@@ -24,10 +24,10 @@
 #include <stdlib.h>
 #include <conio.h>
 
-#define PREHEAT_LOOPS 200
-#define BENCH_TIME 5000
+#define PREHEAT_LOOPS 200L
+#define BENCH_TIME 5000L
 
-unsigned int total_loops_modeC16;
+unsigned long total_loops_modeC16;
 unsigned long timespent_modeC16;
 
 void init_modeC16(void)
@@ -104,11 +104,21 @@ void init_modeC16(void)
 void preheat_modeC16(void)
 {
     unsigned int loops;
+
+#ifdef __386__
     unsigned char *vram;
+#else
+    unsigned char far *vram;
+#endif
 
     for (loops = 0; loops < PREHEAT_LOOPS; loops++)
     {
+
+#ifdef __386__
         for (vram = (unsigned char *)0xB8001; vram < (unsigned char *)0xBBE81; vram += 16)
+#else
+        for (vram = MK_FP(0xB800, 0x0001); vram < MK_FP(0xB800, 0x3E81); vram += 16)
+#endif
         {
             *(vram) = 0xA3;
             *(vram + 2) = 0xA3;
@@ -124,13 +134,23 @@ void preheat_modeC16(void)
 
 void bench_modeC16(void)
 {
+#ifdef __386__
     unsigned char *vram;
+#else
+    unsigned char far *vram;
+#endif
+
     unsigned int loops;
     unsigned int num_loops = total_loops_modeC16;
 
     for (loops = 0; loops < num_loops; loops++)
     {
+
+#ifdef __386__
         for (vram = (unsigned char *)0xB8001; vram < (unsigned char *)0xBBE81; vram += 16)
+#else
+        for (vram = MK_FP(0xB800, 0x0001); vram < MK_FP(0xB800, 0x3E81); vram += 16)
+#endif
         {
             *(vram) = 0xA3;
             *(vram + 2) = 0xA3;
@@ -161,6 +181,6 @@ void show_results_modeC16(void)
 {
     double total_result;
 
-    total_result = ((double)total_loops_modeC16 * 7.8125 * 1000) / ((double)timespent_modeC16);
+    total_result = ((double)total_loops_modeC16 * 7.8125 * 1000.0) / ((double)timespent_modeC16);
     printf("CGA 160x100 16c: %.2lf kb/s\n", total_result);
 }

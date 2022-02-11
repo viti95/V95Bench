@@ -40,10 +40,10 @@
 #define GC_MISCELLANEOUS 6
 #define GC_BITMASK 8
 
-#define PREHEAT_LOOPS 25
-#define BENCH_TIME 5000
+#define PREHEAT_LOOPS 25L
+#define BENCH_TIME 5000L
 
-unsigned int total_loops_modeY;
+unsigned long total_loops_modeY;
 unsigned long timespent_modeY;
 
 void init_modeY(void)
@@ -76,14 +76,23 @@ void init_modeY(void)
 void preheat_modeY(void)
 {
     unsigned int loops;
+
+#ifdef __386__
     unsigned char *vram;
+#else
+    unsigned char far *vram;
+#endif
 
     for (loops = 0; loops < PREHEAT_LOOPS; loops++)
     {
         // PLANE 0
         outp(SC_DATA, 1 << (0 & 3));
 
+#ifdef __386__
         for (vram = (unsigned char *)0xA0000; vram < (unsigned char *)0xA3E80; vram += 8)
+#else
+        for (vram = MK_FP(0xA000, 0); vram < MK_FP(0xA000, 0x3E80); vram += 8)
+#endif
         {
             *(vram) = 0x46;
             *(vram + 1) = 0x46;
@@ -98,7 +107,11 @@ void preheat_modeY(void)
         // PLANE 1
         outp(SC_DATA, 1 << (1 & 3));
 
+#ifdef __386__
         for (vram = (unsigned char *)0xA0000; vram < (unsigned char *)0xA3E80; vram += 8)
+#else
+        for (vram = MK_FP(0xA000, 0); vram < MK_FP(0xA000, 0x3E80); vram += 8)
+#endif
         {
             *(vram) = 0x03;
             *(vram + 1) = 0x03;
@@ -113,7 +126,11 @@ void preheat_modeY(void)
         // PLANE 2
         outp(SC_DATA, 1 << (2 & 3));
 
+#ifdef __386__
         for (vram = (unsigned char *)0xA0000; vram < (unsigned char *)0xA3E80; vram += 8)
+#else
+        for (vram = MK_FP(0xA000, 0); vram < MK_FP(0xA000, 0x3E80); vram += 8)
+#endif
         {
             *(vram) = 0xCC;
             *(vram + 1) = 0xCC;
@@ -128,7 +145,11 @@ void preheat_modeY(void)
         // PLANE 3
         outp(SC_DATA, 1 << (3 & 3));
 
+#ifdef __386__
         for (vram = (unsigned char *)0xA0000; vram < (unsigned char *)0xA3E80; vram += 8)
+#else
+        for (vram = MK_FP(0xA000, 0); vram < MK_FP(0xA000, 0x3E80); vram += 8)
+#endif
         {
             *(vram) = 0x92;
             *(vram + 1) = 0x92;
@@ -144,7 +165,11 @@ void preheat_modeY(void)
 
 void bench_modeY(void)
 {
+#ifdef __386__
     unsigned char *vram;
+#else
+    unsigned char far *vram;
+#endif
 
     unsigned int loops;
     unsigned int num_loops = total_loops_modeY;
@@ -154,7 +179,11 @@ void bench_modeY(void)
         // PLANE 0
         outp(SC_DATA, 1 << (0 & 3));
 
+#ifdef __386__
         for (vram = (unsigned char *)0xA0000; vram < (unsigned char *)0xA3E80; vram += 8)
+#else
+        for (vram = MK_FP(0xA000, 0); vram < MK_FP(0xA000, 0x3E80); vram += 8)
+#endif
         {
             *(vram) = 0x46;
             *(vram + 1) = 0x46;
@@ -169,7 +198,11 @@ void bench_modeY(void)
         // PLANE 1
         outp(SC_DATA, 1 << (1 & 3));
 
+#ifdef __386__
         for (vram = (unsigned char *)0xA0000; vram < (unsigned char *)0xA3E80; vram += 8)
+#else
+        for (vram = MK_FP(0xA000, 0); vram < MK_FP(0xA000, 0x3E80); vram += 8)
+#endif
         {
             *(vram) = 0x03;
             *(vram + 1) = 0x03;
@@ -184,7 +217,11 @@ void bench_modeY(void)
         // PLANE 2
         outp(SC_DATA, 1 << (2 & 3));
 
+#ifdef __386__
         for (vram = (unsigned char *)0xA0000; vram < (unsigned char *)0xA3E80; vram += 8)
+#else
+        for (vram = MK_FP(0xA000, 0); vram < MK_FP(0xA000, 0x3E80); vram += 8)
+#endif
         {
             *(vram) = 0xCC;
             *(vram + 1) = 0xCC;
@@ -199,7 +236,11 @@ void bench_modeY(void)
         // PLANE 3
         outp(SC_DATA, 1 << (3 & 3));
 
+#ifdef __386__
         for (vram = (unsigned char *)0xA0000; vram < (unsigned char *)0xA3E80; vram += 8)
+#else
+        for (vram = MK_FP(0xA000, 0); vram < MK_FP(0xA000, 0x3E80); vram += 8)
+#endif
         {
             *(vram) = 0x92;
             *(vram + 1) = 0x92;
@@ -230,6 +271,6 @@ void show_results_modeY(void)
 {
     double total_result;
 
-    total_result = ((double)total_loops_modeY * 62.5 * 1000) / ((double)timespent_modeY);
+    total_result = ((double)total_loops_modeY * 62.5 * 1000.0) / ((double)timespent_modeY);
     printf("VGA 320x200 256c (Y): %.2lf kb/s\n", total_result);
 }

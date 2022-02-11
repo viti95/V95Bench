@@ -24,10 +24,10 @@
 #include <stdlib.h>
 #include <conio.h>
 
-#define PREHEAT_LOOPS 50
-#define BENCH_TIME 5000
+#define PREHEAT_LOOPS 50L
+#define BENCH_TIME 5000L
 
-unsigned int total_loops_modePCP;
+unsigned long total_loops_modePCP;
 unsigned long timespent_modePCP;
 
 void init_modePCP(void)
@@ -47,11 +47,21 @@ void init_modePCP(void)
 void preheat_modePCP(void)
 {
     unsigned int loops;
+
+#ifdef __386__
     unsigned char *vram;
+#else
+    unsigned char far *vram;
+#endif
 
     for (loops = 0; loops < PREHEAT_LOOPS; loops++)
     {
+
+#ifdef __386__
         for (vram = (unsigned char *)0xB8000; vram < (unsigned char *)0xB9F40; vram += 2)
+#else
+        for (vram = MK_FP(0xB000, 0); vram < MK_FP(0xB000, 0x9F40); vram += 2)
+#endif
         {
             *(vram) = 0x55;
             *(vram + 1) = 0x55;
@@ -67,14 +77,23 @@ void preheat_modePCP(void)
 
 void bench_modePCP(void)
 {
+#ifdef __386__
     unsigned char *vram;
+#else
+    unsigned char far *vram;
+#endif
 
     unsigned int loops;
     unsigned int num_loops = total_loops_modePCP;
 
     for (loops = 0; loops < num_loops; loops++)
     {
+
+#ifdef __386__
         for (vram = (unsigned char *)0xB8000; vram < (unsigned char *)0xB9F40; vram += 2)
+#else
+        for (vram = MK_FP(0xB000, 0); vram < MK_FP(0xB000, 0x9F40); vram += 2)
+#endif
         {
             *(vram) = 0x55;
             *(vram + 1) = 0x55;
@@ -105,6 +124,6 @@ void show_results_modePCP(void)
 {
     double total_result;
 
-    total_result = ((double)total_loops_modePCP * 31.25 * 1000) / ((double)timespent_modePCP);
+    total_result = ((double)total_loops_modePCP * 31.25 * 1000.0) / ((double)timespent_modePCP);
     printf("Plantronics 320x200 16c: %.2lf kb/s\n", total_result);
 }

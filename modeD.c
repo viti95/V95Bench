@@ -24,10 +24,10 @@
 #include <stdlib.h>
 #include <conio.h>
 
-#define PREHEAT_LOOPS 50
-#define BENCH_TIME 5000
+#define PREHEAT_LOOPS 50L
+#define BENCH_TIME 5000L
 
-unsigned int total_loops_modeD;
+unsigned long total_loops_modeD;
 unsigned long timespent_modeD;
 
 void init_modeD(void)
@@ -48,14 +48,23 @@ void init_modeD(void)
 void preheat_modeD(void)
 {
     unsigned int loops;
+
+#ifdef __386__
     unsigned char *vram;
+#else
+    unsigned char far *vram;
+#endif
 
     for (loops = 0; loops < PREHEAT_LOOPS; loops++)
     {
         // Red
         outp(0x3C5, 1 << (3 & 0x03));
 
+#ifdef __386__
         for (vram = (unsigned char *)0xA0000; vram < (unsigned char *)0xA1F40; vram += 8)
+#else
+        for (vram = MK_FP(0xA000, 0); vram < MK_FP(0xA000, 0x1F40); vram += 8)
+#endif
         {
             *(vram) = 0xFF;
             *(vram + 1) = 0xFF;
@@ -70,7 +79,11 @@ void preheat_modeD(void)
         // Green
         outp(0x3C5, 1 << (2 & 0x03));
 
+#ifdef __386__
         for (vram = (unsigned char *)0xA0000; vram < (unsigned char *)0xA1F40; vram += 8)
+#else
+        for (vram = MK_FP(0xA000, 0); vram < MK_FP(0xA000, 0x1F40); vram += 8)
+#endif
         {
             *(vram) = 0xFF;
             *(vram + 1) = 0xFF;
@@ -85,7 +98,11 @@ void preheat_modeD(void)
         // Blue
         outp(0x3C5, 1 << (1 & 0x03));
 
+#ifdef __386__
         for (vram = (unsigned char *)0xA0000; vram < (unsigned char *)0xA1F40; vram += 8)
+#else
+        for (vram = MK_FP(0xA000, 0); vram < MK_FP(0xA000, 0x1F40); vram += 8)
+#endif
         {
             *(vram) = 0xFF;
             *(vram + 1) = 0xFF;
@@ -100,7 +117,11 @@ void preheat_modeD(void)
         // Intensity
         outp(0x3C5, 1 << (0 & 0x03));
 
+#ifdef __386__
         for (vram = (unsigned char *)0xA0000; vram < (unsigned char *)0xA1F40; vram += 8)
+#else
+        for (vram = MK_FP(0xA000, 0); vram < MK_FP(0xA000, 0x1F40); vram += 8)
+#endif
         {
             *(vram) = 0xFF;
             *(vram + 1) = 0xFF;
@@ -116,7 +137,11 @@ void preheat_modeD(void)
 
 void bench_modeD(void)
 {
+#ifdef __386__
     unsigned char *vram;
+#else
+    unsigned char far *vram;
+#endif
 
     unsigned int loops;
     unsigned int num_loops = total_loops_modeD;
@@ -126,7 +151,11 @@ void bench_modeD(void)
         // Red
         outp(0x3C5, 1 << (3 & 0x03));
 
+#ifdef __386__
         for (vram = (unsigned char *)0xA0000; vram < (unsigned char *)0xA1F40; vram += 8)
+#else
+        for (vram = MK_FP(0xA000, 0); vram < MK_FP(0xA000, 0x1F40); vram += 8)
+#endif
         {
             *(vram) = 0xFF;
             *(vram + 1) = 0xFF;
@@ -141,7 +170,11 @@ void bench_modeD(void)
         // Green
         outp(0x3C5, 1 << (2 & 0x03));
 
+#ifdef __386__
         for (vram = (unsigned char *)0xA0000; vram < (unsigned char *)0xA1F40; vram += 8)
+#else
+        for (vram = MK_FP(0xA000, 0); vram < MK_FP(0xA000, 0x1F40); vram += 8)
+#endif
         {
             *(vram) = 0xFF;
             *(vram + 1) = 0xFF;
@@ -156,7 +189,11 @@ void bench_modeD(void)
         // Blue
         outp(0x3C5, 1 << (1 & 0x03));
 
+#ifdef __386__
         for (vram = (unsigned char *)0xA0000; vram < (unsigned char *)0xA1F40; vram += 8)
+#else
+        for (vram = MK_FP(0xA000, 0); vram < MK_FP(0xA000, 0x1F40); vram += 8)
+#endif
         {
             *(vram) = 0xFF;
             *(vram + 1) = 0xFF;
@@ -171,7 +208,11 @@ void bench_modeD(void)
         // Intensity
         outp(0x3C5, 1 << (0 & 0x03));
 
+#ifdef __386__
         for (vram = (unsigned char *)0xA0000; vram < (unsigned char *)0xA1F40; vram += 8)
+#else
+        for (vram = MK_FP(0xA000, 0); vram < MK_FP(0xA000, 0x1F40); vram += 8)
+#endif
         {
             *(vram) = 0xFF;
             *(vram + 1) = 0xFF;
@@ -202,6 +243,6 @@ void show_results_modeD(void)
 {
     double total_result;
 
-    total_result = ((double)total_loops_modeD * 31.25 * 1000) / ((double)timespent_modeD);
+    total_result = ((double)total_loops_modeD * 31.25 * 1000.0) / ((double)timespent_modeD);
     printf("EGA 320x200 16c: %.2lf kb/s\n", total_result);
 }

@@ -23,10 +23,10 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-#define PREHEAT_LOOPS 800
-#define BENCH_TIME 5000
+#define PREHEAT_LOOPS 800L
+#define BENCH_TIME 5000L
 
-unsigned int total_loops_mode1;
+unsigned long total_loops_mode1;
 unsigned long timespent_mode1;
 
 void init_mode1(void)
@@ -45,11 +45,20 @@ void init_mode1(void)
 void preheat_mode1(void)
 {
     unsigned int loops;
+
+#ifdef __386__
     unsigned char *vram;
+#else
+    unsigned char far *vram;
+#endif
 
     for (loops = 0; loops < PREHEAT_LOOPS; loops++)
     {
+#ifdef __386__
         for (vram = (unsigned char *)0xB8000; vram < (unsigned char *)0xB87D0; vram += 8)
+#else
+        for (vram = MK_FP(0xB800, 0); vram < MK_FP(0xB800, 0x07D0); vram += 8)
+#endif
         {
             *(vram) = 0xA5;
             *(vram + 1) = 0xA5;
@@ -65,14 +74,22 @@ void preheat_mode1(void)
 
 void bench_mode1(void)
 {
+#ifdef __386__
     unsigned char *vram;
+#else
+    unsigned char far *vram;
+#endif
 
     unsigned int loops;
     unsigned int num_loops = total_loops_mode1;
 
     for (loops = 0; loops < num_loops; loops++)
     {
+#ifdef __386__
         for (vram = (unsigned char *)0xB8000; vram < (unsigned char *)0xB87D0; vram += 8)
+#else
+        for (vram = MK_FP(0xB800, 0); vram < MK_FP(0xB800, 0x07D0); vram += 8)
+#endif
         {
             *(vram) = 0xA5;
             *(vram + 1) = 0xA5;
@@ -103,6 +120,6 @@ void show_results_mode1(void)
 {
     double total_result;
 
-    total_result = ((double)total_loops_mode1 * 1.953125 * 1000) / ((double)timespent_mode1);
+    total_result = ((double)total_loops_mode1 * 1.953125 * 1000.0) / ((double)timespent_mode1);
     printf("TXT 40x25 16c: %.2lf kb/s\n", total_result);
 }
