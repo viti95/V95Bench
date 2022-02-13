@@ -18,6 +18,15 @@
  - ATI Small Wonder series
  - Plantronics ColorPlus
 
+###############
+# Executables #
+###############
+
+ - V95_16.EXE: 16-bit executable, runs on 8088 / 8086 processors onwards.
+               Recommended for processor up to 286.
+ - V95_32.EXE: 32-bit proctected mode executable, runs on 386 processors
+               onwards. Recommended for 386 processors onwards.
+
 ######################
 # Build instructions #
 ######################
