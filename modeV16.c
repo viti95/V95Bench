@@ -121,7 +121,7 @@ void preheat_modeV16(void)
 #ifdef __386__
         for (vram = (unsigned char *)0xB8001; vram < (unsigned char *)0xBFD01; vram += 16)
 #else
-        for (vram = MK_FP(0xB800, 0x0001); vram < MK_FP(0xB800, 0xFD01); vram += 16)
+        for (vram = MK_FP(0xB800, 0x0001); vram < MK_FP(0xB800, 0x7D01); vram += 16)
 #endif
         {
             *(vram) = 0xA3;
@@ -153,7 +153,7 @@ void bench_modeV16(void)
 #ifdef __386__
         for (vram = (unsigned char *)0xB8001; vram < (unsigned char *)0xBFD01; vram += 16)
 #else
-        for (vram = MK_FP(0xB800, 0x0001); vram < MK_FP(0xB800, 0xFD01); vram += 16)
+        for (vram = MK_FP(0xB800, 0x0001); vram < MK_FP(0xB800, 0x7D01); vram += 16)
 #endif
         {
             *(vram) = 0xA3;
