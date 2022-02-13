@@ -1,4 +1,4 @@
-# V95bench
+# V95Bench
 Benchmark designed to test all kind of graphics cards in DOS environments. 
 
 ## Supported video cards
