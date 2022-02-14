@@ -35,7 +35,7 @@
 #include "modeHGC.h"
 #include "modeATI.h"
 
-int videomode;
+unsigned char videomode;
 
 unsigned char do_bench_mode1 = 0;
 unsigned char do_bench_mode3 = 0;
@@ -313,7 +313,7 @@ int main(int argc, char **argv)
     printf("\n");
 
     printf(" Select option: ");
-    scanf("%d", &videomode);
+    scanf("%u", &videomode);
 
     select_benchmark();
 
