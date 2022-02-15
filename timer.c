@@ -20,6 +20,7 @@
 #include "timer.h"
 
 clock_t start, stop;
+unsigned char read_fix_1, read_fix_2, read_fix_3, read_fix_4, read_fix_5, read_fix_6, read_fix_7, read_fix_8;
 
 unsigned long profile_function(void (*exec_function)(void))
 {

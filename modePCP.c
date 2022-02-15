@@ -28,7 +28,8 @@
 #define BENCH_TIME 5000L
 
 unsigned long total_loops_modePCP;
-unsigned long timespent_modePCP;
+unsigned long timespent_w8_modePCP;
+unsigned long timespent_r8_modePCP;
 
 void init_modePCP(void)
 {
@@ -75,7 +76,7 @@ void preheat_modePCP(unsigned long total_loops)
     }
 }
 
-void bench_modePCP(void)
+void bench_w8_modePCP(void)
 {
 #ifdef __386__
     unsigned char *vram;
@@ -107,6 +108,41 @@ void bench_modePCP(void)
     }
 }
 
+void bench_r8_modePCP(void)
+{
+#ifdef __386__
+    unsigned char *vram;
+#else
+    unsigned char far *vram;
+#endif
+
+    unsigned int loops;
+    unsigned int num_loops = total_loops_modePCP;
+
+    unsigned char read1, read2, read3, read4;
+
+    for (loops = 0; loops < num_loops; loops++)
+    {
+
+#ifdef __386__
+        for (vram = (unsigned char *)0xB8000; vram < (unsigned char *)0xB9F40; vram++)
+#else
+        for (vram = MK_FP(0xB800, 0); vram < MK_FP(0xB800, 0x1F40); vram++)
+#endif
+        {
+            read1 = *(vram);
+            read2 = *(vram + 0x4000);
+            read3 = *(vram + 0x2000);
+            read4 = *(vram + 0x6000);
+        }
+    }
+
+    read_fix_1 = read1;
+    read_fix_2 = read2;
+    read_fix_3 = read3;
+    read_fix_4 = read4;
+}
+
 void execute_bench_modePCP(void)
 {
     unsigned long preheat_loops = PREHEAT_LOOPS;
@@ -117,11 +153,11 @@ void execute_bench_modePCP(void)
     // PRE-HEAT
     do
     {
-        timespent_modePCP = profile_function_loops(preheat_modePCP, preheat_loops);
+        timespent_w8_modePCP = profile_function_loops(preheat_modePCP, preheat_loops);
         preheat_loops *= 2;
-    } while (timespent_modePCP == 0);
+    } while (timespent_w8_modePCP == 0);
     preheat_loops /= 2;
-    total_loops_modePCP = preheat_loops * BENCH_TIME / timespent_modePCP;
+    total_loops_modePCP = preheat_loops * BENCH_TIME / timespent_w8_modePCP;
 
 #ifndef __386__
     // Fix for 16-bit executables
@@ -130,13 +166,16 @@ void execute_bench_modePCP(void)
 #endif
 
     // BENCHMARK
-    timespent_modePCP = profile_function(bench_modePCP);
+    timespent_w8_modePCP = profile_function(bench_w8_modePCP);
+    timespent_r8_modePCP = profile_function(bench_r8_modePCP);
 }
 
 void show_results_modePCP(void)
 {
-    double total_result;
+    double total_result_w8;
+    double total_result_r8;
 
-    total_result = ((double)total_loops_modePCP * 31.25 * 1000.0) / ((double)timespent_modePCP);
-    printf("Plantronics 320x200 16c: %.2lf kb/s\n", total_result);
+    total_result_w8 = ((double)total_loops_modePCP * 31.25 * 1000.0) / ((double)timespent_w8_modePCP);
+    total_result_r8 = ((double)total_loops_modePCP * 31.25 * 1000.0) / ((double)timespent_r8_modePCP);
+    printf("Plantronics 320x200 16c: W8 %.2lf kb/s, R8 %.2lf kb/s\n", total_result_w8, total_result_r8);
 }

@@ -28,7 +28,8 @@
 #define BENCH_TIME 5000L
 
 unsigned long total_loops_modeV16;
-unsigned long timespent_modeV16;
+unsigned long timespent_w8_modeV16;
+unsigned long timespent_r8_modeV16;
 
 void init_modeV16(void)
 {
@@ -136,7 +137,7 @@ void preheat_modeV16(unsigned long total_loops)
     }
 }
 
-void bench_modeV16(void)
+void bench_w8_modeV16(void)
 {
 #ifdef __386__
     unsigned char *vram;
@@ -168,6 +169,41 @@ void bench_modeV16(void)
     }
 }
 
+void bench_r8_modeV16(void)
+{
+#ifdef __386__
+    unsigned char *vram;
+#else
+    unsigned char far *vram;
+#endif
+
+    unsigned int loops;
+    unsigned int num_loops = total_loops_modeV16;
+
+    unsigned char read1, read2, read3, read4;
+
+    for (loops = 0; loops < num_loops; loops++)
+    {
+
+#ifdef __386__
+        for (vram = (unsigned char *)0xB8001; vram < (unsigned char *)0xBFD01; vram += 8)
+#else
+        for (vram = MK_FP(0xB800, 0x0001); vram < MK_FP(0xB800, 0x7D01); vram += 8)
+#endif
+        {
+            read1 = *(vram);
+            read2 = *(vram + 2);
+            read3 = *(vram + 4);
+            read4 = *(vram + 6);
+        }
+    }
+
+    read_fix_1 = read1;
+    read_fix_2 = read2;
+    read_fix_3 = read3;
+    read_fix_4 = read4;
+}
+
 void execute_bench_modeV16(void)
 {
     unsigned long preheat_loops = PREHEAT_LOOPS;
@@ -178,11 +214,11 @@ void execute_bench_modeV16(void)
     // PRE-HEAT
     do
     {
-        timespent_modeV16 = profile_function_loops(preheat_modeV16, preheat_loops);
+        timespent_w8_modeV16 = profile_function_loops(preheat_modeV16, preheat_loops);
         preheat_loops *= 2;
-    } while (timespent_modeV16 == 0);
+    } while (timespent_w8_modeV16 == 0);
     preheat_loops /= 2;
-    total_loops_modeV16 = preheat_loops * BENCH_TIME / timespent_modeV16;
+    total_loops_modeV16 = preheat_loops * BENCH_TIME / timespent_w8_modeV16;
 
 #ifndef __386__
     // Fix for 16-bit executables
@@ -191,13 +227,16 @@ void execute_bench_modeV16(void)
 #endif
 
     // BENCHMARK
-    timespent_modeV16 = profile_function(bench_modeV16);
+    timespent_w8_modeV16 = profile_function(bench_w8_modeV16);
+    timespent_r8_modeV16 = profile_function(bench_r8_modeV16);
 }
 
 void show_results_modeV16(void)
 {
-    double total_result;
+    double total_result_w8;
+    double total_result_r8;
 
-    total_result = ((double)total_loops_modeV16 * 15.625 * 1000.0) / ((double)timespent_modeV16);
-    printf("VGA 160x200 16c: %.2lf kb/s\n", total_result);
+    total_result_w8 = ((double)total_loops_modeV16 * 15.625 * 1000.0) / ((double)timespent_w8_modeV16);
+    total_result_r8 = ((double)total_loops_modeV16 * 15.625 * 1000.0) / ((double)timespent_r8_modeV16);
+    printf("VGA 160x200 16c: W8 %.2lf kb/s, R8 %.2lf kb/s\n", total_result_w8, total_result_r8);
 }

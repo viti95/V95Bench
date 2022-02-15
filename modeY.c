@@ -44,7 +44,8 @@
 #define BENCH_TIME 5000L
 
 unsigned long total_loops_modeY;
-unsigned long timespent_modeY;
+unsigned long timespent_w8_modeY;
+unsigned long timespent_r8_modeY;
 
 void init_modeY(void)
 {
@@ -163,7 +164,7 @@ void preheat_modeY(unsigned long total_loops)
     }
 }
 
-void bench_modeY(void)
+void bench_w8_modeY(void)
 {
 #ifdef __386__
     unsigned char *vram;
@@ -254,6 +255,103 @@ void bench_modeY(void)
     }
 }
 
+void bench_r8_modeY(void)
+{
+#ifdef __386__
+    unsigned char *vram;
+#else
+    unsigned char far *vram;
+#endif
+
+    unsigned int loops;
+    unsigned int num_loops = total_loops_modeY;
+
+    unsigned char read1, read2, read3, read4;
+
+    for (loops = 0; loops < num_loops; loops++)
+    {
+        // PLANE 0
+        outp(SC_DATA, 1 << (0 & 3));
+
+#ifdef __386__
+        for (vram = (unsigned char *)0xA0000; vram < (unsigned char *)0xA3E80; vram += 4)
+#else
+        for (vram = MK_FP(0xA000, 0); vram < MK_FP(0xA000, 0x3E80); vram += 4)
+#endif
+        {
+            read1 = *(vram);
+            read2 = *(vram + 1);
+            read3 = *(vram + 2);
+            read4 = *(vram + 3);
+        }
+
+        read_fix_1 = read1;
+        read_fix_2 = read2;
+        read_fix_3 = read3;
+        read_fix_4 = read4;
+
+        // PLANE 1
+        outp(SC_DATA, 1 << (1 & 3));
+
+#ifdef __386__
+        for (vram = (unsigned char *)0xA0000; vram < (unsigned char *)0xA3E80; vram += 4)
+#else
+        for (vram = MK_FP(0xA000, 0); vram < MK_FP(0xA000, 0x3E80); vram += 4)
+#endif
+        {
+            read1 = *(vram);
+            read2 = *(vram + 1);
+            read3 = *(vram + 2);
+            read4 = *(vram + 3);
+        }
+
+        read_fix_1 = read1;
+        read_fix_2 = read2;
+        read_fix_3 = read3;
+        read_fix_4 = read4;
+
+        // PLANE 2
+        outp(SC_DATA, 1 << (2 & 3));
+
+#ifdef __386__
+        for (vram = (unsigned char *)0xA0000; vram < (unsigned char *)0xA3E80; vram += 4)
+#else
+        for (vram = MK_FP(0xA000, 0); vram < MK_FP(0xA000, 0x3E80); vram += 4)
+#endif
+        {
+            read1 = *(vram);
+            read2 = *(vram + 1);
+            read3 = *(vram + 2);
+            read4 = *(vram + 3);
+        }
+
+        read_fix_1 = read1;
+        read_fix_2 = read2;
+        read_fix_3 = read3;
+        read_fix_4 = read4;
+
+        // PLANE 3
+        outp(SC_DATA, 1 << (3 & 3));
+
+#ifdef __386__
+        for (vram = (unsigned char *)0xA0000; vram < (unsigned char *)0xA3E80; vram += 4)
+#else
+        for (vram = MK_FP(0xA000, 0); vram < MK_FP(0xA000, 0x3E80); vram += 4)
+#endif
+        {
+            read1 = *(vram);
+            read2 = *(vram + 1);
+            read3 = *(vram + 2);
+            read4 = *(vram + 3);
+        }
+
+        read_fix_1 = read1;
+        read_fix_2 = read2;
+        read_fix_3 = read3;
+        read_fix_4 = read4;
+    }
+}
+
 void execute_bench_modeY(void)
 {
     unsigned long preheat_loops = PREHEAT_LOOPS;
@@ -264,11 +362,11 @@ void execute_bench_modeY(void)
     // PRE-HEAT
     do 
     {
-        timespent_modeY = profile_function_loops(preheat_modeY, preheat_loops);
+        timespent_w8_modeY = profile_function_loops(preheat_modeY, preheat_loops);
         preheat_loops *= 2;
-    } while (timespent_modeY == 0);
+    } while (timespent_w8_modeY == 0);
     preheat_loops /= 2;
-    total_loops_modeY = preheat_loops * BENCH_TIME / timespent_modeY;
+    total_loops_modeY = preheat_loops * BENCH_TIME / timespent_w8_modeY;
 
 #ifndef __386__
     // Fix for 16-bit executables
@@ -277,13 +375,16 @@ void execute_bench_modeY(void)
 #endif
 
     // BENCHMARK
-    timespent_modeY = profile_function(bench_modeY);
+    timespent_w8_modeY = profile_function(bench_w8_modeY);
+    timespent_r8_modeY = profile_function(bench_r8_modeY);
 }
 
 void show_results_modeY(void)
 {
-    double total_result;
+    double total_result_w8;
+    double total_result_r8;
 
-    total_result = ((double)total_loops_modeY * 62.5 * 1000.0) / ((double)timespent_modeY);
-    printf("VGA 320x200 256c (Y): %.2lf kb/s\n", total_result);
+    total_result_w8 = ((double)total_loops_modeY * 62.5 * 1000.0) / ((double)timespent_w8_modeY);
+    total_result_r8 = ((double)total_loops_modeY * 62.5 * 1000.0) / ((double)timespent_r8_modeY);
+    printf("VGA 320x200 256c (Y): W8 %.2lf kb/s, R8 %.2lf kb/s\n", total_result_w8, total_result_r8);
 }

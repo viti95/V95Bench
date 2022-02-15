@@ -17,6 +17,7 @@
 
 void init_modePCP(void);
 void preheat_modePCP(unsigned long total_loops);
-void bench_modePCP(void);
+void bench_w8_modePCP(void);
+void bench_w8_modePCP(void);
 void execute_bench_modePCP(void);
 void show_results_modePCP(void);

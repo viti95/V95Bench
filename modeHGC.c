@@ -28,7 +28,8 @@
 #define BENCH_TIME 5000L
 
 unsigned long total_loops_modeHGC;
-unsigned long timespent_modeHGC;
+unsigned long timespent_w8_modeHGC;
+unsigned long timespent_r8_modeHGC;
 
 void init_modeHGC(void)
 {
@@ -80,7 +81,7 @@ void preheat_modeHGC(unsigned long total_loops)
     }
 }
 
-void bench_modeHGC(void)
+void bench_w8_modeHGC(void)
 {
 #ifdef __386__
     unsigned char *vram;
@@ -112,6 +113,41 @@ void bench_modeHGC(void)
     }
 }
 
+void bench_r8_modeHGC(void)
+{
+#ifdef __386__
+    unsigned char *vram;
+#else
+    unsigned char far *vram;
+#endif
+
+    unsigned int loops;
+    unsigned int num_loops = total_loops_modeHGC;
+
+    unsigned char read1, read2, read3, read4;
+
+    for (loops = 0; loops < num_loops; loops++)
+    {
+
+#ifdef __386__
+        for (vram = (unsigned char *)0xB0000; vram < (unsigned char *)0xB1F40; vram++)
+#else
+        for (vram = MK_FP(0xB000, 0); vram < MK_FP(0xB000, 0x1F40); vram++)
+#endif
+        {
+            read1 = *(vram);
+            read2 = *(vram + 0x2000);
+            read3 = *(vram + 0x4000);
+            read4 = *(vram + 0x6000);
+        }
+    }
+
+    read_fix_1 = read1;
+    read_fix_2 = read2;
+    read_fix_3 = read3;
+    read_fix_4 = read4;
+}
+
 void execute_bench_modeHGC(void)
 {
     unsigned long preheat_loops = PREHEAT_LOOPS;
@@ -122,11 +158,11 @@ void execute_bench_modeHGC(void)
     // PRE-HEAT
     do
     {
-        timespent_modeHGC = profile_function_loops(preheat_modeHGC, preheat_loops);
+        timespent_w8_modeHGC = profile_function_loops(preheat_modeHGC, preheat_loops);
         preheat_loops *= 2;
-    } while (timespent_modeHGC == 0);
+    } while (timespent_w8_modeHGC == 0);
     preheat_loops /= 2;
-    total_loops_modeHGC = preheat_loops * BENCH_TIME / timespent_modeHGC;
+    total_loops_modeHGC = preheat_loops * BENCH_TIME / timespent_w8_modeHGC;
 
 #ifndef __386__
     // Fix for 16-bit executables
@@ -135,13 +171,16 @@ void execute_bench_modeHGC(void)
 #endif
 
     // BENCHMARK
-    timespent_modeHGC = profile_function(bench_modeHGC);
+    timespent_w8_modeHGC = profile_function(bench_w8_modeHGC);
+    timespent_r8_modeHGC = profile_function(bench_r8_modeHGC);
 }
 
 void show_results_modeHGC(void)
 {
-    double total_result;
+    double total_result_w8;
+    double total_result_r8;
 
-    total_result = ((double)total_loops_modeHGC * 31.25 * 1000.0) / ((double)timespent_modeHGC);
-    printf("Hercules 640x400 2c: %.2lf kb/s\n", total_result);
+    total_result_w8 = ((double)total_loops_modeHGC * 31.25 * 1000.0) / ((double)timespent_w8_modeHGC);
+    total_result_r8 = ((double)total_loops_modeHGC * 31.25 * 1000.0) / ((double)timespent_r8_modeHGC);
+    printf("Hercules 640x400 2c: W8 %.2lf kb/s, R8 %.2lf kb/s\n", total_result_w8, total_result_r8);
 }

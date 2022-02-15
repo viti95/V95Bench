@@ -17,6 +17,7 @@
 
 void init_mode1(void);
 void preheat_mode1(unsigned long total_loops);
-void bench_mode1(void);
+void bench_w8_mode1(void);
+void bench_r8_mode1(void);
 void execute_bench_mode1(void);
 void show_results_mode1(void);

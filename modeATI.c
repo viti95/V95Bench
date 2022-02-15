@@ -28,7 +28,8 @@
 #define BENCH_TIME 5000L
 
 unsigned long total_loops_modeATI;
-unsigned long timespent_modeATI;
+unsigned long timespent_w8_modeATI;
+unsigned long timespent_r8_modeATI;
 
 void init_modeATI(void)
 {
@@ -89,7 +90,7 @@ void preheat_modeATI(unsigned long total_loops)
     }
 }
 
-void bench_modeATI(void)
+void bench_w8_modeATI(void)
 {
 #ifdef __386__
     unsigned char *vram;
@@ -121,6 +122,49 @@ void bench_modeATI(void)
     }
 }
 
+void bench_r8_modeATI(void)
+{
+#ifdef __386__
+    unsigned char *vram;
+#else
+    unsigned char far *vram;
+#endif
+
+    unsigned int loops;
+    unsigned int num_loops = total_loops_modeATI;
+
+    unsigned char read1, read2, read3, read4, read5, read6, read7, read8;
+
+    for (loops = 0; loops < num_loops; loops++)
+    {
+
+#ifdef __386__
+        for (vram = (unsigned char *)0xB0000; vram < (unsigned char *)0xB1F40; vram++)
+#else
+        for (vram = MK_FP(0xB000, 0); vram < MK_FP(0xB000, 0x1F40); vram++)
+#endif
+        {
+            read1 = *(vram);
+            read2 = *(vram + 0x2000);
+            read3 = *(vram + 0x4000);
+            read4 = *(vram + 0x6000);
+            read5 = *(vram + 0x8000);
+            read6 = *(vram + 0xA000);
+            read7 = *(vram + 0xC000);
+            read8 = *(vram + 0xE000);
+        }
+    }
+
+    read_fix_1 = read1;
+    read_fix_2 = read2;
+    read_fix_3 = read3;
+    read_fix_4 = read4;
+    read_fix_5 = read5;
+    read_fix_6 = read6;
+    read_fix_7 = read7;
+    read_fix_8 = read8;
+}
+
 void execute_bench_modeATI(void)
 {
     unsigned long preheat_loops = PREHEAT_LOOPS;
@@ -131,11 +175,11 @@ void execute_bench_modeATI(void)
     // PRE-HEAT
     do
     {
-        timespent_modeATI = profile_function_loops(preheat_modeATI, preheat_loops);
+        timespent_w8_modeATI = profile_function_loops(preheat_modeATI, preheat_loops);
         preheat_loops *= 2;
-    } while (timespent_modeATI == 0);
+    } while (timespent_w8_modeATI == 0);
     preheat_loops /= 2;
-    total_loops_modeATI = preheat_loops * BENCH_TIME / timespent_modeATI;
+    total_loops_modeATI = preheat_loops * BENCH_TIME / timespent_w8_modeATI;
 
 #ifndef __386__
     // Fix for 16-bit executables
@@ -144,13 +188,16 @@ void execute_bench_modeATI(void)
 #endif
 
     // BENCHMARK
-    timespent_modeATI = profile_function(bench_modeATI);
+    timespent_w8_modeATI = profile_function(bench_w8_modeATI);
+    timespent_r8_modeATI = profile_function(bench_r8_modeATI);
 }
 
 void show_results_modeATI(void)
 {
-    double total_result;
+    double total_result_w8;
+    double total_result_r8;
 
-    total_result = ((double)total_loops_modeATI * 62.5 * 1000.0) / ((double)timespent_modeATI);
-    printf("ATI 640x200 16c: %.2lf kb/s\n", total_result);
+    total_result_w8 = ((double)total_loops_modeATI * 62.5 * 1000.0) / ((double)timespent_w8_modeATI);
+    total_result_r8 = ((double)total_loops_modeATI * 62.5 * 1000.0) / ((double)timespent_r8_modeATI);
+    printf("ATI 640x200 16c: W8 %.2lf kb/s, R8 %.2lf kb/s\n", total_result_w8, total_result_r8);
 }

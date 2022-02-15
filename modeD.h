@@ -17,6 +17,7 @@
 
 void init_modeD(void);
 void preheat_modeD(unsigned long total_loops);
-void bench_modeD(void);
+void bench_w8_modeD(void);
+void bench_w8_modeD(void);
 void execute_bench_modeD(void);
 void show_results_modeD(void);
