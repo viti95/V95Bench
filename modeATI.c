@@ -137,6 +137,12 @@ void execute_bench_modeATI(void)
     preheat_loops /= 2;
     total_loops_modeATI = preheat_loops * BENCH_TIME / timespent_modeATI;
 
+#ifndef __386__
+    // Fix for 16-bit executables
+    if (total_loops_modeATI > 65535)
+        total_loops_modeATI = 65535;
+#endif
+
     // BENCHMARK
     timespent_modeATI = profile_function(bench_modeATI);
 }

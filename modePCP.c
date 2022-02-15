@@ -123,6 +123,12 @@ void execute_bench_modePCP(void)
     preheat_loops /= 2;
     total_loops_modePCP = preheat_loops * BENCH_TIME / timespent_modePCP;
 
+#ifndef __386__
+    // Fix for 16-bit executables
+    if (total_loops_modePCP > 65535)
+        total_loops_modePCP = 65535;
+#endif
+
     // BENCHMARK
     timespent_modePCP = profile_function(bench_modePCP);
 }

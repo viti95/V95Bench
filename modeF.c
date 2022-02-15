@@ -242,6 +242,12 @@ void execute_bench_modeF(void)
     preheat_loops /= 2;
     total_loops_modeF = preheat_loops * BENCH_TIME / timespent_modeF;
 
+#ifndef __386__
+    // Fix for 16-bit executables
+    if (total_loops_modeF > 65535)
+        total_loops_modeF = 65535;
+#endif
+
     // BENCHMARK
     timespent_modeF = profile_function(bench_modeF);
 }

@@ -128,6 +128,12 @@ void execute_bench_modeHGC(void)
     preheat_loops /= 2;
     total_loops_modeHGC = preheat_loops * BENCH_TIME / timespent_modeHGC;
 
+#ifndef __386__
+    // Fix for 16-bit executables
+    if (total_loops_modeHGC > 65535)
+        total_loops_modeHGC = 65535;
+#endif
+
     // BENCHMARK
     timespent_modeHGC = profile_function(bench_modeHGC);
 }
