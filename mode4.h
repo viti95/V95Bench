@@ -16,7 +16,7 @@
  */
 
 void init_mode4(void);
-void preheat_mode4(void);
+void preheat_mode4(unsigned long total_loops);
 void bench_mode4(void);
 void execute_bench_mode4(void);
 void show_results_mode4(void);

@@ -16,7 +16,7 @@
  */
 
 void init_modeV16(void);
-void preheat_modeV16(void);
+void preheat_modeV16(unsigned long total_loops);
 void bench_modeV16(void);
 void execute_bench_modeV16(void);
 void show_results_modeV16(void);

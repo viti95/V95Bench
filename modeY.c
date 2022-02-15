@@ -73,7 +73,7 @@ void init_modeY(void)
     outp(GC_INDEX, GC_READMAP);
 }
 
-void preheat_modeY(void)
+void preheat_modeY(unsigned long total_loops)
 {
     unsigned int loops;
 
@@ -83,7 +83,7 @@ void preheat_modeY(void)
     unsigned char far *vram;
 #endif
 
-    for (loops = 0; loops < PREHEAT_LOOPS; loops++)
+    for (loops = 0; loops < total_loops; loops++)
     {
         // PLANE 0
         outp(SC_DATA, 1 << (0 & 3));
@@ -256,12 +256,19 @@ void bench_modeY(void)
 
 void execute_bench_modeY(void)
 {
+    unsigned long preheat_loops = PREHEAT_LOOPS;
+
     // SET VIDEO MODE
     init_modeY();
 
     // PRE-HEAT
-    timespent_modeY = profile_function(preheat_modeY);
-    total_loops_modeY = PREHEAT_LOOPS * BENCH_TIME / timespent_modeY;
+    do 
+    {
+        timespent_modeY = profile_function_loops(preheat_modeY, preheat_loops);
+        preheat_loops *= 2;
+    } while (timespent_modeY == 0);
+    preheat_loops /= 2;
+    total_loops_modeY = preheat_loops * BENCH_TIME / timespent_modeY;
 
     // BENCHMARK
     timespent_modeY = profile_function(bench_modeY);

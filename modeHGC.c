@@ -49,7 +49,7 @@ void init_modeHGC(void)
     outp(0x03B8, Graph_640x400[11]);
 }
 
-void preheat_modeHGC(void)
+void preheat_modeHGC(unsigned long total_loops)
 {
     unsigned int loops;
 
@@ -59,7 +59,7 @@ void preheat_modeHGC(void)
     unsigned char far *vram;
 #endif
 
-    for (loops = 0; loops < PREHEAT_LOOPS; loops++)
+    for (loops = 0; loops < total_loops; loops++)
     {
 
 #ifdef __386__
@@ -114,12 +114,19 @@ void bench_modeHGC(void)
 
 void execute_bench_modeHGC(void)
 {
+    unsigned long preheat_loops = PREHEAT_LOOPS;
+
     // SET VIDEO MODE
     init_modeHGC();
 
     // PRE-HEAT
-    timespent_modeHGC = profile_function(preheat_modeHGC);
-    total_loops_modeHGC = PREHEAT_LOOPS * BENCH_TIME / timespent_modeHGC;
+    do
+    {
+        timespent_modeHGC = profile_function_loops(preheat_modeHGC, preheat_loops);
+        preheat_loops *= 2;
+    } while (timespent_modeHGC == 0);
+    preheat_loops /= 2;
+    total_loops_modeHGC = preheat_loops * BENCH_TIME / timespent_modeHGC;
 
     // BENCHMARK
     timespent_modeHGC = profile_function(bench_modeHGC);

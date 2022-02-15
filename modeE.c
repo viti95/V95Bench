@@ -45,7 +45,7 @@ void init_modeE(void)
     outp(0x3C4, 0x2);
 }
 
-void preheat_modeE(void)
+void preheat_modeE(unsigned long total_loops)
 {
     unsigned int loops;
 
@@ -55,7 +55,7 @@ void preheat_modeE(void)
     unsigned char far *vram;
 #endif
 
-    for (loops = 0; loops < PREHEAT_LOOPS; loops++)
+    for (loops = 0; loops < total_loops; loops++)
     {
         // Red
         outp(0x3C5, 1 << (3 & 0x03));
@@ -228,12 +228,19 @@ void bench_modeE(void)
 
 void execute_bench_modeE(void)
 {
+    unsigned long preheat_loops = PREHEAT_LOOPS;
+        
     // SET VIDEO MODE
     init_modeE();
 
     // PRE-HEAT
-    timespent_modeE = profile_function(preheat_modeE);
-    total_loops_modeE = PREHEAT_LOOPS * BENCH_TIME / timespent_modeE;
+    do
+    {
+        timespent_modeE = profile_function_loops(preheat_modeE, preheat_loops);
+        preheat_loops *= 2;
+    } while (timespent_modeE == 0);
+    preheat_loops /= 2;
+    total_loops_modeE = preheat_loops * BENCH_TIME / timespent_modeE;
 
     // BENCHMARK
     timespent_modeE = profile_function(bench_modeE);

@@ -44,7 +44,7 @@ void init_modePCP(void)
     outp(0x3DD, 0x10);
 }
 
-void preheat_modePCP(void)
+void preheat_modePCP(unsigned long total_loops)
 {
     unsigned int loops;
 
@@ -54,7 +54,7 @@ void preheat_modePCP(void)
     unsigned char far *vram;
 #endif
 
-    for (loops = 0; loops < PREHEAT_LOOPS; loops++)
+    for (loops = 0; loops < total_loops; loops++)
     {
 
 #ifdef __386__
@@ -109,12 +109,19 @@ void bench_modePCP(void)
 
 void execute_bench_modePCP(void)
 {
+    unsigned long preheat_loops = PREHEAT_LOOPS;
+
     // SET VIDEO MODE
     init_modePCP();
 
     // PRE-HEAT
-    timespent_modePCP = profile_function(preheat_modePCP);
-    total_loops_modePCP = PREHEAT_LOOPS * BENCH_TIME / timespent_modePCP;
+    do
+    {
+        timespent_modePCP = profile_function_loops(preheat_modePCP, preheat_loops);
+        preheat_loops *= 2;
+    } while (timespent_modePCP == 0);
+    preheat_loops /= 2;
+    total_loops_modePCP = preheat_loops * BENCH_TIME / timespent_modePCP;
 
     // BENCHMARK
     timespent_modePCP = profile_function(bench_modePCP);

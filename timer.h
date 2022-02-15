@@ -15,4 +15,5 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-unsigned long profile_function(void (*exec_function)());
+unsigned long profile_function(void (*exec_function)(void));
+unsigned long profile_function_loops(void (*exec_function)(unsigned long), unsigned long loops);

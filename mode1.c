@@ -42,7 +42,7 @@ void init_mode1(void)
 #endif
 }
 
-void preheat_mode1(void)
+void preheat_mode1(unsigned long total_loops)
 {
     unsigned int loops;
 
@@ -52,7 +52,7 @@ void preheat_mode1(void)
     unsigned char far *vram;
 #endif
 
-    for (loops = 0; loops < PREHEAT_LOOPS; loops++)
+    for (loops = 0; loops < total_loops; loops++)
     {
 #ifdef __386__
         for (vram = (unsigned char *)0xB8000; vram < (unsigned char *)0xB87D0; vram += 8)
@@ -105,12 +105,19 @@ void bench_mode1(void)
 
 void execute_bench_mode1(void)
 {
+    unsigned long preheat_loops = PREHEAT_LOOPS;
+
     // SET VIDEO MODE
     init_mode1();
 
     // PRE-HEAT
-    timespent_mode1 = profile_function(preheat_mode1);
-    total_loops_mode1 = PREHEAT_LOOPS * BENCH_TIME / timespent_mode1;
+    do
+    {
+        timespent_mode1 = profile_function_loops(preheat_mode1, preheat_loops);
+        preheat_loops *= 2;
+    } while (timespent_mode1 == 0);
+    preheat_loops /= 2;
+    total_loops_mode1 = preheat_loops * BENCH_TIME / timespent_mode1;
 
     // BENCHMARK
     timespent_mode1 = profile_function(bench_mode1);

@@ -21,11 +21,21 @@
 
 clock_t start, stop;
 
-unsigned long profile_function(void (*exec_function)())
+unsigned long profile_function(void (*exec_function)(void))
 {
     start = clock();
 
     exec_function();
+
+    stop = clock();
+    return (stop - start) / (CLOCKS_PER_SEC / 1000);
+}
+
+unsigned long profile_function_loops(void (*exec_function)(unsigned long), unsigned long loops)
+{
+    start = clock();
+
+    exec_function(loops);
 
     stop = clock();
     return (stop - start) / (CLOCKS_PER_SEC / 1000);
