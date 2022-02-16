@@ -95,15 +95,19 @@ void bench_w16_mode1(void)
     for (loops = 0; loops < num_loops; loops++)
     {
 #ifdef __386__
-        for (vram = (unsigned short *)0xB8000; vram < (unsigned short *)0xB87D0; vram += 4)
+        for (vram = (unsigned short *)0xB8000; vram < (unsigned short *)0xB87D0; vram += 8)
 #else
-        for (vram = MK_FP(0xB800, 0); vram < MK_FP(0xB800, 0x07D0); vram += 4)
+        for (vram = MK_FP(0xB800, 0); vram < MK_FP(0xB800, 0x07D0); vram += 8)
 #endif
         {
             *(vram) = 0xBC34;
             *(vram + 1) = 0xBC34;
             *(vram + 2) = 0xBC34;
             *(vram + 3) = 0xBC34;
+            *(vram + 4) = 0xBC34;
+            *(vram + 5) = 0xBC34;
+            *(vram + 6) = 0xBC34;
+            *(vram + 7) = 0xBC34;
         }
     }
 }

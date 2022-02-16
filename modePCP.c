@@ -99,15 +99,19 @@ void bench_w16_modePCP(void)
     {
 
 #ifdef __386__
-        for (vram = (unsigned short *)0xB8000; vram < (unsigned short *)0xB9F40; vram++)
+        for (vram = (unsigned short *)0xB8000; vram < (unsigned short *)0xB9F40; vram += 2)
 #else
-        for (vram = MK_FP(0xB800, 0); vram < MK_FP(0xB800, 0x1F40); vram++)
+        for (vram = MK_FP(0xB800, 0); vram < MK_FP(0xB800, 0x1F40); vram += 2)
 #endif
         {
             *(vram) = 0xA14C;
+            *(vram + 1) = 0xA14C;
             *(vram + 0x1000) = 0xA14C;
+            *(vram + 0x1001) = 0xA14C;
             *(vram + 0x2000) = 0xA14C;
+            *(vram + 0x2001) = 0xA14C;
             *(vram + 0x3000) = 0xA14C;
+            *(vram + 0x3001) = 0xA14C;
         }
     }
 }

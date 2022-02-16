@@ -104,15 +104,19 @@ void bench_w16_modeHGC(void)
     {
 
 #ifdef __386__
-        for (vram = (unsigned short *)0xB0000; vram < (unsigned short *)0xB1F40; vram++)
+        for (vram = (unsigned short *)0xB0000; vram < (unsigned short *)0xB1F40; vram += 2)
 #else
-        for (vram = MK_FP(0xB000, 0); vram < MK_FP(0xB000, 0x1F40); vram++)
+        for (vram = MK_FP(0xB000, 0); vram < MK_FP(0xB000, 0x1F40); vram += 2)
 #endif
         {
             *(vram) = 0xA413;
+            *(vram + 1) = 0xA413;
             *(vram + 0x1000) = 0xA413;
+            *(vram + 0x1001) = 0xA413;
             *(vram + 0x2000) = 0xA413;
+            *(vram + 0x2001) = 0xA413;
             *(vram + 0x3000) = 0xA413;
+            *(vram + 0x3001) = 0xA413;
         }
     }
 }

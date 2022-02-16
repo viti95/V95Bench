@@ -161,60 +161,76 @@ void bench_w16_modeE(void)
         outp(0x3C5, 1 << (3 & 0x03));
 
 #ifdef __386__
-        for (vram = (unsigned short *)0xA0000; vram < (unsigned short *)0xA3E80; vram += 4)
+        for (vram = (unsigned short *)0xA0000; vram < (unsigned short *)0xA3E80; vram += 8)
 #else
-        for (vram = MK_FP(0xA000, 0); vram < MK_FP(0xA000, 0x3E80); vram += 4)
+        for (vram = MK_FP(0xA000, 0); vram < MK_FP(0xA000, 0x3E80); vram += 8)
 #endif
         {
             *(vram) = 0xA431;
             *(vram + 1) = 0xA431;
             *(vram + 2) = 0xA431;
             *(vram + 3) = 0xA431;
+            *(vram + 4) = 0xA431;
+            *(vram + 5) = 0xA431;
+            *(vram + 6) = 0xA431;
+            *(vram + 7) = 0xA431;
         }
 
         // Green
         outp(0x3C5, 1 << (2 & 0x03));
 
 #ifdef __386__
-        for (vram = (unsigned short *)0xA0000; vram < (unsigned short *)0xA3E80; vram += 4)
+        for (vram = (unsigned short *)0xA0000; vram < (unsigned short *)0xA3E80; vram += 8)
 #else
-        for (vram = MK_FP(0xA000, 0); vram < MK_FP(0xA000, 0x3E80); vram += 4)
+        for (vram = MK_FP(0xA000, 0); vram < MK_FP(0xA000, 0x3E80); vram += 8)
 #endif
         {
             *(vram) = 0x225F;
             *(vram + 1) = 0x225F;
             *(vram + 2) = 0x225F;
             *(vram + 3) = 0x225F;
+            *(vram + 4) = 0x225F;
+            *(vram + 5) = 0x225F;
+            *(vram + 6) = 0x225F;
+            *(vram + 7) = 0x225F;
         }
 
         // Blue
         outp(0x3C5, 1 << (1 & 0x03));
 
 #ifdef __386__
-        for (vram = (unsigned short *)0xA0000; vram < (unsigned short *)0xA3E80; vram += 4)
+        for (vram = (unsigned short *)0xA0000; vram < (unsigned short *)0xA3E80; vram += 8)
 #else
-        for (vram = MK_FP(0xA000, 0); vram < MK_FP(0xA000, 0x3E80); vram += 4)
+        for (vram = MK_FP(0xA000, 0); vram < MK_FP(0xA000, 0x3E80); vram += 8)
 #endif
         {
             *(vram) = 0x3AA4;
             *(vram + 1) = 0x3AA4;
             *(vram + 2) = 0x3AA4;
             *(vram + 3) = 0x3AA4;
+            *(vram + 4) = 0x3AA4;
+            *(vram + 5) = 0x3AA4;
+            *(vram + 6) = 0x3AA4;
+            *(vram + 7) = 0x3AA4;
         }
 
         // Intensity
         outp(0x3C5, 1 << (0 & 0x03));
 
 #ifdef __386__
-        for (vram = (unsigned short *)0xA0000; vram < (unsigned short *)0xA3E80; vram += 4)
+        for (vram = (unsigned short *)0xA0000; vram < (unsigned short *)0xA3E80; vram += 8)
 #else
-        for (vram = MK_FP(0xA000, 0); vram < MK_FP(0xA000, 0x3E80); vram += 4)
+        for (vram = MK_FP(0xA000, 0); vram < MK_FP(0xA000, 0x3E80); vram += 8)
 #endif
         {
             *(vram) = 0x192F;
             *(vram + 1) = 0x192F;
             *(vram + 2) = 0x192F;
             *(vram + 3) = 0x192F;
+            *(vram + 4) = 0x192F;
+            *(vram + 5) = 0x192F;
+            *(vram + 6) = 0x192F;
+            *(vram + 7) = 0x192F;
         }
     }
 }
