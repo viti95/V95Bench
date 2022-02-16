@@ -31,6 +31,10 @@ unsigned long timespent_w8_mode13;
 unsigned long timespent_r8_mode13;
 unsigned long timespent_w16_mode13;
 
+#ifdef __386__
+unsigned long timespent_w32_mode13;
+#endif
+
 void init_mode13(void)
 {
     union REGS regs;
@@ -110,6 +114,31 @@ void bench_w16_mode13(void)
     }
 }
 
+#ifdef __386__
+void bench_w32_mode13(void)
+{
+    unsigned int *vram;
+
+    unsigned int loops;
+    unsigned int num_loops = total_loops_mode13;
+
+    for (loops = 0; loops < num_loops; loops++)
+    {
+        for (vram = (unsigned int *)0xA0000; vram < (unsigned int *)0xAFA00; vram += 8)
+        {
+            *(vram) = 0x457892A0;
+            *(vram + 1) = 0x457892A0;
+            *(vram + 2) = 0x457892A0;
+            *(vram + 3) = 0x457892A0;
+            *(vram + 4) = 0x457892A0;
+            *(vram + 5) = 0x457892A0;
+            *(vram + 6) = 0x457892A0;
+            *(vram + 7) = 0x457892A0;
+        }
+    }
+}
+#endif
+
 void bench_r8_mode13(void)
 {
 #ifdef __386__
@@ -171,6 +200,10 @@ void execute_bench_mode13(void)
     timespent_w8_mode13 = profile_function(bench_w8_mode13);
     timespent_r8_mode13 = profile_function(bench_r8_mode13);
     timespent_w16_mode13 = profile_function(bench_w16_mode13);
+
+#ifdef __386__
+    timespent_w32_mode13 = profile_function(bench_w32_mode13);
+#endif
 }
 
 void show_results_mode13(void)
@@ -183,4 +216,9 @@ void show_results_mode13(void)
     printf("VGA 320x200 256c (13h): W8 %.2lf kb/s, R8 %.2lf kb/s\n", total_result_w, total_result_r);
     total_result_w = ((double)total_loops_mode13 * 62.5 * 1000.0) / ((double)timespent_w16_mode13);
     printf("                        W16 %.2lf kb/s\n", total_result_w);
+
+#ifdef __386__
+    total_result_w = ((double)total_loops_mode13 * 62.5 * 1000.0) / ((double)timespent_w32_mode13);
+    printf("                        W32 %.2lf kb/s\n", total_result_w);
+#endif
 }
