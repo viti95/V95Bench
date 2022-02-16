@@ -31,6 +31,10 @@ unsigned long timespent_w8_mode7;
 unsigned long timespent_r8_mode7;
 unsigned long timespent_w16_mode7;
 
+#ifdef __386__
+unsigned long timespent_w32_mode7;
+#endif
+
 void init_mode7(void)
 {
     union REGS regs;
@@ -114,6 +118,31 @@ void bench_w16_mode7(void)
     }
 }
 
+#ifdef __386__
+void bench_w32_mode7(void)
+{
+    unsigned int *vram;
+
+    unsigned int loops;
+    unsigned int num_loops = total_loops_mode7;
+
+    for (loops = 0; loops < num_loops; loops++)
+    {
+        for (vram = (unsigned int *)0xB0000; vram < (unsigned int *)0xB0FA0; vram += 8)
+        {
+            *(vram) = 0x8C80AF53;
+            *(vram + 1) = 0x8C80AF53;
+            *(vram + 2) = 0x8C80AF53;
+            *(vram + 3) = 0x8C80AF53;
+            *(vram + 4) = 0x8C80AF53;
+            *(vram + 5) = 0x8C80AF53;
+            *(vram + 6) = 0x8C80AF53;
+            *(vram + 7) = 0x8C80AF53;
+        }
+    }
+}
+#endif
+
 void bench_r8_mode7(void)
 {
 #ifdef __386__
@@ -175,6 +204,10 @@ void execute_bench_mode7(void)
     timespent_w8_mode7 = profile_function(bench_w8_mode7);
     timespent_r8_mode7 = profile_function(bench_r8_mode7);
     timespent_w16_mode7 = profile_function(bench_w16_mode7);
+
+#ifdef __386__
+    timespent_w32_mode7 = profile_function(bench_w32_mode7);
+#endif
 }
 
 void show_results_mode7(void)
@@ -187,4 +220,9 @@ void show_results_mode7(void)
     printf("TXT 80x25 2c: W8 %.2lf kb/s, R8 %.2lf kb/s\n", total_result_w, total_result_r);
     total_result_w = ((double)total_loops_mode7 * 3.90625 * 1000.0) / ((double)timespent_w16_mode7);
     printf("              W16 %.2lf kb/s\n", total_result_w);
+
+#ifdef __386__
+    total_result_w = ((double)total_loops_mode7 * 62.5 * 1000.0) / ((double)timespent_w32_mode7);
+    printf("              W32 %.2lf kb/s\n", total_result_w);
+#endif
 }

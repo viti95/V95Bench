@@ -20,5 +20,6 @@ void preheat_mode3(unsigned long total_loops);
 void bench_w8_mode3(void);
 void bench_r8_mode3(void);
 void bench_w16_mode3(void);
+void bench_w32_mode3(void);
 void execute_bench_mode3(void);
 void show_results_mode3(void);

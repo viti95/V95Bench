@@ -32,6 +32,10 @@ unsigned long timespent_w8_modePCP;
 unsigned long timespent_r8_modePCP;
 unsigned long timespent_w16_modePCP;
 
+#ifdef __386__
+unsigned long timespent_w32_modePCP;
+#endif
+
 void init_modePCP(void)
 {
     union REGS regs;
@@ -116,6 +120,31 @@ void bench_w16_modePCP(void)
     }
 }
 
+#ifdef __386__
+void bench_w32_modePCP(void)
+{
+    unsigned int *vram;
+
+    unsigned int loops;
+    unsigned int num_loops = total_loops_modePCP;
+
+    for (loops = 0; loops < num_loops; loops++)
+    {
+        for (vram = (unsigned int *)0xB8000; vram < (unsigned int *)0xB9F40; vram += 2)
+        {
+            *(vram) = 0xA14C5792;
+            *(vram + 1) = 0xA14C5792;
+            *(vram + 0x800) = 0xA14C5792;
+            *(vram + 0x801) = 0xA14C5792;
+            *(vram + 0x1000) = 0xA14C5792;
+            *(vram + 0x1001) = 0xA14C5792;
+            *(vram + 0x1800) = 0xA14C5792;
+            *(vram + 0x1801) = 0xA14C5792;
+        }
+    }
+}
+#endif
+
 void bench_r8_modePCP(void)
 {
 #ifdef __386__
@@ -176,6 +205,11 @@ void execute_bench_modePCP(void)
     // BENCHMARK
     timespent_w8_modePCP = profile_function(bench_w8_modePCP);
     timespent_r8_modePCP = profile_function(bench_r8_modePCP);
+    timespent_w16_modePCP = profile_function(bench_w16_modePCP);
+
+#ifdef __386__
+    timespent_w32_modePCP = profile_function(bench_w32_modePCP);
+#endif
 }
 
 void show_results_modePCP(void)
@@ -188,4 +222,9 @@ void show_results_modePCP(void)
     printf("PCP 320x200 16c: W8 %.2lf kb/s, R8 %.2lf kb/s\n", total_result_w, total_result_r);
     total_result_w = ((double)total_loops_modePCP * 31.25 * 1000.0) / ((double)timespent_w16_modePCP);
     printf("                 W16 %.2lf kb/s\n", total_result_w);
+
+#ifdef __386__
+    total_result_w = ((double)total_loops_modePCP * 62.5 * 1000.0) / ((double)timespent_w32_modePCP);
+    printf("                 W32 %.2lf kb/s\n", total_result_w);
+#endif
 }

@@ -20,5 +20,6 @@ void preheat_modeHGC(unsigned long total_loops);
 void bench_w8_modeHGC(void);
 void bench_r8_modeHGC(void);
 void bench_w16_modeHGC(void);
+void bench_w32_modeHGC(void);
 void execute_bench_modeHGC(void);
 void show_results_modeHGC(void);

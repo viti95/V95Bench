@@ -32,6 +32,10 @@ unsigned long timespent_w8_mode10;
 unsigned long timespent_r8_mode10;
 unsigned long timespent_w16_mode10;
 
+#ifdef __386__
+unsigned long timespent_w32_mode10;
+#endif
+
 void init_mode10(void)
 {
     union REGS regs;
@@ -235,6 +239,79 @@ void bench_w16_mode10(void)
     }
 }
 
+#ifdef __386__
+void bench_w32_mode10(void)
+{
+    unsigned int *vram;
+
+    unsigned int loops;
+    unsigned int num_loops = total_loops_mode10;
+
+    for (loops = 0; loops < num_loops; loops++)
+    {
+        // Red
+        outp(0x3C5, 1 << (3 & 0x03));
+
+        for (vram = (unsigned int *)0xA0000; vram < (unsigned int *)0xA6D60; vram += 8)
+        {
+            *(vram) = 0xA4B2CB02;
+            *(vram + 1) = 0xA4B2CB02;
+            *(vram + 2) = 0xA4B2CB02;
+            *(vram + 3) = 0xA4B2CB02;
+            *(vram + 4) = 0xA4B2CB02;
+            *(vram + 5) = 0xA4B2CB02;
+            *(vram + 6) = 0xA4B2CB02;
+            *(vram + 7) = 0xA4B2CB02;
+        }
+
+        // Green
+        outp(0x3C5, 1 << (2 & 0x03));
+
+        for (vram = (unsigned int *)0xA0000; vram < (unsigned int *)0xA6D60; vram += 8)
+        {
+            *(vram) = 0xEF1CCB02;
+            *(vram + 1) = 0xEF1CCB02;
+            *(vram + 2) = 0xEF1CCB02;
+            *(vram + 3) = 0xEF1CCB02;
+            *(vram + 4) = 0xEF1CCB02;
+            *(vram + 5) = 0xEF1CCB02;
+            *(vram + 6) = 0xEF1CCB02;
+            *(vram + 7) = 0xEF1CCB02;
+        }
+
+        // Blue
+        outp(0x3C5, 1 << (1 & 0x03));
+
+        for (vram = (unsigned int *)0xA0000; vram < (unsigned int *)0xA6D60; vram += 8)
+        {
+            *(vram) = 0xF1D0CB02;
+            *(vram + 1) = 0xF1D0CB02;
+            *(vram + 2) = 0xF1D0CB02;
+            *(vram + 3) = 0xF1D0CB02;
+            *(vram + 4) = 0xF1D0CB02;
+            *(vram + 5) = 0xF1D0CB02;
+            *(vram + 6) = 0xF1D0CB02;
+            *(vram + 7) = 0xF1D0CB02;
+        }
+
+        // Intensity
+        outp(0x3C5, 1 << (0 & 0x03));
+
+        for (vram = (unsigned int *)0xA0000; vram < (unsigned int *)0xA6D60; vram += 8)
+        {
+            *(vram) = 0x4156CB02;
+            *(vram + 1) = 0x4156CB02;
+            *(vram + 2) = 0x4156CB02;
+            *(vram + 3) = 0x4156CB02;
+            *(vram + 4) = 0x4156CB02;
+            *(vram + 5) = 0x4156CB02;
+            *(vram + 6) = 0x4156CB02;
+            *(vram + 7) = 0x4156CB02;
+        }
+    }
+}
+#endif
+
 void bench_r8_mode10(void)
 {
 #ifdef __386__
@@ -358,6 +435,10 @@ void execute_bench_mode10(void)
     timespent_w8_mode10 = profile_function(bench_w8_mode10);
     timespent_r8_mode10 = profile_function(bench_r8_mode10);
     timespent_w16_mode10 = profile_function(bench_w16_mode10);
+
+#ifdef __386__
+    timespent_w32_mode10 = profile_function(bench_w32_mode10);
+#endif
 }
 
 void show_results_mode10(void)
@@ -370,4 +451,9 @@ void show_results_mode10(void)
     printf("EGA 640x350 16c: W8 %.2lf kb/s, R8 %.2lf kb/s\n", total_result_w, total_result_r);
     total_result_w = ((double)total_loops_mode10 * 109.375 * 1000.0) / ((double)timespent_w16_mode10);
     printf("                 W16 %.2lf kb/s\n", total_result_w);
+
+#ifdef __386__
+    total_result_w = ((double)total_loops_mode10 * 62.5 * 1000.0) / ((double)timespent_w32_mode10);
+    printf("                 W32 %.2lf kb/s\n", total_result_w);
+#endif
 }

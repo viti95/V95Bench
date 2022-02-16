@@ -20,5 +20,6 @@ void preheat_mode4(unsigned long total_loops);
 void bench_w8_mode4(void);
 void bench_r8_mode4(void);
 void bench_w16_mode4(void);
+void bench_w32_mode4(void);
 void execute_bench_mode4(void);
 void show_results_mode4(void);
