@@ -128,14 +128,14 @@ void bench_w32_mode3(void)
     {
         for (vram = (unsigned int *)0xB8000; vram < (unsigned int *)0xB8FA0; vram += 8)
         {
-            *(vram) = 0x8391ABEF;
-            *(vram + 1) = 0x8391ABEF;
-            *(vram + 2) = 0x8391ABEF;
-            *(vram + 3) = 0x8391ABEF;
-            *(vram + 4) = 0x8391ABEF;
-            *(vram + 5) = 0x8391ABEF;
-            *(vram + 6) = 0x8391ABEF;
-            *(vram + 7) = 0x8391ABEF;
+            *(vram) = 0x14C2ABEF;
+            *(vram + 1) = 0x14C2ABEF;
+            *(vram + 2) = 0x14C2ABEF;
+            *(vram + 3) = 0x14C2ABEF;
+            *(vram + 4) = 0x14C2ABEF;
+            *(vram + 5) = 0x14C2ABEF;
+            *(vram + 6) = 0x14C2ABEF;
+            *(vram + 7) = 0x14C2ABEF;
         }
     }
 }
