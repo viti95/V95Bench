@@ -18,6 +18,7 @@
 void init_mode13(void);
 void preheat_mode13(unsigned long total_loops);
 void bench_w8_mode13(void);
-void bench_w8_mode13(void);
+void bench_r8_mode13(void);
+void bench_w16_mode13(void);
 void execute_bench_mode13(void);
 void show_results_mode13(void);

@@ -18,6 +18,6 @@
 void init_modeF(void);
 void preheat_modeF(unsigned long total_loops);
 void bench_w8_modeF(void);
-void bench_w8_modeF(void);
+void bench_r8_modeF(void);
 void execute_bench_modeF(void);
 void show_results_modeF(void);

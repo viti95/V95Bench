@@ -18,6 +18,6 @@
 void init_modeATI(void);
 void preheat_modeATI(unsigned long total_loops);
 void bench_w8_modeATI(void);
-void bench_w8_modeATI(void);
+void bench_r8_modeATI(void);
 void execute_bench_modeATI(void);
 void show_results_modeATI(void);

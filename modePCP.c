@@ -30,6 +30,7 @@
 unsigned long total_loops_modePCP;
 unsigned long timespent_w8_modePCP;
 unsigned long timespent_r8_modePCP;
+unsigned long timespent_w16_modePCP;
 
 void init_modePCP(void)
 {
@@ -108,6 +109,34 @@ void bench_w8_modePCP(void)
     }
 }
 
+void bench_w16_modePCP(void)
+{
+#ifdef __386__
+    unsigned short *vram;
+#else
+    unsigned short far *vram;
+#endif
+
+    unsigned int loops;
+    unsigned int num_loops = total_loops_modePCP;
+
+    for (loops = 0; loops < num_loops; loops++)
+    {
+
+#ifdef __386__
+        for (vram = (unsigned short *)0xB8000; vram < (unsigned short *)0xB9F40; vram++)
+#else
+        for (vram = MK_FP(0xB800, 0); vram < MK_FP(0xB800, 0x1F40); vram++)
+#endif
+        {
+            *(vram) = 0xA14C;
+            *(vram + 0x4000) = 0xA14C;
+            *(vram + 0x2000) = 0xA14C;
+            *(vram + 0x6000) = 0xA14C;
+        }
+    }
+}
+
 void bench_r8_modePCP(void)
 {
 #ifdef __386__
@@ -172,10 +201,12 @@ void execute_bench_modePCP(void)
 
 void show_results_modePCP(void)
 {
-    double total_result_w8;
-    double total_result_r8;
+    double total_result_w;
+    double total_result_r;
 
-    total_result_w8 = ((double)total_loops_modePCP * 31.25 * 1000.0) / ((double)timespent_w8_modePCP);
-    total_result_r8 = ((double)total_loops_modePCP * 31.25 * 1000.0) / ((double)timespent_r8_modePCP);
-    printf("Plantronics 320x200 16c: W8 %.2lf kb/s, R8 %.2lf kb/s\n", total_result_w8, total_result_r8);
+    total_result_w = ((double)total_loops_modePCP * 31.25 * 1000.0) / ((double)timespent_w8_modePCP);
+    total_result_r = ((double)total_loops_modePCP * 31.25 * 1000.0) / ((double)timespent_r8_modePCP);
+    printf("PCP 320x200 16c: W8 %.2lf kb/s, R8 %.2lf kb/s\n", total_result_w, total_result_r);
+    total_result_w = ((double)total_loops_modePCP * 31.25 * 1000.0) / ((double)timespent_w16_modePCP);
+    printf("                 W16 %.2lf kb/s\n", total_result_w);
 }
