@@ -62,33 +62,8 @@ void init_modeATI(void)
 
 void preheat_modeATI(unsigned long total_loops)
 {
-    unsigned int loops;
-
-#ifdef __386__
-    unsigned char *vram;
-#else
-    unsigned char far *vram;
-#endif
-
-    for (loops = 0; loops < total_loops; loops++)
-    {
-
-#ifdef __386__
-        for (vram = (unsigned char *)0xB0000; vram < (unsigned char *)0xB1F40; vram++)
-#else
-        for (vram = MK_FP(0xB000, 0); vram < MK_FP(0xB000, 0x1F40); vram++)
-#endif
-        {
-            *(vram) = 0x55;
-            *(vram + 0x2000) = 0x55;
-            *(vram + 0x4000) = 0x55;
-            *(vram + 0x6000) = 0x55;
-            *(vram + 0x8000) = 0x55;
-            *(vram + 0xA000) = 0x55;
-            *(vram + 0xC000) = 0x55;
-            *(vram + 0xE000) = 0x55;
-        }
-    }
+    total_loops_modeATI = total_loops;
+    bench_w8_modeATI();
 }
 
 void bench_w8_modeATI(void)
@@ -144,13 +119,13 @@ void bench_w16_modeATI(void)
 #endif
         {
             *(vram) = 0xEA23;
+            *(vram + 0x1000) = 0xEA23;
             *(vram + 0x2000) = 0xEA23;
+            *(vram + 0x3000) = 0xEA23;
             *(vram + 0x4000) = 0xEA23;
+            *(vram + 0x5000) = 0xEA23;
             *(vram + 0x6000) = 0xEA23;
-            *(vram + 0x8000) = 0xEA23;
-            *(vram + 0xA000) = 0xEA23;
-            *(vram + 0xC000) = 0xEA23;
-            *(vram + 0xE000) = 0xEA23;
+            *(vram + 0x7000) = 0xEA23;
         }
     }
 }

@@ -109,33 +109,8 @@ void init_modeC16(void)
 
 void preheat_modeC16(unsigned long total_loops)
 {
-    unsigned int loops;
-
-#ifdef __386__
-    unsigned char *vram;
-#else
-    unsigned char far *vram;
-#endif
-
-    for (loops = 0; loops < total_loops; loops++)
-    {
-
-#ifdef __386__
-        for (vram = (unsigned char *)0xB8001; vram < (unsigned char *)0xBBE81; vram += 16)
-#else
-        for (vram = MK_FP(0xB800, 0x0001); vram < MK_FP(0xB800, 0x3E81); vram += 16)
-#endif
-        {
-            *(vram) = 0xA3;
-            *(vram + 2) = 0xA3;
-            *(vram + 4) = 0xA3;
-            *(vram + 6) = 0xA3;
-            *(vram + 8) = 0xA3;
-            *(vram + 10) = 0xA3;
-            *(vram + 12) = 0xA3;
-            *(vram + 14) = 0xA3;
-        }
-    }
+    total_loops_modeC16 = total_loops;
+    bench_w8_modeC16();
 }
 
 void bench_w8_modeC16(void)

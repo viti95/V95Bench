@@ -53,33 +53,8 @@ void init_modeHGC(void)
 
 void preheat_modeHGC(unsigned long total_loops)
 {
-    unsigned int loops;
-
-#ifdef __386__
-    unsigned char *vram;
-#else
-    unsigned char far *vram;
-#endif
-
-    for (loops = 0; loops < total_loops; loops++)
-    {
-
-#ifdef __386__
-        for (vram = (unsigned char *)0xB0000; vram < (unsigned char *)0xB1F40; vram += 2)
-#else
-        for (vram = MK_FP(0xB000, 0); vram < MK_FP(0xB000, 0x1F40); vram += 2)
-#endif
-        {
-            *(vram) = 0x55;
-            *(vram + 1) = 0x55;
-            *(vram + 0x2000) = 0x55;
-            *(vram + 0x2001) = 0x55;
-            *(vram + 0x4000) = 0x55;
-            *(vram + 0x4001) = 0x55;
-            *(vram + 0x6000) = 0x55;
-            *(vram + 0x6001) = 0x55;
-        }
-    }
+    total_loops_modeHGC = total_loops;
+    bench_w8_modeHGC();
 }
 
 void bench_w8_modeHGC(void)
@@ -135,9 +110,9 @@ void bench_w16_modeHGC(void)
 #endif
         {
             *(vram) = 0xA413;
+            *(vram + 0x1000) = 0xA413;
             *(vram + 0x2000) = 0xA413;
-            *(vram + 0x4000) = 0xA413;
-            *(vram + 0x6000) = 0xA413;
+            *(vram + 0x3000) = 0xA413;
         }
     }
 }

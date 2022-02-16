@@ -46,33 +46,8 @@ void init_mode4(void)
 
 void preheat_mode4(unsigned long total_loops)
 {
-    unsigned int loops;
-
-#ifdef __386__
-    unsigned char *vram;
-#else
-    unsigned char far *vram;
-#endif
-
-    for (loops = 0; loops < total_loops; loops++)
-    {
-
-#ifdef __386__
-        for (vram = (unsigned char *)0xB8000; vram < (unsigned char *)0xB9F40; vram += 4)
-#else
-        for (vram = MK_FP(0xB800, 0); vram < MK_FP(0xB800, 0x1F40); vram += 4)
-#endif
-        {
-            *(vram) = 0x55;
-            *(vram + 1) = 0x55;
-            *(vram + 2) = 0x55;
-            *(vram + 3) = 0x55;
-            *(vram + 0x2000) = 0x55;
-            *(vram + 0x2001) = 0x55;
-            *(vram + 0x2002) = 0x55;
-            *(vram + 0x2003) = 0x55;
-        }
-    }
+    total_loops_mode4 = total_loops;
+    bench_w8_mode4();
 }
 
 void bench_w8_mode4(void)
@@ -95,14 +70,14 @@ void bench_w8_mode4(void)
         for (vram = MK_FP(0xB800, 0); vram < MK_FP(0xB800, 0x1F40); vram += 4)
 #endif
         {
-            *(vram) = 0x55;
-            *(vram + 1) = 0x55;
-            *(vram + 2) = 0x55;
-            *(vram + 3) = 0x55;
-            *(vram + 0x2000) = 0x55;
-            *(vram + 0x2001) = 0x55;
-            *(vram + 0x2002) = 0x55;
-            *(vram + 0x2003) = 0x55;
+            *(vram) = 0x5B;
+            *(vram + 1) = 0x5B;
+            *(vram + 2) = 0x5B;
+            *(vram + 3) = 0x5B;
+            *(vram + 0x2000) = 0x5B;
+            *(vram + 0x2001) = 0x5B;
+            *(vram + 0x2002) = 0x5B;
+            *(vram + 0x2003) = 0x5B;
         }
     }
 }
@@ -129,8 +104,8 @@ void bench_w16_mode4(void)
         {
             *(vram) = 0x9C2A;
             *(vram + 1) = 0x9C2A;
-            *(vram + 0x2000) = 0x9C2A;
-            *(vram + 0x2001) = 0x9C2A;
+            *(vram + 0x1000) = 0x9C2A;
+            *(vram + 0x1001) = 0x9C2A;
         }
     }
 }

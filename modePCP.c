@@ -48,33 +48,8 @@ void init_modePCP(void)
 
 void preheat_modePCP(unsigned long total_loops)
 {
-    unsigned int loops;
-
-#ifdef __386__
-    unsigned char *vram;
-#else
-    unsigned char far *vram;
-#endif
-
-    for (loops = 0; loops < total_loops; loops++)
-    {
-
-#ifdef __386__
-        for (vram = (unsigned char *)0xB8000; vram < (unsigned char *)0xB9F40; vram += 2)
-#else
-        for (vram = MK_FP(0xB800, 0); vram < MK_FP(0xB800, 0x1F40); vram += 2)
-#endif
-        {
-            *(vram) = 0x55;
-            *(vram + 1) = 0x55;
-            *(vram + 0x4000) = 0x55;
-            *(vram + 0x4001) = 0x55;
-            *(vram + 0x2000) = 0x55;
-            *(vram + 0x2001) = 0x55;
-            *(vram + 0x6000) = 0x55;
-            *(vram + 0x6001) = 0x55;
-        }
-    }
+    total_loops_modePCP = total_loops;
+    bench_w8_modePCP();
 }
 
 void bench_w8_modePCP(void)
@@ -99,10 +74,10 @@ void bench_w8_modePCP(void)
         {
             *(vram) = 0x55;
             *(vram + 1) = 0x55;
-            *(vram + 0x4000) = 0x55;
-            *(vram + 0x4001) = 0x55;
             *(vram + 0x2000) = 0x55;
             *(vram + 0x2001) = 0x55;
+            *(vram + 0x4000) = 0x55;
+            *(vram + 0x4001) = 0x55;
             *(vram + 0x6000) = 0x55;
             *(vram + 0x6001) = 0x55;
         }
@@ -130,9 +105,9 @@ void bench_w16_modePCP(void)
 #endif
         {
             *(vram) = 0xA14C;
-            *(vram + 0x4000) = 0xA14C;
+            *(vram + 0x1000) = 0xA14C;
             *(vram + 0x2000) = 0xA14C;
-            *(vram + 0x6000) = 0xA14C;
+            *(vram + 0x3000) = 0xA14C;
         }
     }
 }
