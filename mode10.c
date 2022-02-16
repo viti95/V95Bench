@@ -254,14 +254,14 @@ void bench_w32_mode10(void)
 
         for (vram = (unsigned int *)0xA0000; vram < (unsigned int *)0xA6D60; vram += 8)
         {
-            *(vram) = 0xA4B2CB02;
-            *(vram + 1) = 0xA4B2CB02;
-            *(vram + 2) = 0xA4B2CB02;
-            *(vram + 3) = 0xA4B2CB02;
-            *(vram + 4) = 0xA4B2CB02;
-            *(vram + 5) = 0xA4B2CB02;
-            *(vram + 6) = 0xA4B2CB02;
-            *(vram + 7) = 0xA4B2CB02;
+            *(vram) = 0xE97ECB02;
+            *(vram + 1) = 0xE97ECB02;
+            *(vram + 2) = 0xE97ECB02;
+            *(vram + 3) = 0xE97ECB02;
+            *(vram + 4) = 0xE97ECB02;
+            *(vram + 5) = 0xE97ECB02;
+            *(vram + 6) = 0xE97ECB02;
+            *(vram + 7) = 0xE97ECB02;
         }
 
         // Green
@@ -269,14 +269,14 @@ void bench_w32_mode10(void)
 
         for (vram = (unsigned int *)0xA0000; vram < (unsigned int *)0xA6D60; vram += 8)
         {
-            *(vram) = 0xEF1CCB02;
-            *(vram + 1) = 0xEF1CCB02;
-            *(vram + 2) = 0xEF1CCB02;
-            *(vram + 3) = 0xEF1CCB02;
-            *(vram + 4) = 0xEF1CCB02;
-            *(vram + 5) = 0xEF1CCB02;
-            *(vram + 6) = 0xEF1CCB02;
-            *(vram + 7) = 0xEF1CCB02;
+            *(vram) = 0xF314CB02;
+            *(vram + 1) = 0xF314CB02;
+            *(vram + 2) = 0xF314CB02;
+            *(vram + 3) = 0xF314CB02;
+            *(vram + 4) = 0xF314CB02;
+            *(vram + 5) = 0xF314CB02;
+            *(vram + 6) = 0xF314CB02;
+            *(vram + 7) = 0xF314CB02;
         }
 
         // Blue
@@ -284,14 +284,14 @@ void bench_w32_mode10(void)
 
         for (vram = (unsigned int *)0xA0000; vram < (unsigned int *)0xA6D60; vram += 8)
         {
-            *(vram) = 0xF1D0CB02;
-            *(vram + 1) = 0xF1D0CB02;
-            *(vram + 2) = 0xF1D0CB02;
-            *(vram + 3) = 0xF1D0CB02;
-            *(vram + 4) = 0xF1D0CB02;
-            *(vram + 5) = 0xF1D0CB02;
-            *(vram + 6) = 0xF1D0CB02;
-            *(vram + 7) = 0xF1D0CB02;
+            *(vram) = 0x3214CB02;
+            *(vram + 1) = 0x3214CB02;
+            *(vram + 2) = 0x3214CB02;
+            *(vram + 3) = 0x3214CB02;
+            *(vram + 4) = 0x3214CB02;
+            *(vram + 5) = 0x3214CB02;
+            *(vram + 6) = 0x3214CB02;
+            *(vram + 7) = 0x3214CB02;
         }
 
         // Intensity
@@ -299,14 +299,14 @@ void bench_w32_mode10(void)
 
         for (vram = (unsigned int *)0xA0000; vram < (unsigned int *)0xA6D60; vram += 8)
         {
-            *(vram) = 0x4156CB02;
-            *(vram + 1) = 0x4156CB02;
-            *(vram + 2) = 0x4156CB02;
-            *(vram + 3) = 0x4156CB02;
-            *(vram + 4) = 0x4156CB02;
-            *(vram + 5) = 0x4156CB02;
-            *(vram + 6) = 0x4156CB02;
-            *(vram + 7) = 0x4156CB02;
+            *(vram) = 0xFA98CB02;
+            *(vram + 1) = 0xFA98CB02;
+            *(vram + 2) = 0xFA98CB02;
+            *(vram + 3) = 0xFA98CB02;
+            *(vram + 4) = 0xFA98CB02;
+            *(vram + 5) = 0xFA98CB02;
+            *(vram + 6) = 0xFA98CB02;
+            *(vram + 7) = 0xFA98CB02;
         }
     }
 }

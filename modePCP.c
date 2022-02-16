@@ -132,14 +132,14 @@ void bench_w32_modePCP(void)
     {
         for (vram = (unsigned int *)0xB8000; vram < (unsigned int *)0xB9F40; vram += 2)
         {
-            *(vram) = 0xA14C5792;
-            *(vram + 1) = 0xA14C5792;
-            *(vram + 0x800) = 0xA14C5792;
-            *(vram + 0x801) = 0xA14C5792;
-            *(vram + 0x1000) = 0xA14C5792;
-            *(vram + 0x1001) = 0xA14C5792;
-            *(vram + 0x1800) = 0xA14C5792;
-            *(vram + 0x1801) = 0xA14C5792;
+            *(vram) = 0x36E15792;
+            *(vram + 1) = 0x36E15792;
+            *(vram + 0x800) = 0x36E15792;
+            *(vram + 0x801) = 0x36E15792;
+            *(vram + 0x1000) = 0x36E1C5792;
+            *(vram + 0x1001) = 0x36E15792;
+            *(vram + 0x1800) = 0x36E15792;
+            *(vram + 0x1801) = 0x36E15792;
         }
     }
 }

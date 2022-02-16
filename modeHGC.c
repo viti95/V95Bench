@@ -137,14 +137,14 @@ void bench_w32_modeHGC(void)
     {
         for (vram = (unsigned int *)0xB0000; vram < (unsigned int *)0xB1F40; vram += 2)
         {
-            *(vram) = 0xA413CF02;
-            *(vram + 1) = 0xA413CF02;
-            *(vram + 0x800) = 0xA413CF02;
-            *(vram + 0x801) = 0xA413CF02;
-            *(vram + 0x1000) = 0xA413CF02;
-            *(vram + 0x1001) = 0xA413CF02;
-            *(vram + 0x1800) = 0xA413CF02;
-            *(vram + 0x1801) = 0xA413CF02;
+            *(vram) = 0x36E1CF02;
+            *(vram + 1) = 0x36E1CF02;
+            *(vram + 0x800) = 0x36E1CF02;
+            *(vram + 0x801) = 0x36E1CF02;
+            *(vram + 0x1000) = 0x36E1CF02;
+            *(vram + 0x1001) = 0x36E1CF02;
+            *(vram + 0x1800) = 0x36E1CF02;
+            *(vram + 0x1801) = 0x36E1CF02;
         }
     }
 }

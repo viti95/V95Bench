@@ -146,14 +146,14 @@ void bench_w32_modeATI(void)
     {
         for (vram = (unsigned int *)0xB0000; vram < (unsigned int *)0xB1F40; vram++)
         {
-            *(vram) = 0xEA23035C;
-            *(vram + 0x800) = 0xEA23035C;
-            *(vram + 0x1000) = 0xEA23035C;
-            *(vram + 0x1800) = 0xEA23035C;
-            *(vram + 0x2000) = 0xEA23035C;
-            *(vram + 0x2800) = 0xEA23035C;
-            *(vram + 0x3000) = 0xEA23035C;
-            *(vram + 0x3800) = 0xEA23035C;
+            *(vram) = 0x7F2A035C;
+            *(vram + 0x800) = 0x7F2A035C;
+            *(vram + 0x1000) = 0x7F2A035C;
+            *(vram + 0x1800) = 0x7F2A035C;
+            *(vram + 0x2000) = 0x7F2A035C;
+            *(vram + 0x2800) = 0x7F2A035C;
+            *(vram + 0x3000) = 0x7F2A035C;
+            *(vram + 0x3800) = 0x7F2A035C;
         }
     }
 }
