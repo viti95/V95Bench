@@ -233,10 +233,10 @@ void execute_bench_modeV16(void)
 
 void show_results_modeV16(void)
 {
-    double total_result_w8;
-    double total_result_r8;
+    double total_result_w;
+    double total_result_r;
 
-    total_result_w8 = ((double)total_loops_modeV16 * 15.625 * 1000.0) / ((double)timespent_w8_modeV16);
-    total_result_r8 = ((double)total_loops_modeV16 * 15.625 * 1000.0) / ((double)timespent_r8_modeV16);
-    printf("VGA 160x200 16c: W8 %.2lf kb/s, R8 %.2lf kb/s\n", total_result_w8, total_result_r8);
+    total_result_w = ((double)total_loops_modeV16 * 15.625 * 1000.0) / ((double)timespent_w8_modeV16);
+    total_result_r = ((double)total_loops_modeV16 * 15.625 * 1000.0) / ((double)timespent_r8_modeV16);
+    printf("VGA 160x200 16c: W8 %.2lf kb/s, R8 %.2lf kb/s\n", total_result_w, total_result_r);
 }

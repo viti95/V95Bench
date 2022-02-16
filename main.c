@@ -30,7 +30,7 @@
 #include "modeY.h"
 #include "modeD.h"
 #include "modeE.h"
-#include "modeF.h"
+#include "mode10.h"
 #include "modePCP.h"
 #include "modeHGC.h"
 #include "modeATI.h"
@@ -48,7 +48,7 @@ unsigned char do_bench_mode13 = 0;
 unsigned char do_bench_modeY = 0;
 unsigned char do_bench_modeD = 0;
 unsigned char do_bench_modeE = 0;
-unsigned char do_bench_modeF = 0;
+unsigned char do_bench_mode10 = 0;
 unsigned char do_bench_modePCP = 0;
 unsigned char do_bench_modeHGC = 0;
 unsigned char do_bench_modeATI = 0;
@@ -119,10 +119,10 @@ void launch_bench_modeE(void)
     execute_bench_modeE();
 }
 
-void launch_bench_modeF(void)
+void launch_bench_mode10(void)
 {
-    do_bench_modeF = 1;
-    execute_bench_modeF();
+    do_bench_mode10 = 1;
+    execute_bench_mode10();
 }
 
 void launch_bench_modePCP(void)
@@ -168,7 +168,7 @@ void select_benchmark(void)
         launch_bench_mode6();
         launch_bench_modeD();
         launch_bench_modeE();
-        launch_bench_modeF();
+        launch_bench_mode10();
         break;
     case MCGA:
         launch_bench_mode1();
@@ -185,7 +185,7 @@ void select_benchmark(void)
         launch_bench_mode6();
         launch_bench_modeD();
         launch_bench_modeE();
-        launch_bench_modeF();
+        launch_bench_mode10();
         launch_bench_modeV16();
         launch_bench_mode13();
         launch_bench_modeY();
@@ -277,8 +277,8 @@ void show_results(void)
     if (do_bench_modeE)
         show_results_modeE();
 
-    if (do_bench_modeF)
-        show_results_modeF();
+    if (do_bench_mode10)
+        show_results_mode10();
 
     if (do_bench_modeV16)
         show_results_modeV16();

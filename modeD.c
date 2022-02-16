@@ -30,6 +30,7 @@
 unsigned long total_loops_modeD;
 unsigned long timespent_w8_modeD;
 unsigned long timespent_r8_modeD;
+unsigned long timespent_w16_modeD;
 
 void init_modeD(void)
 {
@@ -158,14 +159,14 @@ void bench_w8_modeD(void)
         for (vram = MK_FP(0xA000, 0); vram < MK_FP(0xA000, 0x1F40); vram += 8)
 #endif
         {
-            *(vram) = 0xFF;
-            *(vram + 1) = 0xFF;
-            *(vram + 2) = 0xFF;
-            *(vram + 3) = 0xFF;
-            *(vram + 4) = 0xFF;
-            *(vram + 5) = 0xFF;
-            *(vram + 6) = 0xFF;
-            *(vram + 7) = 0xFF;
+            *(vram) = 0xA5;
+            *(vram + 1) = 0xA5;
+            *(vram + 2) = 0xA5;
+            *(vram + 3) = 0xA5;
+            *(vram + 4) = 0xA5;
+            *(vram + 5) = 0xA5;
+            *(vram + 6) = 0xA5;
+            *(vram + 7) = 0xA5;
         }
 
         // Green
@@ -177,14 +178,14 @@ void bench_w8_modeD(void)
         for (vram = MK_FP(0xA000, 0); vram < MK_FP(0xA000, 0x1F40); vram += 8)
 #endif
         {
-            *(vram) = 0xFF;
-            *(vram + 1) = 0xFF;
-            *(vram + 2) = 0xFF;
-            *(vram + 3) = 0xFF;
-            *(vram + 4) = 0xFF;
-            *(vram + 5) = 0xFF;
-            *(vram + 6) = 0xFF;
-            *(vram + 7) = 0xFF;
+            *(vram) = 0x8C;
+            *(vram + 1) = 0x8C;
+            *(vram + 2) = 0x8C;
+            *(vram + 3) = 0x8C;
+            *(vram + 4) = 0x8C;
+            *(vram + 5) = 0x8C;
+            *(vram + 6) = 0x8C;
+            *(vram + 7) = 0x8C;
         }
 
         // Blue
@@ -196,14 +197,14 @@ void bench_w8_modeD(void)
         for (vram = MK_FP(0xA000, 0); vram < MK_FP(0xA000, 0x1F40); vram += 8)
 #endif
         {
-            *(vram) = 0xFF;
-            *(vram + 1) = 0xFF;
-            *(vram + 2) = 0xFF;
-            *(vram + 3) = 0xFF;
-            *(vram + 4) = 0xFF;
-            *(vram + 5) = 0xFF;
-            *(vram + 6) = 0xFF;
-            *(vram + 7) = 0xFF;
+            *(vram) = 0xAA;
+            *(vram + 1) = 0xAA;
+            *(vram + 2) = 0xAA;
+            *(vram + 3) = 0xAA;
+            *(vram + 4) = 0xAA;
+            *(vram + 5) = 0xAA;
+            *(vram + 6) = 0xAA;
+            *(vram + 7) = 0xAA;
         }
 
         // Intensity
@@ -215,14 +216,89 @@ void bench_w8_modeD(void)
         for (vram = MK_FP(0xA000, 0); vram < MK_FP(0xA000, 0x1F40); vram += 8)
 #endif
         {
-            *(vram) = 0xFF;
-            *(vram + 1) = 0xFF;
-            *(vram + 2) = 0xFF;
-            *(vram + 3) = 0xFF;
-            *(vram + 4) = 0xFF;
-            *(vram + 5) = 0xFF;
-            *(vram + 6) = 0xFF;
-            *(vram + 7) = 0xFF;
+            *(vram) = 0x24;
+            *(vram + 1) = 0x24;
+            *(vram + 2) = 0x24;
+            *(vram + 3) = 0x24;
+            *(vram + 4) = 0x24;
+            *(vram + 5) = 0x24;
+            *(vram + 6) = 0x24;
+            *(vram + 7) = 0x24;
+        }
+    }
+}
+
+void bench_w16_modeD(void)
+{
+#ifdef __386__
+    unsigned short *vram;
+#else
+    unsigned short far *vram;
+#endif
+
+    unsigned int loops;
+    unsigned int num_loops = total_loops_modeD;
+
+    for (loops = 0; loops < num_loops; loops++)
+    {
+        // Red
+        outp(0x3C5, 1 << (3 & 0x03));
+
+#ifdef __386__
+        for (vram = (unsigned short *)0xA0000; vram < (unsigned short *)0xA1F40; vram += 4)
+#else
+        for (vram = MK_FP(0xA000, 0); vram < MK_FP(0xA000, 0x1F40); vram += 4)
+#endif
+        {
+            *(vram) = 0x1452;
+            *(vram + 1) = 0x1452;
+            *(vram + 2) = 0x1452;
+            *(vram + 3) = 0x1452;
+        }
+
+        // Green
+        outp(0x3C5, 1 << (2 & 0x03));
+
+#ifdef __386__
+        for (vram = (unsigned short *)0xA0000; vram < (unsigned short *)0xA1F40; vram += 4)
+#else
+        for (vram = MK_FP(0xA000, 0); vram < MK_FP(0xA000, 0x1F40); vram += 4)
+#endif
+        {
+            *(vram) = 0x21EE;
+            *(vram + 1) = 0x21EE;
+            *(vram + 2) = 0x21EE;
+            *(vram + 3) = 0x21EE;
+        }
+
+        // Blue
+        outp(0x3C5, 1 << (1 & 0x03));
+
+#ifdef __386__
+        for (vram = (unsigned short *)0xA0000; vram < (unsigned short *)0xA1F40; vram += 4)
+#else
+        for (vram = MK_FP(0xA000, 0); vram < MK_FP(0xA000, 0x1F40); vram += 4)
+#endif
+        {
+            *(vram) = 0xFF15;
+            *(vram + 1) = 0xFF15;
+            *(vram + 2) = 0xFF15;
+            *(vram + 3) = 0xFF15;
+        }
+
+        // Intensity
+        outp(0x3C5, 1 << (0 & 0x03));
+
+#ifdef __386__
+        for (vram = (unsigned short *)0xA0000; vram < (unsigned short *)0xA1F40; vram += 4)
+#else
+        for (vram = MK_FP(0xA000, 0); vram < MK_FP(0xA000, 0x1F40); vram += 4)
+#endif
+        {
+            *(vram) = 0xC13E;
+            *(vram + 1) = 0xC13E;
+            *(vram + 2) = 0xC13E;
+            *(vram + 3) = 0xC13E;
         }
     }
 }
@@ -350,14 +426,17 @@ void execute_bench_modeD(void)
     // BENCHMARK
     timespent_w8_modeD = profile_function(bench_w8_modeD);
     timespent_r8_modeD = profile_function(bench_r8_modeD);
+    timespent_w16_modeD = profile_function(bench_w16_modeD);
 }
 
 void show_results_modeD(void)
 {
-    double total_result_w8;
-    double total_result_r8;
+    double total_result_w;
+    double total_result_r;
 
-    total_result_w8 = ((double)total_loops_modeD * 31.25 * 1000.0) / ((double)timespent_w8_modeD);
-    total_result_r8 = ((double)total_loops_modeD * 31.25 * 1000.0) / ((double)timespent_r8_modeD);
-    printf("EGA 320x200 16c: W8 %.2lf kb/s, R8 %.2lf kb/s\n", total_result_w8, total_result_r8);
+    total_result_w = ((double)total_loops_modeD * 31.25 * 1000.0) / ((double)timespent_w8_modeD);
+    total_result_r = ((double)total_loops_modeD * 31.25 * 1000.0) / ((double)timespent_r8_modeD);
+    printf("EGA 320x200 16c: W8 %.2lf kb/s, R8 %.2lf kb/s\n", total_result_w, total_result_r);
+    total_result_w = ((double)total_loops_modeD * 31.25 * 1000.0) / ((double)timespent_w16_modeD);
+    printf("                 W16 %.2lf kb/s\n", total_result_w);
 }

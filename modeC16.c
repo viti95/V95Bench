@@ -234,10 +234,10 @@ void execute_bench_modeC16(void)
 
 void show_results_modeC16(void)
 {
-    double total_result_w8;
-    double total_result_r8;
+    double total_result_w;
+    double total_result_r;
 
-    total_result_w8 = ((double)total_loops_modeC16 * 7.8125 * 1000.0) / ((double)timespent_w8_modeC16);
-    total_result_r8 = ((double)total_loops_modeC16 * 7.8125 * 1000.0) / ((double)timespent_r8_modeC16);
-    printf("CGA 160x100 16c: W8 %.2lf kb/s, R8 %.2lf kb/s\n", total_result_w8, total_result_r8);
+    total_result_w = ((double)total_loops_modeC16 * 7.8125 * 1000.0) / ((double)timespent_w8_modeC16);
+    total_result_r = ((double)total_loops_modeC16 * 7.8125 * 1000.0) / ((double)timespent_r8_modeC16);
+    printf("CGA 160x100 16c: W8 %.2lf kb/s, R8 %.2lf kb/s\n", total_result_w, total_result_r);
 }

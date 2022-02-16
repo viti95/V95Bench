@@ -30,6 +30,7 @@
 unsigned long total_loops_modeATI;
 unsigned long timespent_w8_modeATI;
 unsigned long timespent_r8_modeATI;
+unsigned long timespent_w16_modeATI;
 
 void init_modeATI(void)
 {
@@ -122,6 +123,38 @@ void bench_w8_modeATI(void)
     }
 }
 
+void bench_w16_modeATI(void)
+{
+#ifdef __386__
+    unsigned short *vram;
+#else
+    unsigned short far *vram;
+#endif
+
+    unsigned int loops;
+    unsigned int num_loops = total_loops_modeATI;
+
+    for (loops = 0; loops < num_loops; loops++)
+    {
+
+#ifdef __386__
+        for (vram = (unsigned short *)0xB0000; vram < (unsigned short *)0xB1F40; vram++)
+#else
+        for (vram = MK_FP(0xB000, 0); vram < MK_FP(0xB000, 0x1F40); vram++)
+#endif
+        {
+            *(vram) = 0xEA23;
+            *(vram + 0x2000) = 0xEA23;
+            *(vram + 0x4000) = 0xEA23;
+            *(vram + 0x6000) = 0xEA23;
+            *(vram + 0x8000) = 0xEA23;
+            *(vram + 0xA000) = 0xEA23;
+            *(vram + 0xC000) = 0xEA23;
+            *(vram + 0xE000) = 0xEA23;
+        }
+    }
+}
+
 void bench_r8_modeATI(void)
 {
 #ifdef __386__
@@ -194,10 +227,12 @@ void execute_bench_modeATI(void)
 
 void show_results_modeATI(void)
 {
-    double total_result_w8;
-    double total_result_r8;
+    double total_result_w;
+    double total_result_r;
 
-    total_result_w8 = ((double)total_loops_modeATI * 62.5 * 1000.0) / ((double)timespent_w8_modeATI);
-    total_result_r8 = ((double)total_loops_modeATI * 62.5 * 1000.0) / ((double)timespent_r8_modeATI);
-    printf("ATI 640x200 16c: W8 %.2lf kb/s, R8 %.2lf kb/s\n", total_result_w8, total_result_r8);
+    total_result_w = ((double)total_loops_modeATI * 62.5 * 1000.0) / ((double)timespent_w8_modeATI);
+    total_result_r = ((double)total_loops_modeATI * 62.5 * 1000.0) / ((double)timespent_r8_modeATI);
+    printf("ATI 640x200 16c: W8 %.2lf kb/s, R8 %.2lf kb/s\n", total_result_w, total_result_r);
+    total_result_w = ((double)total_loops_modeATI * 62.5 * 1000.0) / ((double)timespent_w16_modeATI);
+    printf("                 W16 %.2lf kb/s\n", total_result_w);
 }
