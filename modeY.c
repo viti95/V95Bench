@@ -445,7 +445,7 @@ void execute_bench_modeY(void)
     init_modeY();
 
     // PRE-HEAT
-    do 
+    do
     {
         timespent_w8_modeY = profile_function_loops(preheat_modeY, preheat_loops);
         preheat_loops *= 2;

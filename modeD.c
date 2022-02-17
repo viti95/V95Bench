@@ -406,7 +406,6 @@ void bench_r8_modeD(void)
         read_fix_2 = read2;
         read_fix_3 = read3;
         read_fix_4 = read4;
-
     }
 }
 

@@ -53,10 +53,11 @@ unsigned char do_bench_modePCP = 0;
 unsigned char do_bench_modeHGC = 0;
 unsigned char do_bench_modeATI = 0;
 
-void pause_keyboard(void){
-
+void pause_keyboard(void)
+{
     char ch;
-    while ((ch = getchar()) != '\n' && ch != EOF);
+    while ((ch = getchar()) != '\n' && ch != EOF)
+        ;
 }
 
 void launch_bench_mode1(void)

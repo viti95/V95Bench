@@ -412,7 +412,7 @@ void bench_r8_modeE(void)
 void execute_bench_modeE(void)
 {
     unsigned long preheat_loops = PREHEAT_LOOPS;
-        
+
     // SET VIDEO MODE
     init_modeE();
 
