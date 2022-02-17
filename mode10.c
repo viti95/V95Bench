@@ -453,7 +453,7 @@ void show_results_mode10(void)
     printf("                 W16 %.2lf kb/s\n", total_result_w);
 
 #ifdef __386__
-    total_result_w = ((double)total_loops_mode10 * 62.5 * 1000.0) / ((double)timespent_w32_mode10);
+    total_result_w = ((double)total_loops_mode10 * 109.375 * 1000.0) / ((double)timespent_w32_mode10);
     printf("                 W32 %.2lf kb/s\n", total_result_w);
 #endif
 }
