@@ -53,6 +53,12 @@ unsigned char do_bench_modePCP = 0;
 unsigned char do_bench_modeHGC = 0;
 unsigned char do_bench_modeATI = 0;
 
+void pause_keyboard(void){
+
+    char ch;
+    while ((ch = getchar()) != '\n' && ch != EOF);
+}
+
 void launch_bench_mode1(void)
 {
     do_bench_mode1 = 1;
@@ -243,51 +249,99 @@ void reset_video(void)
 
 void show_results(void)
 {
+    char ch;
+
+    printf("Results (press key Enter to continue)\n\n");
 
     if (do_bench_mode7)
+    {
         show_results_mode7();
+        pause_keyboard();
+    }
 
     if (do_bench_modeHGC)
+    {
         show_results_modeHGC();
+        pause_keyboard();
+    }
 
     if (do_bench_mode1)
+    {
         show_results_mode1();
+        pause_keyboard();
+    }
 
     if (do_bench_mode3)
+    {
         show_results_mode3();
+        pause_keyboard();
+    }
 
     if (do_bench_modeC16)
+    {
         show_results_modeC16();
+        pause_keyboard();
+    }
 
     if (do_bench_mode4)
+    {
         show_results_mode4();
+        pause_keyboard();
+    }
 
     if (do_bench_mode6)
+    {
         show_results_mode6();
+        pause_keyboard();
+    }
 
     if (do_bench_modePCP)
+    {
         show_results_modePCP();
+        pause_keyboard();
+    }
 
     if (do_bench_modeATI)
+    {
         show_results_modeATI();
+        pause_keyboard();
+    }
 
     if (do_bench_modeD)
+    {
         show_results_modeD();
+        pause_keyboard();
+    }
 
     if (do_bench_modeE)
+    {
         show_results_modeE();
+        pause_keyboard();
+    }
 
     if (do_bench_mode10)
+    {
         show_results_mode10();
+        pause_keyboard();
+    }
 
     if (do_bench_modeV16)
+    {
         show_results_modeV16();
+        pause_keyboard();
+    }
 
     if (do_bench_mode13)
+    {
         show_results_mode13();
+        pause_keyboard();
+    }
 
     if (do_bench_modeY)
+    {
         show_results_modeY();
+        pause_keyboard();
+    }
 }
 
 int main(int argc, char **argv)
@@ -314,6 +368,7 @@ int main(int argc, char **argv)
 
     printf(" Select option: ");
     scanf("%u", &videomode);
+    getchar(); // fix
 
     select_benchmark();
 
