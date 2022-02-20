@@ -409,6 +409,103 @@ void bench_r8_modeD(void)
     }
 }
 
+void bench_r16_modeD(void)
+{
+#ifdef __386__
+    unsigned short *vram;
+#else
+    unsigned short far *vram;
+#endif
+
+    unsigned int loops;
+    unsigned int num_loops = total_loops_modeD;
+
+    unsigned short read1, read2, read3, read4;
+
+    for (loops = 0; loops < num_loops; loops++)
+    {
+        // Red
+        outp(0x3C5, 1 << (3 & 0x03));
+
+#ifdef __386__
+        for (vram = (unsigned short *)0xA0000; vram < (unsigned short *)0xA1F40; vram += 4)
+#else
+        for (vram = MK_FP(0xA000, 0); vram < MK_FP(0xA000, 0x1F40); vram += 4)
+#endif
+        {
+            read1 = *(vram);
+            read2 = *(vram + 1);
+            read3 = *(vram + 2);
+            read4 = *(vram + 3);
+        }
+
+        read_fix_1 = read1;
+        read_fix_2 = read2;
+        read_fix_3 = read3;
+        read_fix_4 = read4;
+
+        // Green
+        outp(0x3C5, 1 << (2 & 0x03));
+
+#ifdef __386__
+        for (vram = (unsigned short *)0xA0000; vram < (unsigned short *)0xA1F40; vram += 4)
+#else
+        for (vram = MK_FP(0xA000, 0); vram < MK_FP(0xA000, 0x1F40); vram += 4)
+#endif
+        {
+            read1 = *(vram);
+            read2 = *(vram + 1);
+            read3 = *(vram + 2);
+            read4 = *(vram + 3);
+        }
+
+        read_fix_1 = read1;
+        read_fix_2 = read2;
+        read_fix_3 = read3;
+        read_fix_4 = read4;
+
+        // Blue
+        outp(0x3C5, 1 << (1 & 0x03));
+
+#ifdef __386__
+        for (vram = (unsigned short *)0xA0000; vram < (unsigned short *)0xA1F40; vram += 4)
+#else
+        for (vram = MK_FP(0xA000, 0); vram < MK_FP(0xA000, 0x1F40); vram += 4)
+#endif
+        {
+            read1 = *(vram);
+            read2 = *(vram + 1);
+            read3 = *(vram + 2);
+            read4 = *(vram + 3);
+        }
+
+        read_fix_1 = read1;
+        read_fix_2 = read2;
+        read_fix_3 = read3;
+        read_fix_4 = read4;
+
+        // Intensity
+        outp(0x3C5, 1 << (0 & 0x03));
+
+#ifdef __386__
+        for (vram = (unsigned short *)0xA0000; vram < (unsigned short *)0xA1F40; vram += 4)
+#else
+        for (vram = MK_FP(0xA000, 0); vram < MK_FP(0xA000, 0x1F40); vram += 4)
+#endif
+        {
+            read1 = *(vram);
+            read2 = *(vram + 1);
+            read3 = *(vram + 2);
+            read4 = *(vram + 3);
+        }
+
+        read_fix_1 = read1;
+        read_fix_2 = read2;
+        read_fix_3 = read3;
+        read_fix_4 = read4;
+    }
+}
+
 void execute_bench_modeD(void)
 {
     unsigned long preheat_loops = PREHEAT_LOOPS;

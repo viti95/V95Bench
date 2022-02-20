@@ -202,6 +202,49 @@ void bench_r8_modeATI(void)
     read_fix_8 = read8;
 }
 
+void bench_r16_modeATI(void)
+{
+#ifdef __386__
+    unsigned short *vram;
+#else
+    unsigned short far *vram;
+#endif
+
+    unsigned int loops;
+    unsigned int num_loops = total_loops_modeATI;
+
+    unsigned short read1, read2, read3, read4, read5, read6, read7, read8;
+
+    for (loops = 0; loops < num_loops; loops++)
+    {
+
+#ifdef __386__
+        for (vram = (unsigned short *)0xB0000; vram < (unsigned short *)0xB1F40; vram++)
+#else
+        for (vram = MK_FP(0xB000, 0); vram < MK_FP(0xB000, 0x1F40); vram++)
+#endif
+        {
+            read1 = *(vram);
+            read2 = *(vram + 0x1000);
+            read3 = *(vram + 0x2000);
+            read4 = *(vram + 0x3000);
+            read5 = *(vram + 0x4000);
+            read6 = *(vram + 0x5000);
+            read7 = *(vram + 0x6000);
+            read8 = *(vram + 0x7000);
+        }
+    }
+
+    read_fix_1 = read1;
+    read_fix_2 = read2;
+    read_fix_3 = read3;
+    read_fix_4 = read4;
+    read_fix_5 = read5;
+    read_fix_6 = read6;
+    read_fix_7 = read7;
+    read_fix_8 = read8;
+}
+
 void execute_bench_modeATI(void)
 {
     unsigned long preheat_loops = PREHEAT_LOOPS;

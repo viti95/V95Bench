@@ -20,6 +20,7 @@ void preheat_modeE(unsigned long total_loops);
 void bench_w8_modeE(void);
 void bench_r8_modeE(void);
 void bench_w16_modeE(void);
+void bench_r16_modeE(void);
 void bench_w32_modeE(void);
 void execute_bench_modeE(void);
 void show_results_modeE(void);
