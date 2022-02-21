@@ -30,6 +30,7 @@ unsigned long total_loops_mode4;
 unsigned long timespent_w8_mode4;
 unsigned long timespent_r8_mode4;
 unsigned long timespent_w16_mode4;
+unsigned long timespent_r16_mode4;
 
 #ifdef __386__
 unsigned long timespent_w32_mode4;
@@ -239,6 +240,7 @@ void execute_bench_mode4(void)
     timespent_w8_mode4 = profile_function(bench_w8_mode4);
     timespent_r8_mode4 = profile_function(bench_r8_mode4);
     timespent_w16_mode4 = profile_function(bench_w16_mode4);
+    timespent_r16_mode4 = profile_function(bench_r16_mode4);
 
 #ifdef __386__
     timespent_w32_mode4 = profile_function(bench_w32_mode4);
@@ -254,7 +256,8 @@ void show_results_mode4(void)
     total_result_r = ((double)total_loops_mode4 * 15.625 * 1000.0) / ((double)timespent_r8_mode4);
     printf("CGA 320x200 4c: W8 %.2lf kb/s, R8 %.2lf kb/s\n", total_result_w, total_result_r);
     total_result_w = ((double)total_loops_mode4 * 15.625 * 1000.0) / ((double)timespent_w16_mode4);
-    printf("                W16 %.2lf kb/s\n", total_result_w);
+    total_result_r = ((double)total_loops_mode4 * 15.625 * 1000.0) / ((double)timespent_r16_mode4);
+    printf("                W16 %.2lf kb/s, R16 %.2lf kb/s\n", total_result_w, total_result_r);
 
 #ifdef __386__
     total_result_w = ((double)total_loops_mode4 * 15.625 * 1000.0) / ((double)timespent_w32_mode4);

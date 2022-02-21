@@ -31,6 +31,7 @@ unsigned long total_loops_modeHGC;
 unsigned long timespent_w8_modeHGC;
 unsigned long timespent_r8_modeHGC;
 unsigned long timespent_w16_modeHGC;
+unsigned long timespent_r16_modeHGC;
 
 #ifdef __386__
 unsigned long timespent_w32_modeHGC;
@@ -246,6 +247,7 @@ void execute_bench_modeHGC(void)
     timespent_w8_modeHGC = profile_function(bench_w8_modeHGC);
     timespent_r8_modeHGC = profile_function(bench_r8_modeHGC);
     timespent_w16_modeHGC = profile_function(bench_w16_modeHGC);
+    timespent_r16_modeHGC = profile_function(bench_r16_modeHGC);
 
 #ifdef __386__
     timespent_w32_modeHGC = profile_function(bench_w32_modeHGC);
@@ -261,7 +263,8 @@ void show_results_modeHGC(void)
     total_result_r = ((double)total_loops_modeHGC * 31.25 * 1000.0) / ((double)timespent_r8_modeHGC);
     printf("HGC 640x400 2c: W8 %.2lf kb/s, R8 %.2lf kb/s\n", total_result_w, total_result_r);
     total_result_w = ((double)total_loops_modeHGC * 31.25 * 1000.0) / ((double)timespent_w16_modeHGC);
-    printf("                W16 %.2lf kb/s\n", total_result_w);
+    total_result_r = ((double)total_loops_modeHGC * 31.25 * 1000.0) / ((double)timespent_r16_modeHGC);
+    printf("                W16 %.2lf kb/s, R16 %.2lf kb/s\n", total_result_w, total_result_r);
 
 #ifdef __386__
     total_result_w = ((double)total_loops_modeHGC * 31.25 * 1000.0) / ((double)timespent_w32_modeHGC);

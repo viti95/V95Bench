@@ -31,6 +31,7 @@ unsigned long total_loops_modeD;
 unsigned long timespent_w8_modeD;
 unsigned long timespent_r8_modeD;
 unsigned long timespent_w16_modeD;
+unsigned long timespent_r16_modeD;
 
 #ifdef __386__
 unsigned long timespent_w32_modeD;
@@ -532,6 +533,7 @@ void execute_bench_modeD(void)
     timespent_w8_modeD = profile_function(bench_w8_modeD);
     timespent_r8_modeD = profile_function(bench_r8_modeD);
     timespent_w16_modeD = profile_function(bench_w16_modeD);
+    timespent_r16_modeD = profile_function(bench_r16_modeD);
 
 #ifdef __386__
     timespent_w32_modeD = profile_function(bench_w32_modeD);
@@ -547,7 +549,8 @@ void show_results_modeD(void)
     total_result_r = ((double)total_loops_modeD * 31.25 * 1000.0) / ((double)timespent_r8_modeD);
     printf("EGA 320x200 16c: W8 %.2lf kb/s, R8 %.2lf kb/s\n", total_result_w, total_result_r);
     total_result_w = ((double)total_loops_modeD * 31.25 * 1000.0) / ((double)timespent_w16_modeD);
-    printf("                 W16 %.2lf kb/s\n", total_result_w);
+    total_result_r = ((double)total_loops_modeD * 31.25 * 1000.0) / ((double)timespent_r16_modeD);
+    printf("                 W16 %.2lf kb/s, R16 %.2lf kb/s\n", total_result_w, total_result_r);
 
 #ifdef __386__
     total_result_w = ((double)total_loops_modeD * 31.25 * 1000.0) / ((double)timespent_w32_modeD);

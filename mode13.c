@@ -30,6 +30,7 @@ unsigned long total_loops_mode13;
 unsigned long timespent_w8_mode13;
 unsigned long timespent_r8_mode13;
 unsigned long timespent_w16_mode13;
+unsigned long timespent_r16_mode13;
 
 #ifdef __386__
 unsigned long timespent_w32_mode13;
@@ -239,6 +240,7 @@ void execute_bench_mode13(void)
     timespent_w8_mode13 = profile_function(bench_w8_mode13);
     timespent_r8_mode13 = profile_function(bench_r8_mode13);
     timespent_w16_mode13 = profile_function(bench_w16_mode13);
+    timespent_r16_mode13 = profile_function(bench_r16_mode13);
 
 #ifdef __386__
     timespent_w32_mode13 = profile_function(bench_w32_mode13);
@@ -254,7 +256,8 @@ void show_results_mode13(void)
     total_result_r = ((double)total_loops_mode13 * 62.5 * 1000.0) / ((double)timespent_r8_mode13);
     printf("VGA 320x200 256c (13h): W8 %.2lf kb/s, R8 %.2lf kb/s\n", total_result_w, total_result_r);
     total_result_w = ((double)total_loops_mode13 * 62.5 * 1000.0) / ((double)timespent_w16_mode13);
-    printf("                        W16 %.2lf kb/s\n", total_result_w);
+    total_result_r = ((double)total_loops_mode13 * 62.5 * 1000.0) / ((double)timespent_r16_mode13);
+    printf("                        W16 %.2lf kb/s, R16 %.2lf kb/s\n", total_result_w, total_result_r);
 
 #ifdef __386__
     total_result_w = ((double)total_loops_mode13 * 62.5 * 1000.0) / ((double)timespent_w32_mode13);

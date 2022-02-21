@@ -31,6 +31,7 @@ unsigned long total_loops_modePCP;
 unsigned long timespent_w8_modePCP;
 unsigned long timespent_r8_modePCP;
 unsigned long timespent_w16_modePCP;
+unsigned long timespent_r16_modePCP;
 
 #ifdef __386__
 unsigned long timespent_w32_modePCP;
@@ -241,6 +242,7 @@ void execute_bench_modePCP(void)
     timespent_w8_modePCP = profile_function(bench_w8_modePCP);
     timespent_r8_modePCP = profile_function(bench_r8_modePCP);
     timespent_w16_modePCP = profile_function(bench_w16_modePCP);
+    timespent_r16_modePCP = profile_function(bench_r16_modePCP);
 
 #ifdef __386__
     timespent_w32_modePCP = profile_function(bench_w32_modePCP);
@@ -256,7 +258,8 @@ void show_results_modePCP(void)
     total_result_r = ((double)total_loops_modePCP * 31.25 * 1000.0) / ((double)timespent_r8_modePCP);
     printf("PCP 320x200 16c: W8 %.2lf kb/s, R8 %.2lf kb/s\n", total_result_w, total_result_r);
     total_result_w = ((double)total_loops_modePCP * 31.25 * 1000.0) / ((double)timespent_w16_modePCP);
-    printf("                 W16 %.2lf kb/s\n", total_result_w);
+    total_result_r = ((double)total_loops_modePCP * 31.25 * 1000.0) / ((double)timespent_r16_modePCP);
+    printf("                 W16 %.2lf kb/s, R16 %.2lf kb/s\n", total_result_w, total_result_r);
 
 #ifdef __386__
     total_result_w = ((double)total_loops_modePCP * 31.25 * 1000.0) / ((double)timespent_w32_modePCP);

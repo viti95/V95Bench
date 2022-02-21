@@ -31,6 +31,7 @@ unsigned long total_loops_modeATI;
 unsigned long timespent_w8_modeATI;
 unsigned long timespent_r8_modeATI;
 unsigned long timespent_w16_modeATI;
+unsigned long timespent_r16_modeATI;
 
 #ifdef __386__
 unsigned long timespent_w32_modeATI;
@@ -271,6 +272,7 @@ void execute_bench_modeATI(void)
     timespent_w8_modeATI = profile_function(bench_w8_modeATI);
     timespent_r8_modeATI = profile_function(bench_r8_modeATI);
     timespent_w16_modeATI = profile_function(bench_w16_modeATI);
+    timespent_r16_modeATI = profile_function(bench_r16_modeATI);
 
 #ifdef __386__
     timespent_w32_modeATI = profile_function(bench_w32_modeATI);
@@ -286,7 +288,8 @@ void show_results_modeATI(void)
     total_result_r = ((double)total_loops_modeATI * 62.5 * 1000.0) / ((double)timespent_r8_modeATI);
     printf("ATI 640x200 16c: W8 %.2lf kb/s, R8 %.2lf kb/s\n", total_result_w, total_result_r);
     total_result_w = ((double)total_loops_modeATI * 62.5 * 1000.0) / ((double)timespent_w16_modeATI);
-    printf("                 W16 %.2lf kb/s\n", total_result_w);
+    total_result_r = ((double)total_loops_modeATI * 62.5 * 1000.0) / ((double)timespent_r16_modeATI);
+    printf("                 W16 %.2lf kb/s, R16 %.2lf kb/s\n", total_result_w, total_result_r);
 
 #ifdef __386__
     total_result_w = ((double)total_loops_modeATI * 62.5 * 1000.0) / ((double)timespent_w32_modeATI);
