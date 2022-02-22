@@ -120,10 +120,9 @@ void bench_w8_modeV16(void)
     unsigned char far *vram;
 #endif
 
-    unsigned int loops;
     unsigned int num_loops = total_loops_modeV16;
 
-    for (loops = 0; loops < num_loops; loops++)
+    do
     {
 
 #ifdef __386__
@@ -141,7 +140,7 @@ void bench_w8_modeV16(void)
             *(vram + 12) = 0xA3;
             *(vram + 14) = 0xA3;
         }
-    }
+    } while (num_loops-- != 0);
 }
 
 void bench_r8_modeV16(void)
@@ -152,12 +151,11 @@ void bench_r8_modeV16(void)
     unsigned char far *vram;
 #endif
 
-    unsigned int loops;
     unsigned int num_loops = total_loops_modeV16;
 
     unsigned char read1, read2, read3, read4;
 
-    for (loops = 0; loops < num_loops; loops++)
+    do
     {
 
 #ifdef __386__
@@ -171,7 +169,7 @@ void bench_r8_modeV16(void)
             read3 = *(vram + 4);
             read4 = *(vram + 6);
         }
-    }
+    } while (num_loops-- != 0);
 
     read_fix_1 = read1;
     read_fix_2 = read2;

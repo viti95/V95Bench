@@ -94,10 +94,9 @@ void bench_w8_modeY(void)
     unsigned char far *vram;
 #endif
 
-    unsigned int loops;
     unsigned int num_loops = total_loops_modeY;
 
-    for (loops = 0; loops < num_loops; loops++)
+    do
     {
         // PLANE 0
         outp(SC_DATA, 1 << (0 & 3));
@@ -174,7 +173,7 @@ void bench_w8_modeY(void)
             *(vram + 6) = 0x92;
             *(vram + 7) = 0x92;
         }
-    }
+    } while (num_loops-- != 0);
 }
 
 void bench_w16_modeY(void)
@@ -185,10 +184,9 @@ void bench_w16_modeY(void)
     unsigned short far *vram;
 #endif
 
-    unsigned int loops;
     unsigned int num_loops = total_loops_modeY;
 
-    for (loops = 0; loops < num_loops; loops++)
+    do
     {
         // PLANE 0
         outp(SC_DATA, 1 << (0 & 3));
@@ -265,7 +263,7 @@ void bench_w16_modeY(void)
             *(vram + 6) = 0x11A0;
             *(vram + 7) = 0x11A0;
         }
-    }
+    } while (num_loops-- != 0);
 }
 
 #ifdef __386__
@@ -273,10 +271,9 @@ void bench_w32_modeY(void)
 {
     unsigned int *vram;
 
-    unsigned int loops;
     unsigned int num_loops = total_loops_modeY;
 
-    for (loops = 0; loops < num_loops; loops++)
+    do
     {
         // PLANE 0
         outp(SC_DATA, 1 << (0 & 3));
@@ -337,7 +334,7 @@ void bench_w32_modeY(void)
             *(vram + 6) = 0x021EBFD3;
             *(vram + 7) = 0x021EBFD3;
         }
-    }
+    } while (num_loops-- != 0);
 }
 #endif
 
@@ -349,12 +346,11 @@ void bench_r8_modeY(void)
     unsigned char far *vram;
 #endif
 
-    unsigned int loops;
     unsigned int num_loops = total_loops_modeY;
 
     unsigned char read1, read2, read3, read4;
 
-    for (loops = 0; loops < num_loops; loops++)
+    do
     {
         // PLANE 0
         outp(SC_DATA, 1 << (0 & 3));
@@ -435,7 +431,7 @@ void bench_r8_modeY(void)
         read_fix_2 = read2;
         read_fix_3 = read3;
         read_fix_4 = read4;
-    }
+    } while (num_loops-- != 0);
 }
 
 void bench_r16_modeY(void)
@@ -446,12 +442,11 @@ void bench_r16_modeY(void)
     unsigned short far *vram;
 #endif
 
-    unsigned int loops;
     unsigned int num_loops = total_loops_modeY;
 
     unsigned short read1, read2, read3, read4;
 
-    for (loops = 0; loops < num_loops; loops++)
+    do
     {
         // PLANE 0
         outp(SC_DATA, 1 << (0 & 3));
@@ -532,7 +527,7 @@ void bench_r16_modeY(void)
         read_fix_2 = read2;
         read_fix_3 = read3;
         read_fix_4 = read4;
-    }
+    } while (num_loops-- != 0);
 }
 
 void execute_bench_modeY(void)

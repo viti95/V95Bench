@@ -79,10 +79,9 @@ void bench_w8_modeATI(void)
     unsigned char far *vram;
 #endif
 
-    unsigned int loops;
     unsigned int num_loops = total_loops_modeATI;
 
-    for (loops = 0; loops < num_loops; loops++)
+    do
     {
 
 #ifdef __386__
@@ -100,7 +99,7 @@ void bench_w8_modeATI(void)
             *(vram + 0xC000) = 0x55;
             *(vram + 0xE000) = 0x55;
         }
-    }
+    } while (num_loops-- != 0);
 }
 
 void bench_w16_modeATI(void)
@@ -111,10 +110,9 @@ void bench_w16_modeATI(void)
     unsigned short far *vram;
 #endif
 
-    unsigned int loops;
     unsigned int num_loops = total_loops_modeATI;
 
-    for (loops = 0; loops < num_loops; loops++)
+    do
     {
 
 #ifdef __386__
@@ -132,7 +130,7 @@ void bench_w16_modeATI(void)
             *(vram + 0x6000) = 0xEA23;
             *(vram + 0x7000) = 0xEA23;
         }
-    }
+    } while (num_loops-- != 0);
 }
 
 #ifdef __386__
@@ -140,10 +138,9 @@ void bench_w32_modeATI(void)
 {
     unsigned int *vram;
 
-    unsigned int loops;
     unsigned int num_loops = total_loops_modeATI;
 
-    for (loops = 0; loops < num_loops; loops++)
+    do
     {
         for (vram = (unsigned int *)0xB0000; vram < (unsigned int *)0xB1F40; vram++)
         {
@@ -156,7 +153,7 @@ void bench_w32_modeATI(void)
             *(vram + 0x3000) = 0x7F2A035C;
             *(vram + 0x3800) = 0x7F2A035C;
         }
-    }
+    } while (num_loops-- != 0);
 }
 #endif
 
@@ -168,12 +165,11 @@ void bench_r8_modeATI(void)
     unsigned char far *vram;
 #endif
 
-    unsigned int loops;
     unsigned int num_loops = total_loops_modeATI;
 
     unsigned char read1, read2, read3, read4, read5, read6, read7, read8;
 
-    for (loops = 0; loops < num_loops; loops++)
+    do
     {
 
 #ifdef __386__
@@ -191,7 +187,7 @@ void bench_r8_modeATI(void)
             read7 = *(vram + 0xC000);
             read8 = *(vram + 0xE000);
         }
-    }
+    } while (num_loops-- != 0);
 
     read_fix_1 = read1;
     read_fix_2 = read2;
@@ -211,12 +207,11 @@ void bench_r16_modeATI(void)
     unsigned short far *vram;
 #endif
 
-    unsigned int loops;
     unsigned int num_loops = total_loops_modeATI;
 
     unsigned short read1, read2, read3, read4, read5, read6, read7, read8;
 
-    for (loops = 0; loops < num_loops; loops++)
+    do
     {
 
 #ifdef __386__
@@ -234,7 +229,7 @@ void bench_r16_modeATI(void)
             read7 = *(vram + 0x6000);
             read8 = *(vram + 0x7000);
         }
-    }
+    } while (num_loops-- != 0);
 
     read_fix_1 = read1;
     read_fix_2 = read2;

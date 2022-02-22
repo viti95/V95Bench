@@ -70,10 +70,9 @@ void bench_w8_modeHGC(void)
     unsigned char far *vram;
 #endif
 
-    unsigned int loops;
     unsigned int num_loops = total_loops_modeHGC;
 
-    for (loops = 0; loops < num_loops; loops++)
+    do
     {
 
 #ifdef __386__
@@ -91,7 +90,7 @@ void bench_w8_modeHGC(void)
             *(vram + 0x6000) = 0x55;
             *(vram + 0x6001) = 0x55;
         }
-    }
+    } while (num_loops-- != 0);
 }
 
 void bench_w16_modeHGC(void)
@@ -102,10 +101,9 @@ void bench_w16_modeHGC(void)
     unsigned short far *vram;
 #endif
 
-    unsigned int loops;
     unsigned int num_loops = total_loops_modeHGC;
 
-    for (loops = 0; loops < num_loops; loops++)
+    do
     {
 
 #ifdef __386__
@@ -123,7 +121,7 @@ void bench_w16_modeHGC(void)
             *(vram + 0x3000) = 0xA413;
             *(vram + 0x3001) = 0xA413;
         }
-    }
+    } while (num_loops-- != 0);
 }
 
 #ifdef __386__
@@ -131,10 +129,9 @@ void bench_w32_modeHGC(void)
 {
     unsigned int *vram;
 
-    unsigned int loops;
     unsigned int num_loops = total_loops_modeHGC;
 
-    for (loops = 0; loops < num_loops; loops++)
+    do
     {
         for (vram = (unsigned int *)0xB0000; vram < (unsigned int *)0xB1F40; vram += 2)
         {
@@ -147,7 +144,7 @@ void bench_w32_modeHGC(void)
             *(vram + 0x1800) = 0x36E1CF02;
             *(vram + 0x1801) = 0x36E1CF02;
         }
-    }
+    } while (num_loops-- != 0);
 }
 #endif
 
@@ -159,12 +156,11 @@ void bench_r8_modeHGC(void)
     unsigned char far *vram;
 #endif
 
-    unsigned int loops;
     unsigned int num_loops = total_loops_modeHGC;
 
     unsigned char read1, read2, read3, read4;
 
-    for (loops = 0; loops < num_loops; loops++)
+    do
     {
 
 #ifdef __386__
@@ -178,7 +174,7 @@ void bench_r8_modeHGC(void)
             read3 = *(vram + 0x4000);
             read4 = *(vram + 0x6000);
         }
-    }
+    } while (num_loops-- != 0);
 
     read_fix_1 = read1;
     read_fix_2 = read2;
@@ -194,12 +190,11 @@ void bench_r16_modeHGC(void)
     unsigned short far *vram;
 #endif
 
-    unsigned int loops;
     unsigned int num_loops = total_loops_modeHGC;
 
     unsigned short read1, read2, read3, read4;
 
-    for (loops = 0; loops < num_loops; loops++)
+    do
     {
 
 #ifdef __386__
@@ -213,7 +208,7 @@ void bench_r16_modeHGC(void)
             read3 = *(vram + 0x2000);
             read4 = *(vram + 0x3000);
         }
-    }
+    } while (num_loops-- != 0);
 
     read_fix_1 = read1;
     read_fix_2 = read2;
