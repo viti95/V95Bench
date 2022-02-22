@@ -189,14 +189,14 @@ void bench_r8_modeATI(void)
         }
     } while (num_loops-- != 0);
 
-    read_fix_1 = read1;
-    read_fix_2 = read2;
-    read_fix_3 = read3;
-    read_fix_4 = read4;
-    read_fix_5 = read5;
-    read_fix_6 = read6;
-    read_fix_7 = read7;
-    read_fix_8 = read8;
+    read_fix_8b_1 = read1;
+    read_fix_8b_2 = read2;
+    read_fix_8b_3 = read3;
+    read_fix_8b_4 = read4;
+    read_fix_8b_5 = read5;
+    read_fix_8b_6 = read6;
+    read_fix_8b_7 = read7;
+    read_fix_8b_8 = read8;
 }
 
 void bench_r16_modeATI(void)
@@ -231,14 +231,14 @@ void bench_r16_modeATI(void)
         }
     } while (num_loops-- != 0);
 
-    read_fix_1 = read1;
-    read_fix_2 = read2;
-    read_fix_3 = read3;
-    read_fix_4 = read4;
-    read_fix_5 = read5;
-    read_fix_6 = read6;
-    read_fix_7 = read7;
-    read_fix_8 = read8;
+    read_fix_16b_1 = read1;
+    read_fix_16b_2 = read2;
+    read_fix_16b_3 = read3;
+    read_fix_16b_4 = read4;
+    read_fix_16b_5 = read5;
+    read_fix_16b_6 = read6;
+    read_fix_16b_7 = read7;
+    read_fix_16b_8 = read8;
 }
 
 void execute_bench_modeATI(void)

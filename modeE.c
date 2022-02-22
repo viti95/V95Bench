@@ -339,10 +339,10 @@ void bench_r8_modeE(void)
             read4 = *(vram + 3);
         }
 
-        read_fix_1 = read1;
-        read_fix_2 = read2;
-        read_fix_3 = read3;
-        read_fix_4 = read4;
+        read_fix_8b_1 = read1;
+        read_fix_8b_2 = read2;
+        read_fix_8b_3 = read3;
+        read_fix_8b_4 = read4;
 
         // Green
         outp(0x3C5, 1 << (2 & 0x03));
@@ -359,10 +359,10 @@ void bench_r8_modeE(void)
             read4 = *(vram + 3);
         }
 
-        read_fix_1 = read1;
-        read_fix_2 = read2;
-        read_fix_3 = read3;
-        read_fix_4 = read4;
+        read_fix_8b_1 = read1;
+        read_fix_8b_2 = read2;
+        read_fix_8b_3 = read3;
+        read_fix_8b_4 = read4;
 
         // Blue
         outp(0x3C5, 1 << (1 & 0x03));
@@ -379,10 +379,10 @@ void bench_r8_modeE(void)
             read4 = *(vram + 3);
         }
 
-        read_fix_1 = read1;
-        read_fix_2 = read2;
-        read_fix_3 = read3;
-        read_fix_4 = read4;
+        read_fix_8b_1 = read1;
+        read_fix_8b_2 = read2;
+        read_fix_8b_3 = read3;
+        read_fix_8b_4 = read4;
 
         // Intensity
         outp(0x3C5, 1 << (0 & 0x03));
@@ -399,10 +399,10 @@ void bench_r8_modeE(void)
             read4 = *(vram + 3);
         }
 
-        read_fix_1 = read1;
-        read_fix_2 = read2;
-        read_fix_3 = read3;
-        read_fix_4 = read4;
+        read_fix_8b_1 = read1;
+        read_fix_8b_2 = read2;
+        read_fix_8b_3 = read3;
+        read_fix_8b_4 = read4;
     } while (num_loops-- != 0);
 }
 
@@ -435,10 +435,10 @@ void bench_r16_modeE(void)
             read4 = *(vram + 3);
         }
 
-        read_fix_1 = read1;
-        read_fix_2 = read2;
-        read_fix_3 = read3;
-        read_fix_4 = read4;
+        read_fix_16b_1 = read1;
+        read_fix_16b_2 = read2;
+        read_fix_16b_3 = read3;
+        read_fix_16b_4 = read4;
 
         // Green
         outp(0x3C5, 1 << (2 & 0x03));
@@ -455,10 +455,10 @@ void bench_r16_modeE(void)
             read4 = *(vram + 3);
         }
 
-        read_fix_1 = read1;
-        read_fix_2 = read2;
-        read_fix_3 = read3;
-        read_fix_4 = read4;
+        read_fix_16b_1 = read1;
+        read_fix_16b_2 = read2;
+        read_fix_16b_3 = read3;
+        read_fix_16b_4 = read4;
 
         // Blue
         outp(0x3C5, 1 << (1 & 0x03));
@@ -475,10 +475,10 @@ void bench_r16_modeE(void)
             read4 = *(vram + 3);
         }
 
-        read_fix_1 = read1;
-        read_fix_2 = read2;
-        read_fix_3 = read3;
-        read_fix_4 = read4;
+        read_fix_16b_1 = read1;
+        read_fix_16b_2 = read2;
+        read_fix_16b_3 = read3;
+        read_fix_16b_4 = read4;
 
         // Intensity
         outp(0x3C5, 1 << (0 & 0x03));
@@ -495,10 +495,10 @@ void bench_r16_modeE(void)
             read4 = *(vram + 3);
         }
 
-        read_fix_1 = read1;
-        read_fix_2 = read2;
-        read_fix_3 = read3;
-        read_fix_4 = read4;
+        read_fix_16b_1 = read1;
+        read_fix_16b_2 = read2;
+        read_fix_16b_3 = read3;
+        read_fix_16b_4 = read4;
     } while (num_loops-- != 0);
 }
 

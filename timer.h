@@ -15,7 +15,8 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-extern unsigned char read_fix_1, read_fix_2, read_fix_3, read_fix_4, read_fix_5, read_fix_6, read_fix_7, read_fix_8;
+extern unsigned char read_fix_8b_1, read_fix_8b_2, read_fix_8b_3, read_fix_8b_4, read_fix_8b_5, read_fix_8b_6, read_fix_8b_7, read_fix_8b_8;
+extern unsigned short read_fix_16b_1, read_fix_16b_2, read_fix_16b_3, read_fix_16b_4, read_fix_16b_5, read_fix_16b_6, read_fix_16b_7, read_fix_16b_8;
 
 unsigned long profile_function(void (*exec_function)(void));
 unsigned long profile_function_loops(void (*exec_function)(unsigned long), unsigned long loops);

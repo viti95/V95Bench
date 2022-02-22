@@ -169,10 +169,10 @@ void bench_r8_mode7(void)
         }
     } while (num_loops-- != 0);
 
-    read_fix_1 = read1;
-    read_fix_2 = read2;
-    read_fix_3 = read3;
-    read_fix_4 = read4;
+    read_fix_8b_1 = read1;
+    read_fix_8b_2 = read2;
+    read_fix_8b_3 = read3;
+    read_fix_8b_4 = read4;
 }
 
 void bench_r16_mode7(void)
@@ -203,10 +203,10 @@ void bench_r16_mode7(void)
         }
     } while (num_loops-- != 0);
 
-    read_fix_1 = read1;
-    read_fix_2 = read2;
-    read_fix_3 = read3;
-    read_fix_4 = read4;
+    read_fix_16b_1 = read1;
+    read_fix_16b_2 = read2;
+    read_fix_16b_3 = read3;
+    read_fix_16b_4 = read4;
 }
 
 void execute_bench_mode7(void)

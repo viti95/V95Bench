@@ -172,10 +172,10 @@ void bench_r8_modeC16(void)
         }
     } while (num_loops-- != 0);
 
-    read_fix_1 = read1;
-    read_fix_2 = read2;
-    read_fix_3 = read3;
-    read_fix_4 = read4;
+    read_fix_8b_1 = read1;
+    read_fix_8b_2 = read2;
+    read_fix_8b_3 = read3;
+    read_fix_8b_4 = read4;
 }
 
 void execute_bench_modeC16(void)
