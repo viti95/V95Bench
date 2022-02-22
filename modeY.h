@@ -22,5 +22,6 @@ void bench_r8_modeY(void);
 void bench_w16_modeY(void);
 void bench_r16_modeY(void);
 void bench_w32_modeY(void);
+void bench_r32_modeY(void);
 void execute_bench_modeY(void);
 void show_results_modeY(void);

@@ -51,6 +51,7 @@ unsigned long timespent_r16_modeY;
 
 #ifdef __386__
 unsigned long timespent_w32_modeY;
+unsigned long timespent_r32_modeY;
 #endif
 
 void init_modeY(void)
@@ -530,6 +531,84 @@ void bench_r16_modeY(void)
     } while (num_loops-- != 0);
 }
 
+#ifdef __386__
+void bench_r32_modeY(void)
+{
+    unsigned int *vram;
+
+    unsigned int num_loops = total_loops_modeY;
+
+    unsigned int read1, read2, read3, read4;
+
+    do
+    {
+        // PLANE 0
+        outp(SC_DATA, 1 << (0 & 3));
+
+        for (vram = (unsigned int *)0xA0000; vram < (unsigned int *)0xA3E80; vram += 4)
+        {
+            read1 = *(vram);
+            read2 = *(vram + 1);
+            read3 = *(vram + 2);
+            read4 = *(vram + 3);
+        }
+
+        read_fix_32b_1 = read1;
+        read_fix_32b_2 = read2;
+        read_fix_32b_3 = read3;
+        read_fix_32b_4 = read4;
+
+        // PLANE 1
+        outp(SC_DATA, 1 << (1 & 3));
+
+        for (vram = (unsigned int *)0xA0000; vram < (unsigned int *)0xA3E80; vram += 4)
+        {
+            read1 = *(vram);
+            read2 = *(vram + 1);
+            read3 = *(vram + 2);
+            read4 = *(vram + 3);
+        }
+
+        read_fix_32b_1 = read1;
+        read_fix_32b_2 = read2;
+        read_fix_32b_3 = read3;
+        read_fix_32b_4 = read4;
+
+        // PLANE 2
+        outp(SC_DATA, 1 << (2 & 3));
+
+        for (vram = (unsigned int *)0xA0000; vram < (unsigned int *)0xA3E80; vram += 4)
+        {
+            read1 = *(vram);
+            read2 = *(vram + 1);
+            read3 = *(vram + 2);
+            read4 = *(vram + 3);
+        }
+
+        read_fix_32b_1 = read1;
+        read_fix_32b_2 = read2;
+        read_fix_32b_3 = read3;
+        read_fix_32b_4 = read4;
+
+        // PLANE 3
+        outp(SC_DATA, 1 << (3 & 3));
+
+        for (vram = (unsigned int *)0xA0000; vram < (unsigned int *)0xA3E80; vram += 4)
+        {
+            read1 = *(vram);
+            read2 = *(vram + 1);
+            read3 = *(vram + 2);
+            read4 = *(vram + 3);
+        }
+
+        read_fix_32b_1 = read1;
+        read_fix_32b_2 = read2;
+        read_fix_32b_3 = read3;
+        read_fix_32b_4 = read4;
+    } while (num_loops-- != 0);
+}
+#endif
+
 void execute_bench_modeY(void)
 {
     unsigned long preheat_loops = PREHEAT_LOOPS;
@@ -560,6 +639,7 @@ void execute_bench_modeY(void)
 
 #ifdef __386__
     timespent_w32_modeY = profile_function(bench_w32_modeY);
+    timespent_r32_modeY = profile_function(bench_r32_modeY);
 #endif
 }
 
@@ -577,6 +657,7 @@ void show_results_modeY(void)
 
 #ifdef __386__
     total_result_w = ((double)total_loops_modeY * 62.5 * 1000.0) / ((double)timespent_w32_modeY);
-    printf("                      W32 %.2lf kb/s\n", total_result_w);
+    total_result_r = ((double)total_loops_modeY * 62.5 * 1000.0) / ((double)timespent_r32_modeY);
+    printf("                      W32 %.2lf kb/s, R32 %.2lf kb/s\n", total_result_w, total_result_r);
 #endif
 }

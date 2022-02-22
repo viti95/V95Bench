@@ -34,6 +34,7 @@ unsigned long timespent_r16_mode3;
 
 #ifdef __386__
 unsigned long timespent_w32_mode3;
+unsigned long timespent_r32_mode3;
 #endif
 
 void init_mode3(void)
@@ -205,6 +206,33 @@ void bench_r16_mode3(void)
     read_fix_16b_4 = read4;
 }
 
+#ifdef __386__
+void bench_r32_mode3(void)
+{
+    unsigned int *vram;
+
+    unsigned int num_loops = total_loops_mode3;
+
+    unsigned int read1, read2, read3, read4;
+
+    do
+    {
+        for (vram = (unsigned int *)0xB8000; vram < (unsigned int *)0xB8FA0; vram += 4)
+        {
+            read1 = *(vram);
+            read2 = *(vram + 1);
+            read3 = *(vram + 2);
+            read4 = *(vram + 3);
+        }
+    } while (num_loops-- != 0);
+
+    read_fix_32b_1 = read1;
+    read_fix_32b_2 = read2;
+    read_fix_32b_3 = read3;
+    read_fix_32b_4 = read4;
+}
+#endif
+
 void execute_bench_mode3(void)
 {
     unsigned long preheat_loops = PREHEAT_LOOPS;
@@ -235,6 +263,7 @@ void execute_bench_mode3(void)
 
 #ifdef __386__
     timespent_w32_mode3 = profile_function(bench_w32_mode3);
+    timespent_r32_mode3 = profile_function(bench_r32_mode3);
 #endif
 }
 
@@ -252,6 +281,7 @@ void show_results_mode3(void)
 
 #ifdef __386__
     total_result_w = ((double)total_loops_mode3 * 3.90625 * 1000.0) / ((double)timespent_w32_mode3);
-    printf("               W32 %.2lf kb/s\n", total_result_w);
+    total_result_r = ((double)total_loops_mode3 * 3.90625 * 1000.0) / ((double)timespent_r32_mode3);
+    printf("               W32 %.2lf kb/s, R32 %.2lf kb/s\n", total_result_w, total_result_r);
 #endif
 }

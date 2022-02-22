@@ -22,5 +22,6 @@ void bench_r8_modeHGC(void);
 void bench_w16_modeHGC(void);
 void bench_r16_modeHGC(void);
 void bench_w32_modeHGC(void);
+void bench_r32_modeHGC(void);
 void execute_bench_modeHGC(void);
 void show_results_modeHGC(void);

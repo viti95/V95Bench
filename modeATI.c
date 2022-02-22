@@ -35,6 +35,7 @@ unsigned long timespent_r16_modeATI;
 
 #ifdef __386__
 unsigned long timespent_w32_modeATI;
+unsigned long timespent_r32_modeATI;
 #endif
 
 void init_modeATI(void)
@@ -241,6 +242,41 @@ void bench_r16_modeATI(void)
     read_fix_16b_8 = read8;
 }
 
+#ifdef __386__
+void bench_r32_modeATI(void)
+{
+    unsigned int *vram;
+
+    unsigned int num_loops = total_loops_modeATI;
+
+    unsigned int read1, read2, read3, read4, read5, read6, read7, read8;
+
+    do
+    {
+        for (vram = (unsigned int *)0xB0000; vram < (unsigned int *)0xB1F40; vram++)
+        {
+            read1 = *(vram);
+            read2 = *(vram + 0x800);
+            read3 = *(vram + 0x1000);
+            read4 = *(vram + 0x1800);
+            read5 = *(vram + 0x2000);
+            read6 = *(vram + 0x2800);
+            read7 = *(vram + 0x3000);
+            read8 = *(vram + 0x3800);
+        }
+    } while (num_loops-- != 0);
+
+    read_fix_32b_1 = read1;
+    read_fix_32b_2 = read2;
+    read_fix_32b_3 = read3;
+    read_fix_32b_4 = read4;
+    read_fix_32b_5 = read5;
+    read_fix_32b_6 = read6;
+    read_fix_32b_7 = read7;
+    read_fix_32b_8 = read8;
+}
+#endif
+
 void execute_bench_modeATI(void)
 {
     unsigned long preheat_loops = PREHEAT_LOOPS;
@@ -271,6 +307,7 @@ void execute_bench_modeATI(void)
 
 #ifdef __386__
     timespent_w32_modeATI = profile_function(bench_w32_modeATI);
+    timespent_r32_modeATI = profile_function(bench_r32_modeATI);
 #endif
 }
 
@@ -288,6 +325,7 @@ void show_results_modeATI(void)
 
 #ifdef __386__
     total_result_w = ((double)total_loops_modeATI * 62.5 * 1000.0) / ((double)timespent_w32_modeATI);
-    printf("                 W32 %.2lf kb/s\n", total_result_w);
+    total_result_r = ((double)total_loops_modeATI * 62.5 * 1000.0) / ((double)timespent_r32_modeATI);
+    printf("                 W32 %.2lf kb/s, R32 %.2lf kb/s\n", total_result_w, total_result_r);
 #endif
 }

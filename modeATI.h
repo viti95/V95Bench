@@ -22,5 +22,6 @@ void bench_r8_modeATI(void);
 void bench_w16_modeATI(void);
 void bench_r16_modeATI(void);
 void bench_w32_modeATI(void);
+void bench_r32_modeATI(void);
 void execute_bench_modeATI(void);
 void show_results_modeATI(void);
