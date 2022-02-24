@@ -15,23 +15,19 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __MAIN_H__
-#define __MAIN_H__
+#ifndef __MODE8_H__
+#define __MODE8_H__
 
-#define MDA 1
-#define HGC 2
-#define CGA 3
-#define EGA 4
-#define MCGA 5
-#define VGA 6
-#define VESA 7
-#define Tandy1PCjr 8
-#define Tandy2 9
-#define ATI 10
-#define Plantronics 11
-
-void show_results(void);
-void reset_video(void);
-void select_benchmark(void);
+void init_mode8(void);
+void preheat_mode8(unsigned long total_loops);
+void bench_w8_mode8(void);
+void bench_r8_mode8(void);
+void bench_w16_mode8(void);
+void bench_r16_mode8(void);
+void bench_w32_mode8(void);
+void bench_r32_mode8(void);
+void execute_bench_mode8(void);
+void show_results_mode8(void);
+void export_results_mode8(void);
 
 #endif

@@ -15,7 +15,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "mode4.h"
+#include "mode8.h"
 #include "timer.h"
 #include "file.h"
 
@@ -27,23 +27,23 @@
 #define PREHEAT_LOOPS 100L
 #define BENCH_TIME 5000L
 
-unsigned long total_loops_mode4;
-unsigned long timespent_w8_mode4;
-unsigned long timespent_r8_mode4;
-unsigned long timespent_w16_mode4;
-unsigned long timespent_r16_mode4;
+unsigned long total_loops_mode8;
+unsigned long timespent_w8_mode8;
+unsigned long timespent_r8_mode8;
+unsigned long timespent_w16_mode8;
+unsigned long timespent_r16_mode8;
 
 #ifdef __386__
-unsigned long timespent_w32_mode4;
-unsigned long timespent_r32_mode4;
+unsigned long timespent_w32_mode8;
+unsigned long timespent_r32_mode8;
 #endif
 
-void init_mode4(void)
+void init_mode8(void)
 {
     union REGS regs;
 
-    // Set video mode 4
-    regs.w.ax = 0x04;
+    // Set video mode 8
+    regs.w.ax = 0x08;
 #ifdef __386__
     int386(0x10, &regs, &regs);
 #else
@@ -51,13 +51,13 @@ void init_mode4(void)
 #endif
 }
 
-void preheat_mode4(unsigned long total_loops)
+void preheat_mode8(unsigned long total_loops)
 {
-    total_loops_mode4 = total_loops;
-    bench_w8_mode4();
+    total_loops_mode8 = total_loops;
+    bench_w8_mode8();
 }
 
-void bench_w8_mode4(void)
+void bench_w8_mode8(void)
 {
 #ifdef __386__
     unsigned char *vram;
@@ -65,7 +65,7 @@ void bench_w8_mode4(void)
     unsigned char far *vram;
 #endif
 
-    unsigned int num_loops = total_loops_mode4;
+    unsigned int num_loops = total_loops_mode8;
 
     do
     {
@@ -88,7 +88,7 @@ void bench_w8_mode4(void)
     } while (num_loops-- != 0);
 }
 
-void bench_w16_mode4(void)
+void bench_w16_mode8(void)
 {
 #ifdef __386__
     unsigned short *vram;
@@ -96,7 +96,7 @@ void bench_w16_mode4(void)
     unsigned short far *vram;
 #endif
 
-    unsigned int num_loops = total_loops_mode4;
+    unsigned int num_loops = total_loops_mode8;
 
     do
     {
@@ -107,24 +107,24 @@ void bench_w16_mode4(void)
         for (vram = MK_FP(0xB800, 0); vram < MK_FP(0xB800, 0x1F40); vram += 4)
 #endif
         {
-            *(vram) = 0x9C5A;
-            *(vram + 1) = 0x9C5A;
-            *(vram + 2) = 0x9C5A;
-            *(vram + 3) = 0x9C5A;
-            *(vram + 0x1000) = 0x9C5A;
-            *(vram + 0x1001) = 0x9C5A;
-            *(vram + 0x1002) = 0x9C5A;
-            *(vram + 0x1003) = 0x9C5A;
+            *(vram) = 0x9C2A;
+            *(vram + 1) = 0x9C2A;
+            *(vram + 2) = 0x9C2A;
+            *(vram + 3) = 0x9C2A;
+            *(vram + 0x1000) = 0x9C2A;
+            *(vram + 0x1001) = 0x9C2A;
+            *(vram + 0x1002) = 0x9C2A;
+            *(vram + 0x1003) = 0x9C2A;
         }
     } while (num_loops-- != 0);
 }
 
 #ifdef __386__
-void bench_w32_mode4(void)
+void bench_w32_mode8(void)
 {
     unsigned int *vram;
 
-    unsigned int num_loops = total_loops_mode4;
+    unsigned int num_loops = total_loops_mode8;
 
     do
     {
@@ -143,7 +143,7 @@ void bench_w32_mode4(void)
 }
 #endif
 
-void bench_r8_mode4(void)
+void bench_r8_mode8(void)
 {
 #ifdef __386__
     unsigned char *vram;
@@ -151,7 +151,7 @@ void bench_r8_mode4(void)
     unsigned char far *vram;
 #endif
 
-    unsigned int num_loops = total_loops_mode4;
+    unsigned int num_loops = total_loops_mode8;
 
     unsigned char read1, read2, read3, read4;
 
@@ -177,7 +177,7 @@ void bench_r8_mode4(void)
     read_fix_8b_4 = read4;
 }
 
-void bench_r16_mode4(void)
+void bench_r16_mode8(void)
 {
 #ifdef __386__
     unsigned short *vram;
@@ -185,7 +185,7 @@ void bench_r16_mode4(void)
     unsigned short far *vram;
 #endif
 
-    unsigned int num_loops = total_loops_mode4;
+    unsigned int num_loops = total_loops_mode8;
 
     unsigned short read1, read2, read3, read4;
 
@@ -212,11 +212,11 @@ void bench_r16_mode4(void)
 }
 
 #ifdef __386__
-void bench_r32_mode4(void)
+void bench_r32_mode8(void)
 {
     unsigned int *vram;
 
-    unsigned int num_loops = total_loops_mode4;
+    unsigned int num_loops = total_loops_mode8;
 
     unsigned int read1, read2, read3, read4;
 
@@ -238,74 +238,74 @@ void bench_r32_mode4(void)
 }
 #endif
 
-void execute_bench_mode4(void)
+void execute_bench_mode8(void)
 {
     unsigned long preheat_loops = PREHEAT_LOOPS;
 
     // SET VIDEO MODE
-    init_mode4();
+    init_mode8();
 
     // PRE-HEAT
     do
     {
-        timespent_w8_mode4 = profile_function_loops(preheat_mode4, preheat_loops);
+        timespent_w8_mode8 = profile_function_loops(preheat_mode8, preheat_loops);
         preheat_loops *= 2;
-    } while (timespent_w8_mode4 == 0);
+    } while (timespent_w8_mode8 == 0);
     preheat_loops /= 2;
-    total_loops_mode4 = preheat_loops * BENCH_TIME / timespent_w8_mode4;
+    total_loops_mode8 = preheat_loops * BENCH_TIME / timespent_w8_mode8;
 
 #ifndef __386__
     // Fix for 16-bit executables
-    if (total_loops_mode4 > 65535)
-        total_loops_mode4 = 65535;
+    if (total_loops_mode8 > 65535)
+        total_loops_mode8 = 65535;
 #endif
 
     // BENCHMARK
-    timespent_w8_mode4 = profile_function(bench_w8_mode4);
-    timespent_r8_mode4 = profile_function(bench_r8_mode4);
-    timespent_w16_mode4 = profile_function(bench_w16_mode4);
-    timespent_r16_mode4 = profile_function(bench_r16_mode4);
+    timespent_w8_mode8 = profile_function(bench_w8_mode8);
+    timespent_r8_mode8 = profile_function(bench_r8_mode8);
+    timespent_w16_mode8 = profile_function(bench_w16_mode8);
+    timespent_r16_mode8 = profile_function(bench_r16_mode8);
 
 #ifdef __386__
-    timespent_w32_mode4 = profile_function(bench_w32_mode4);
-    timespent_r32_mode4 = profile_function(bench_r32_mode4);
+    timespent_w32_mode8 = profile_function(bench_w32_mode8);
+    timespent_r32_mode8 = profile_function(bench_r32_mode8);
 #endif
 }
 
-void show_results_mode4(void)
+void show_results_mode8(void)
 {
     double total_result_w;
     double total_result_r;
 
-    total_result_w = ((double)total_loops_mode4 * 15.625 * 1000.0) / ((double)timespent_w8_mode4);
-    total_result_r = ((double)total_loops_mode4 * 15.625 * 1000.0) / ((double)timespent_r8_mode4);
-    printf("CGA 320x200 4c: W8 %.2lf kb/s, R8 %.2lf kb/s\n", total_result_w, total_result_r);
-    total_result_w = ((double)total_loops_mode4 * 15.625 * 1000.0) / ((double)timespent_w16_mode4);
-    total_result_r = ((double)total_loops_mode4 * 15.625 * 1000.0) / ((double)timespent_r16_mode4);
-    printf("                W16 %.2lf kb/s, R16 %.2lf kb/s\n", total_result_w, total_result_r);
+    total_result_w = ((double)total_loops_mode8 * 15.625 * 1000.0) / ((double)timespent_w8_mode8);
+    total_result_r = ((double)total_loops_mode8 * 15.625 * 1000.0) / ((double)timespent_r8_mode8);
+    printf("PCjr/Tandy 160x200 16c: W8 %.2lf kb/s, R8 %.2lf kb/s\n", total_result_w, total_result_r);
+    total_result_w = ((double)total_loops_mode8 * 15.625 * 1000.0) / ((double)timespent_w16_mode8);
+    total_result_r = ((double)total_loops_mode8 * 15.625 * 1000.0) / ((double)timespent_r16_mode8);
+    printf("                        W16 %.2lf kb/s, R16 %.2lf kb/s\n", total_result_w, total_result_r);
 
 #ifdef __386__
-    total_result_w = ((double)total_loops_mode4 * 15.625 * 1000.0) / ((double)timespent_w32_mode4);
-    total_result_r = ((double)total_loops_mode4 * 15.625 * 1000.0) / ((double)timespent_r32_mode4);
-    printf("                W32 %.2lf kb/s, R32 %.2lf kb/s\n", total_result_w, total_result_r);
+    total_result_w = ((double)total_loops_mode8 * 15.625 * 1000.0) / ((double)timespent_w32_mode8);
+    total_result_r = ((double)total_loops_mode8 * 15.625 * 1000.0) / ((double)timespent_r32_mode8);
+    printf("                        W32 %.2lf kb/s, R32 %.2lf kb/s\n", total_result_w, total_result_r);
 #endif
 }
 
-void export_results_mode4(void)
+void export_results_mode8(void)
 {
     double total_result_w;
     double total_result_r;
 
-    total_result_w = ((double)total_loops_mode4 * 15.625 * 1000.0) / ((double)timespent_w8_mode4);
-    total_result_r = ((double)total_loops_mode4 * 15.625 * 1000.0) / ((double)timespent_r8_mode4);
-    fprintf(logFile, "CGA 320x200 4c: W8 %.2lf kb/s, R8 %.2lf kb/s\n", total_result_w, total_result_r);
-    total_result_w = ((double)total_loops_mode4 * 15.625 * 1000.0) / ((double)timespent_w16_mode4);
-    total_result_r = ((double)total_loops_mode4 * 15.625 * 1000.0) / ((double)timespent_r16_mode4);
-    fprintf(logFile, "                W16 %.2lf kb/s, R16 %.2lf kb/s\n", total_result_w, total_result_r);
+    total_result_w = ((double)total_loops_mode8 * 15.625 * 1000.0) / ((double)timespent_w8_mode8);
+    total_result_r = ((double)total_loops_mode8 * 15.625 * 1000.0) / ((double)timespent_r8_mode8);
+    fprintf(logFile, "PCjr/Tandy 160x200 16c: W8 %.2lf kb/s, R8 %.2lf kb/s\n", total_result_w, total_result_r);
+    total_result_w = ((double)total_loops_mode8 * 15.625 * 1000.0) / ((double)timespent_w16_mode8);
+    total_result_r = ((double)total_loops_mode8 * 15.625 * 1000.0) / ((double)timespent_r16_mode8);
+    fprintf(logFile, "                        W16 %.2lf kb/s, R16 %.2lf kb/s\n", total_result_w, total_result_r);
 
 #ifdef __386__
-    total_result_w = ((double)total_loops_mode4 * 15.625 * 1000.0) / ((double)timespent_w32_mode4);
-    total_result_r = ((double)total_loops_mode4 * 15.625 * 1000.0) / ((double)timespent_r32_mode4);
-    fprintf(logFile, "                W32 %.2lf kb/s, R32 %.2lf kb/s\n", total_result_w, total_result_r);
+    total_result_w = ((double)total_loops_mode8 * 15.625 * 1000.0) / ((double)timespent_w32_mode8);
+    total_result_r = ((double)total_loops_mode8 * 15.625 * 1000.0) / ((double)timespent_r32_mode8);
+    fprintf(logFile, "                        W32 %.2lf kb/s, R32 %.2lf kb/s\n", total_result_w, total_result_r);
 #endif
 }

@@ -28,6 +28,7 @@
 #include "modeV16.h"
 #include "mode6.h"
 #include "mode7.h"
+#include "mode8.h"
 #include "mode13.h"
 #include "modeY.h"
 #include "modeD.h"
@@ -47,6 +48,7 @@ unsigned char do_bench_modeC16 = 0;
 unsigned char do_bench_modeV16 = 0;
 unsigned char do_bench_mode6 = 0;
 unsigned char do_bench_mode7 = 0;
+unsigned char do_bench_mode8 = 0;
 unsigned char do_bench_mode13 = 0;
 unsigned char do_bench_modeY = 0;
 unsigned char do_bench_modeD = 0;
@@ -103,6 +105,12 @@ void launch_bench_mode7(void)
 {
     do_bench_mode7 = 1;
     execute_bench_mode7();
+}
+
+void launch_bench_mode8(void)
+{
+    do_bench_mode8 = 1;
+    execute_bench_mode8();
 }
 
 void launch_bench_mode13(void)
@@ -202,19 +210,21 @@ void select_benchmark(void)
         break;
     case VESA:
         break;
-    case Tandy:
+    case Tandy1PCjr:
         launch_bench_mode1();
         launch_bench_mode3();
         launch_bench_modeC16();
         launch_bench_mode4();
         launch_bench_mode6();
+        launch_bench_mode8();
         break;
-    case PCjr:
+    case Tandy2:
         launch_bench_mode1();
         launch_bench_mode3();
         launch_bench_modeC16();
         launch_bench_mode4();
         launch_bench_mode6();
+        launch_bench_mode8();
         break;
     case ATI:
         launch_bench_mode1();
@@ -307,6 +317,12 @@ void show_results(void)
         pause_keyboard();
     }
 
+    if (do_bench_mode8)
+    {
+        show_results_mode8();
+        pause_keyboard();
+    }
+
     if (do_bench_modePCP)
     {
         show_results_modePCP();
@@ -381,6 +397,9 @@ void export_results(char *filename)
     if (do_bench_mode6)
         export_results_mode6();
 
+    if (do_bench_mode8)
+        export_results_mode8();
+
     if (do_bench_modePCP)
         export_results_modePCP();
 
@@ -428,8 +447,8 @@ int main(int argc, char **argv)
     printf("    5.  MCGA\n");
     printf("    6.  VGA\n");
     printf("    7.  VESA (not available)\n");
-    printf("    8.  Tandy (not available)\n");
-    printf("    9.  IBM PCjr (not available)\n");
+    printf("    8.  Tandy Video 1 / IBM PCjr\n");
+    printf("    9.  Tandy Video 2\n");
     printf("    10. ATI Small Wonder\n");
     printf("    11. Plantronics ColorPlus\n");
     printf("\n");

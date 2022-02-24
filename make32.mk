@@ -45,6 +45,7 @@ GLOBOBJS = &
  modeV16.obj &
  mode6.obj &
  mode7.obj &
+ mode8.obj &
  mode13.obj &
  modeY.obj &
  modeD.obj &
