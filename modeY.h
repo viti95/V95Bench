@@ -15,6 +15,9 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#ifndef __MODEY_H__
+#define __MODEY_H__
+
 void init_modeY(void);
 void preheat_modeY(unsigned long total_loops);
 void bench_w8_modeY(void);
@@ -25,3 +28,6 @@ void bench_w32_modeY(void);
 void bench_r32_modeY(void);
 void execute_bench_modeY(void);
 void show_results_modeY(void);
+void export_results_modeY(void);
+
+#endif

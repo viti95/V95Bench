@@ -15,6 +15,9 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#ifndef __MODEE_H__
+#define __MODEE_H__
+
 void init_modeE(void);
 void preheat_modeE(unsigned long total_loops);
 void bench_w8_modeE(void);
@@ -25,3 +28,6 @@ void bench_w32_modeE(void);
 void bench_r32_modeE(void);
 void execute_bench_modeE(void);
 void show_results_modeE(void);
+void export_results_modeE(void);
+
+#endif

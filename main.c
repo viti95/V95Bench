@@ -17,8 +17,10 @@
 
 #include <stdio.h>
 #include <dos.h>
+#include <string.h>
 
 #include "main.h"
+#include "file.h"
 #include "mode1.h"
 #include "mode3.h"
 #include "mode4.h"
@@ -36,6 +38,7 @@
 #include "modeATI.h"
 
 unsigned char videomode;
+unsigned char menu_selection;
 
 unsigned char do_bench_mode1 = 0;
 unsigned char do_bench_mode3 = 0;
@@ -200,8 +203,18 @@ void select_benchmark(void)
     case VESA:
         break;
     case Tandy:
+        launch_bench_mode1();
+        launch_bench_mode3();
+        launch_bench_modeC16();
+        launch_bench_mode4();
+        launch_bench_mode6();
         break;
     case PCjr:
+        launch_bench_mode1();
+        launch_bench_mode3();
+        launch_bench_modeC16();
+        launch_bench_mode4();
+        launch_bench_mode6();
         break;
     case ATI:
         launch_bench_mode1();
@@ -250,8 +263,6 @@ void reset_video(void)
 
 void show_results(void)
 {
-    char ch;
-
     printf("Results (press key Enter to continue)\n\n");
 
     if (do_bench_mode7)
@@ -345,14 +356,70 @@ void show_results(void)
     }
 }
 
+void export_results(char *filename)
+{
+    open_results_file(filename);
+
+    if (do_bench_mode7)
+        export_results_mode7();
+
+    if (do_bench_modeHGC)
+        export_results_modeHGC();
+
+    if (do_bench_mode1)
+        export_results_mode1();
+
+    if (do_bench_mode3)
+        export_results_mode3();
+
+    if (do_bench_modeC16)
+        export_results_modeC16();
+
+    if (do_bench_mode4)
+        export_results_mode4();
+
+    if (do_bench_mode6)
+        export_results_mode6();
+
+    if (do_bench_modePCP)
+        export_results_modePCP();
+
+    if (do_bench_modeATI)
+        export_results_modeATI();
+
+    if (do_bench_modeD)
+        export_results_modeD();
+
+    if (do_bench_modeE)
+        export_results_modeE();
+
+    if (do_bench_mode10)
+        export_results_mode10();
+
+    if (do_bench_modeV16)
+        export_results_modeV16();
+
+    if (do_bench_mode13)
+        export_results_mode13();
+
+    if (do_bench_modeY)
+        export_results_modeY();
+
+    close_results_file();
+
+    printf("Results exported to file %s\n", filename);
+}
+
 int main(int argc, char **argv)
 {
+    char filename[13];
+
     printf("\n");
-    printf(" =====================\n");
-    printf(" = V95 GPU Benchmark =\n");
-    printf(" =====================\n");
+    printf("=====================\n");
+    printf("= V95 GPU Benchmark =\n");
+    printf("=====================\n");
     printf("\n");
-    printf(" Please select video card:\n");
+    printf("Please select video card:\n");
     printf("\n");
     printf("    1.  MDA\n");
     printf("    2.  Hercules\n");
@@ -367,7 +434,7 @@ int main(int argc, char **argv)
     printf("    11. Plantronics ColorPlus\n");
     printf("\n");
 
-    printf(" Select option: ");
+    printf("Select option: ");
     scanf("%u", &videomode);
     getchar(); // fix
 
@@ -375,7 +442,41 @@ int main(int argc, char **argv)
 
     reset_video();
 
-    show_results();
+    printf("\n");
+    printf("Benchmark finished\n");
+    printf("\n");
+    printf("    1.  Show results\n");
+    printf("    2.  Export results to file\n");
+    printf("    3.  Both\n");
+    printf("\n");
+
+    printf("Select option: ");
+    scanf("%u", &menu_selection);
+    getchar(); // fix
+
+    switch (menu_selection)
+    {
+    case 1:
+        show_results();
+        break;
+    case 2:
+        printf("Enter file name (8 characters max.)\n");
+        scanf("%8s", filename);
+        strcat(filename, ".txt");
+        export_results(filename);
+        break;
+    case 3:
+        show_results();
+
+        printf("Enter file name (8 characters max.)\n");
+        scanf("%8s", filename);
+        strcat(filename, ".txt");
+        export_results(filename);
+        break;
+    default:
+        show_results();
+        break;
+    }
 
     return 0;
 }

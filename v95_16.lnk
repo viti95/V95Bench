@@ -12,6 +12,7 @@ format dos
 name v95_16
 
 file timer.obj
+file file.obj
 file mode1.obj
 file mode3.obj
 file mode4.obj

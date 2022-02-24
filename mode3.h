@@ -15,6 +15,9 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#ifndef __MODE3_H__
+#define __MODE3_H__
+
 void init_mode3(void);
 void preheat_mode3(unsigned long total_loops);
 void bench_w8_mode3(void);
@@ -25,3 +28,6 @@ void bench_w32_mode3(void);
 void bench_r32_mode3(void);
 void execute_bench_mode3(void);
 void show_results_mode3(void);
+void export_results_mode3(void);
+
+#endif

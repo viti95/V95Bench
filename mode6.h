@@ -15,6 +15,9 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#ifndef __MODE6_H__
+#define __MODE6_H__
+
 void init_mode6(void);
 void preheat_mode6(unsigned long total_loops);
 void bench_w8_mode6(void);
@@ -25,3 +28,6 @@ void bench_w32_mode6(void);
 void bench_r32_mode6(void);
 void execute_bench_mode6(void);
 void show_results_mode6(void);
+void export_results_mode6(void);
+
+#endif

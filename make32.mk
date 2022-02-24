@@ -37,6 +37,7 @@ CCOPTS = $(EXTERNOPT) -omaxet -oh -ol+ -zp4 -3r -ei -j -zq
 
 GLOBOBJS = &
  timer.obj &
+ file.obj &
  mode1.obj &
  mode3.obj &
  mode4.obj &

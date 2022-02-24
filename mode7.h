@@ -15,6 +15,9 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#ifndef __MODE7_H__
+#define __MODE7_H__
+
 void init_mode7(void);
 void preheat_mode7(unsigned long total_loops);
 void bench_w8_mode7(void);
@@ -25,3 +28,6 @@ void bench_w32_mode7(void);
 void bench_r32_mode7(void);
 void execute_bench_mode7(void);
 void show_results_mode7(void);
+void export_results_mode7(void);
+
+#endif

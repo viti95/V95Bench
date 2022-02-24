@@ -15,6 +15,9 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#ifndef __MODEHGC_H__
+#define __MODEHGC_H__
+
 void init_modeHGC(void);
 void preheat_modeHGC(unsigned long total_loops);
 void bench_w8_modeHGC(void);
@@ -25,3 +28,6 @@ void bench_w32_modeHGC(void);
 void bench_r32_modeHGC(void);
 void execute_bench_modeHGC(void);
 void show_results_modeHGC(void);
+void export_results_modeHGC(void);
+
+#endif

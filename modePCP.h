@@ -15,6 +15,9 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#ifndef __MODEPCP_H__
+#define __MODEPCP_H__
+
 void init_modePCP(void);
 void preheat_modePCP(unsigned long total_loops);
 void bench_w8_modePCP(void);
@@ -25,3 +28,6 @@ void bench_w32_modePCP(void);
 void bench_r32_modePCP(void);
 void execute_bench_modePCP(void);
 void show_results_modePCP(void);
+void export_results_modePCP(void);
+
+#endif

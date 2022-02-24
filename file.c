@@ -15,23 +15,16 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __MAIN_H__
-#define __MAIN_H__
+#include "file.h"
 
-#define MDA 1
-#define HGC 2
-#define CGA 3
-#define EGA 4
-#define MCGA 5
-#define VGA 6
-#define VESA 7
-#define Tandy 8
-#define PCjr 9
-#define ATI 10
-#define Plantronics 11
+FILE *logFile;
 
-void show_results(void);
-void reset_video(void);
-void select_benchmark(void);
+void open_results_file(char *filename)
+{
+    logFile = fopen(filename, "w+");
+}
 
-#endif
+void close_results_file(void)
+{
+    fclose(logFile);
+}

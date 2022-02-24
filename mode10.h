@@ -15,6 +15,9 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#ifndef __MODE10_H__
+#define __MODE10_H__
+
 void init_mode10(void);
 void preheat_mode10(unsigned long total_loops);
 void bench_w8_mode10(void);
@@ -25,3 +28,6 @@ void bench_w32_mode10(void);
 void bench_r32_mode10(void);
 void execute_bench_mode10(void);
 void show_results_mode10(void);
+void export_results_mode10(void);
+
+#endif

@@ -17,6 +17,7 @@
 
 #include "modeD.h"
 #include "timer.h"
+#include "file.h"
 
 #include <dos.h>
 #include <stdio.h>
@@ -631,5 +632,24 @@ void show_results_modeD(void)
     total_result_w = ((double)total_loops_modeD * 31.25 * 1000.0) / ((double)timespent_w32_modeD);
     total_result_r = ((double)total_loops_modeD * 31.25 * 1000.0) / ((double)timespent_r32_modeD);
     printf("                 W32 %.2lf kb/s, R32 %.2lf kb/s\n", total_result_w, total_result_r);
+#endif
+}
+
+void export_results_modeD(void)
+{
+    double total_result_w;
+    double total_result_r;
+
+    total_result_w = ((double)total_loops_modeD * 31.25 * 1000.0) / ((double)timespent_w8_modeD);
+    total_result_r = ((double)total_loops_modeD * 31.25 * 1000.0) / ((double)timespent_r8_modeD);
+    fprintf(logFile, "EGA 320x200 16c: W8 %.2lf kb/s, R8 %.2lf kb/s\n", total_result_w, total_result_r);
+    total_result_w = ((double)total_loops_modeD * 31.25 * 1000.0) / ((double)timespent_w16_modeD);
+    total_result_r = ((double)total_loops_modeD * 31.25 * 1000.0) / ((double)timespent_r16_modeD);
+    fprintf(logFile, "                 W16 %.2lf kb/s, R16 %.2lf kb/s\n", total_result_w, total_result_r);
+
+#ifdef __386__
+    total_result_w = ((double)total_loops_modeD * 31.25 * 1000.0) / ((double)timespent_w32_modeD);
+    total_result_r = ((double)total_loops_modeD * 31.25 * 1000.0) / ((double)timespent_r32_modeD);
+    fprintf(logFile, "                 W32 %.2lf kb/s, R32 %.2lf kb/s\n", total_result_w, total_result_r);
 #endif
 }
