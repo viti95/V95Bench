@@ -32,6 +32,8 @@ unsigned long total_loops_modeV16;
 unsigned long timespent_w8_modeV16;
 unsigned long timespent_r8_modeV16;
 
+static const char MSG_8BIT[]  = "VGA 160x200 16c: W8 %.2lf kb/s, R8 %.2lf kb/s\n";
+
 void init_modeV16(void)
 {
 #ifdef __386__
@@ -212,7 +214,7 @@ void show_results_modeV16(void)
 
     total_result_w = ((double)total_loops_modeV16 * 15.625 * 1000.0) / ((double)timespent_w8_modeV16);
     total_result_r = ((double)total_loops_modeV16 * 15.625 * 1000.0) / ((double)timespent_r8_modeV16);
-    printf("VGA 160x200 16c: W8 %.2lf kb/s, R8 %.2lf kb/s\n", total_result_w, total_result_r);
+    printf(MSG_8BIT, total_result_w, total_result_r);
 }
 
 void export_results_modeV16(void)
@@ -222,5 +224,5 @@ void export_results_modeV16(void)
 
     total_result_w = ((double)total_loops_modeV16 * 15.625 * 1000.0) / ((double)timespent_w8_modeV16);
     total_result_r = ((double)total_loops_modeV16 * 15.625 * 1000.0) / ((double)timespent_r8_modeV16);
-    fprintf(logFile, "VGA 160x200 16c: W8 %.2lf kb/s, R8 %.2lf kb/s\n", total_result_w, total_result_r);
+    fprintf(logFile, MSG_8BIT, total_result_w, total_result_r);
 }

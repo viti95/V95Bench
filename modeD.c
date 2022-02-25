@@ -39,6 +39,10 @@ unsigned long timespent_w32_modeD;
 unsigned long timespent_r32_modeD;
 #endif
 
+static const char MSG_8BIT[]  = "EGA 320x200 16c: W8 %.2lf kb/s, R8 %.2lf kb/s\n";
+static const char MSG_16BIT[] = "                 W16 %.2lf kb/s, R16 %.2lf kb/s\n";
+static const char MSG_32BIT[] = "                 W32 %.2lf kb/s, R32 %.2lf kb/s\n";
+
 void init_modeD(void)
 {
     union REGS regs;
@@ -623,15 +627,15 @@ void show_results_modeD(void)
 
     total_result_w = ((double)total_loops_modeD * 31.25 * 1000.0) / ((double)timespent_w8_modeD);
     total_result_r = ((double)total_loops_modeD * 31.25 * 1000.0) / ((double)timespent_r8_modeD);
-    printf("EGA 320x200 16c: W8 %.2lf kb/s, R8 %.2lf kb/s\n", total_result_w, total_result_r);
+    printf(MSG_8BIT, total_result_w, total_result_r);
     total_result_w = ((double)total_loops_modeD * 31.25 * 1000.0) / ((double)timespent_w16_modeD);
     total_result_r = ((double)total_loops_modeD * 31.25 * 1000.0) / ((double)timespent_r16_modeD);
-    printf("                 W16 %.2lf kb/s, R16 %.2lf kb/s\n", total_result_w, total_result_r);
+    printf(MSG_16BIT, total_result_w, total_result_r);
 
 #ifdef __386__
     total_result_w = ((double)total_loops_modeD * 31.25 * 1000.0) / ((double)timespent_w32_modeD);
     total_result_r = ((double)total_loops_modeD * 31.25 * 1000.0) / ((double)timespent_r32_modeD);
-    printf("                 W32 %.2lf kb/s, R32 %.2lf kb/s\n", total_result_w, total_result_r);
+    printf(MSG_32BIT, total_result_w, total_result_r);
 #endif
 }
 
@@ -642,14 +646,14 @@ void export_results_modeD(void)
 
     total_result_w = ((double)total_loops_modeD * 31.25 * 1000.0) / ((double)timespent_w8_modeD);
     total_result_r = ((double)total_loops_modeD * 31.25 * 1000.0) / ((double)timespent_r8_modeD);
-    fprintf(logFile, "EGA 320x200 16c: W8 %.2lf kb/s, R8 %.2lf kb/s\n", total_result_w, total_result_r);
+    fprintf(logFile, MSG_8BIT, total_result_w, total_result_r);
     total_result_w = ((double)total_loops_modeD * 31.25 * 1000.0) / ((double)timespent_w16_modeD);
     total_result_r = ((double)total_loops_modeD * 31.25 * 1000.0) / ((double)timespent_r16_modeD);
-    fprintf(logFile, "                 W16 %.2lf kb/s, R16 %.2lf kb/s\n", total_result_w, total_result_r);
+    fprintf(logFile, MSG_16BIT, total_result_w, total_result_r);
 
 #ifdef __386__
     total_result_w = ((double)total_loops_modeD * 31.25 * 1000.0) / ((double)timespent_w32_modeD);
     total_result_r = ((double)total_loops_modeD * 31.25 * 1000.0) / ((double)timespent_r32_modeD);
-    fprintf(logFile, "                 W32 %.2lf kb/s, R32 %.2lf kb/s\n", total_result_w, total_result_r);
+    fprintf(logFile, MSG_32BIT, total_result_w, total_result_r);
 #endif
 }
