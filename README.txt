@@ -17,6 +17,7 @@
  - VGA
  - ATI Small Wonder series
  - Plantronics ColorPlus
+ - IBM PCjr / Tandy Video I
 
 ###############
 # Executables #
