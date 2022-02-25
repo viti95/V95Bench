@@ -18,6 +18,7 @@
 #include "mode3.h"
 #include "timer.h"
 #include "file.h"
+#include "messages.h"
 
 #include <dos.h>
 #include <stdio.h>
@@ -37,10 +38,6 @@ unsigned long timespent_r16_mode3;
 unsigned long timespent_w32_mode3;
 unsigned long timespent_r32_mode3;
 #endif
-
-static const char MSG_8BIT[]  = "TXT 80x25 16c: W8 %.2lf kb/s, R8 %.2lf kb/s\n";
-static const char MSG_16BIT[] = "               W16 %.2lf kb/s, R16 %.2lf kb/s\n";
-static const char MSG_32BIT[] = "               W32 %.2lf kb/s, R32 %.2lf kb/s\n";
 
 void init_mode3(void)
 {
@@ -279,15 +276,15 @@ void show_results_mode3(void)
 
     total_result_w = ((double)total_loops_mode3 * 3.90625 * 1000.0) / ((double)timespent_w8_mode3);
     total_result_r = ((double)total_loops_mode3 * 3.90625 * 1000.0) / ((double)timespent_r8_mode3);
-    printf(MSG_8BIT, total_result_w, total_result_r);
+    printf(MSG_MODE3_8BIT, total_result_w, total_result_r);
     total_result_w = ((double)total_loops_mode3 * 3.90625 * 1000.0) / ((double)timespent_w16_mode3);
     total_result_r = ((double)total_loops_mode3 * 3.90625 * 1000.0) / ((double)timespent_r16_mode3);
-    printf(MSG_16BIT, total_result_w, total_result_r);
+    printf(MSG_GENERIC_16BIT + 9, total_result_w, total_result_r);
 
 #ifdef __386__
     total_result_w = ((double)total_loops_mode3 * 3.90625 * 1000.0) / ((double)timespent_w32_mode3);
     total_result_r = ((double)total_loops_mode3 * 3.90625 * 1000.0) / ((double)timespent_r32_mode3);
-    printf(MSG_32BIT, total_result_w, total_result_r);
+    printf(MSG_GENERIC_32BIT + 9, total_result_w, total_result_r);
 #endif
 }
 
@@ -298,14 +295,14 @@ void export_results_mode3(void)
 
     total_result_w = ((double)total_loops_mode3 * 3.90625 * 1000.0) / ((double)timespent_w8_mode3);
     total_result_r = ((double)total_loops_mode3 * 3.90625 * 1000.0) / ((double)timespent_r8_mode3);
-    fprintf(logFile, MSG_8BIT, total_result_w, total_result_r);
+    fprintf(logFile, MSG_MODE3_8BIT, total_result_w, total_result_r);
     total_result_w = ((double)total_loops_mode3 * 3.90625 * 1000.0) / ((double)timespent_w16_mode3);
     total_result_r = ((double)total_loops_mode3 * 3.90625 * 1000.0) / ((double)timespent_r16_mode3);
-    fprintf(logFile, MSG_16BIT, total_result_w, total_result_r);
+    fprintf(logFile, MSG_GENERIC_16BIT + 9, total_result_w, total_result_r);
 
 #ifdef __386__
     total_result_w = ((double)total_loops_mode3 * 3.90625 * 1000.0) / ((double)timespent_w32_mode3);
     total_result_r = ((double)total_loops_mode3 * 3.90625 * 1000.0) / ((double)timespent_r32_mode3);
-    fprintf(logFile, MSG_32BIT, total_result_w, total_result_r);
+    fprintf(logFile, MSG_GENERIC_32BIT + 9, total_result_w, total_result_r);
 #endif
 }

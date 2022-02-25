@@ -18,6 +18,7 @@
 #include "modeV16.h"
 #include "timer.h"
 #include "file.h"
+#include "messages.h"
 
 #include <dos.h>
 #include <stdio.h>
@@ -31,8 +32,6 @@
 unsigned long total_loops_modeV16;
 unsigned long timespent_w8_modeV16;
 unsigned long timespent_r8_modeV16;
-
-static const char MSG_8BIT[]  = "VGA 160x200 16c: W8 %.2lf kb/s, R8 %.2lf kb/s\n";
 
 void init_modeV16(void)
 {
@@ -214,7 +213,7 @@ void show_results_modeV16(void)
 
     total_result_w = ((double)total_loops_modeV16 * 15.625 * 1000.0) / ((double)timespent_w8_modeV16);
     total_result_r = ((double)total_loops_modeV16 * 15.625 * 1000.0) / ((double)timespent_r8_modeV16);
-    printf(MSG_8BIT, total_result_w, total_result_r);
+    printf(MSG_MODEV16_8BIT, total_result_w, total_result_r);
 }
 
 void export_results_modeV16(void)
@@ -224,5 +223,5 @@ void export_results_modeV16(void)
 
     total_result_w = ((double)total_loops_modeV16 * 15.625 * 1000.0) / ((double)timespent_w8_modeV16);
     total_result_r = ((double)total_loops_modeV16 * 15.625 * 1000.0) / ((double)timespent_r8_modeV16);
-    fprintf(logFile, MSG_8BIT, total_result_w, total_result_r);
+    fprintf(logFile, MSG_MODEV16_8BIT, total_result_w, total_result_r);
 }

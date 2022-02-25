@@ -18,6 +18,7 @@
 #include "modeC16.h"
 #include "timer.h"
 #include "file.h"
+#include "messages.h"
 
 #include <dos.h>
 #include <stdio.h>
@@ -31,8 +32,6 @@
 unsigned long total_loops_modeC16;
 unsigned long timespent_w8_modeC16;
 unsigned long timespent_r8_modeC16;
-
-static const char MSG_8BIT[]  = "CGA 160x100 16c: W8 %.2lf kb/s, R8 %.2lf kb/s\n";
 
 void init_modeC16(void)
 {
@@ -215,7 +214,7 @@ void show_results_modeC16(void)
 
     total_result_w = ((double)total_loops_modeC16 * 7.8125 * 1000.0) / ((double)timespent_w8_modeC16);
     total_result_r = ((double)total_loops_modeC16 * 7.8125 * 1000.0) / ((double)timespent_r8_modeC16);
-    printf(MSG_8BIT, total_result_w, total_result_r);
+    printf(MSG_MODEC16_8BIT, total_result_w, total_result_r);
 }
 
 void export_results_modeC16(void)
@@ -225,5 +224,5 @@ void export_results_modeC16(void)
 
     total_result_w = ((double)total_loops_modeC16 * 7.8125 * 1000.0) / ((double)timespent_w8_modeC16);
     total_result_r = ((double)total_loops_modeC16 * 7.8125 * 1000.0) / ((double)timespent_r8_modeC16);
-    fprintf(logFile, MSG_8BIT, total_result_w, total_result_r);
+    fprintf(logFile, MSG_MODEC16_8BIT, total_result_w, total_result_r);
 }

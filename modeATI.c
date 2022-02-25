@@ -18,6 +18,7 @@
 #include "modeATI.h"
 #include "timer.h"
 #include "file.h"
+#include "messages.h"
 
 #include <dos.h>
 #include <stdio.h>
@@ -38,10 +39,6 @@ unsigned long timespent_r16_modeATI;
 unsigned long timespent_w32_modeATI;
 unsigned long timespent_r32_modeATI;
 #endif
-
-static const char MSG_8BIT[]  = "ATI 640x200 16c: W8 %.2lf kb/s, R8 %.2lf kb/s\n";
-static const char MSG_16BIT[] = "                 W16 %.2lf kb/s, R16 %.2lf kb/s\n";
-static const char MSG_32BIT[] = "                 W32 %.2lf kb/s, R32 %.2lf kb/s\n";
 
 void init_modeATI(void)
 {
@@ -323,15 +320,15 @@ void show_results_modeATI(void)
 
     total_result_w = ((double)total_loops_modeATI * 62.5 * 1000.0) / ((double)timespent_w8_modeATI);
     total_result_r = ((double)total_loops_modeATI * 62.5 * 1000.0) / ((double)timespent_r8_modeATI);
-    printf(MSG_8BIT, total_result_w, total_result_r);
+    printf(MSG_MODEATI_8BIT, total_result_w, total_result_r);
     total_result_w = ((double)total_loops_modeATI * 62.5 * 1000.0) / ((double)timespent_w16_modeATI);
     total_result_r = ((double)total_loops_modeATI * 62.5 * 1000.0) / ((double)timespent_r16_modeATI);
-    printf(MSG_16BIT, total_result_w, total_result_r);
+    printf(MSG_GENERIC_16BIT + 7, total_result_w, total_result_r);
 
 #ifdef __386__
     total_result_w = ((double)total_loops_modeATI * 62.5 * 1000.0) / ((double)timespent_w32_modeATI);
     total_result_r = ((double)total_loops_modeATI * 62.5 * 1000.0) / ((double)timespent_r32_modeATI);
-    printf(MSG_32BIT, total_result_w, total_result_r);
+    printf(MSG_GENERIC_32BIT + 7, total_result_w, total_result_r);
 #endif
 }
 
@@ -342,14 +339,14 @@ void export_results_modeATI(void)
 
     total_result_w = ((double)total_loops_modeATI * 62.5 * 1000.0) / ((double)timespent_w8_modeATI);
     total_result_r = ((double)total_loops_modeATI * 62.5 * 1000.0) / ((double)timespent_r8_modeATI);
-    fprintf(logFile, MSG_8BIT, total_result_w, total_result_r);
+    fprintf(logFile, MSG_MODEATI_8BIT, total_result_w, total_result_r);
     total_result_w = ((double)total_loops_modeATI * 62.5 * 1000.0) / ((double)timespent_w16_modeATI);
     total_result_r = ((double)total_loops_modeATI * 62.5 * 1000.0) / ((double)timespent_r16_modeATI);
-    fprintf(logFile, MSG_16BIT, total_result_w, total_result_r);
+    fprintf(logFile, MSG_GENERIC_16BIT + 7, total_result_w, total_result_r);
 
 #ifdef __386__
     total_result_w = ((double)total_loops_modeATI * 62.5 * 1000.0) / ((double)timespent_w32_modeATI);
     total_result_r = ((double)total_loops_modeATI * 62.5 * 1000.0) / ((double)timespent_r32_modeATI);
-    fprintf(logFile, MSG_32BIT, total_result_w, total_result_r);
+    fprintf(logFile, MSG_GENERIC_32BIT + 7, total_result_w, total_result_r);
 #endif
 }
