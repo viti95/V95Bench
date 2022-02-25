@@ -22,6 +22,7 @@ extern const char MSG_MODE6_8BIT[];
 extern const char MSG_MODE7_8BIT[];
 extern const char MSG_MODE8_8BIT[];
 extern const char MSG_MODE9_8BIT[];
+extern const char MSG_MODEA_8BIT[];
 extern const char MSG_MODE10_8BIT[];
 extern const char MSG_MODE13_8BIT[];
 extern const char MSG_MODEATI_8BIT[];

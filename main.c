@@ -31,6 +31,7 @@
 #include "mode7.h"
 #include "mode8.h"
 #include "mode9.h"
+#include "modeA.h"
 #include "mode13.h"
 #include "modeY.h"
 #include "modeD.h"
@@ -52,6 +53,7 @@ unsigned char do_bench_mode6 = 0;
 unsigned char do_bench_mode7 = 0;
 unsigned char do_bench_mode8 = 0;
 unsigned char do_bench_mode9 = 0;
+unsigned char do_bench_modeA = 0;
 unsigned char do_bench_mode13 = 0;
 unsigned char do_bench_modeY = 0;
 unsigned char do_bench_modeD = 0;
@@ -131,6 +133,7 @@ void select_benchmark(void)
         launch_bench_mode(&do_bench_mode6, execute_bench_mode6);
         launch_bench_mode(&do_bench_mode8, execute_bench_mode8);
         launch_bench_mode(&do_bench_mode9, execute_bench_mode9);
+        launch_bench_mode(&do_bench_modeA, execute_bench_modeA);
         break;
     case ATI:
         launch_bench_mode(&do_bench_mode1, execute_bench_mode1);
@@ -236,6 +239,12 @@ void show_results(void)
         pause_keyboard();
     }
 
+    if (do_bench_modeA)
+    {
+        show_results_modeA();
+        pause_keyboard();
+    }
+
     if (do_bench_modePCP)
     {
         show_results_modePCP();
@@ -315,6 +324,9 @@ void export_results(char *filename)
 
     if (do_bench_mode9)
         export_results_mode9();
+
+    if (do_bench_modeA)
+        export_results_modeA();
 
     if (do_bench_modePCP)
         export_results_modePCP();

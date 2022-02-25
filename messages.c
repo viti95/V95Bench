@@ -24,6 +24,7 @@ const char MSG_MODE6_8BIT[]    = "CGA 640x200 2c: W8 %.2lf kb/s, R8 %.2lf kb/s\n
 const char MSG_MODE7_8BIT[]    = "TXT 80x25 2c: W8 %.2lf kb/s, R8 %.2lf kb/s\n";
 const char MSG_MODE8_8BIT[]    = "PCjr/Tandy 160x200 16c: W8 %.2lf kb/s, R8 %.2lf kb/s\n";
 const char MSG_MODE9_8BIT[]    = "PCjr/Tandy 320x200 16c: W8 %.2lf kb/s, R8 %.2lf kb/s\n";
+const char MSG_MODEA_8BIT[]    = "PCjr/Tandy 640x200 4c: W8 %.2lf kb/s, R8 %.2lf kb/s\n";
 const char MSG_MODE10_8BIT[]   = "EGA 640x350 16c: W8 %.2lf kb/s, R8 %.2lf kb/s\n";
 const char MSG_MODE13_8BIT[]   = "VGA 320x200 256c (13h): W8 %.2lf kb/s, R8 %.2lf kb/s\n";
 const char MSG_MODEATI_8BIT[]  = "ATI 640x200 16c: W8 %.2lf kb/s, R8 %.2lf kb/s\n";
