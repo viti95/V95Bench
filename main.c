@@ -18,6 +18,7 @@
 #include <stdio.h>
 #include <dos.h>
 #include <string.h>
+#include <stdlib.h>
 
 #include "main.h"
 #include "file.h"
@@ -29,6 +30,7 @@
 #include "mode6.h"
 #include "mode7.h"
 #include "mode8.h"
+#include "mode9.h"
 #include "mode13.h"
 #include "modeY.h"
 #include "modeD.h"
@@ -49,6 +51,7 @@ unsigned char do_bench_modeV16 = 0;
 unsigned char do_bench_mode6 = 0;
 unsigned char do_bench_mode7 = 0;
 unsigned char do_bench_mode8 = 0;
+unsigned char do_bench_mode9 = 0;
 unsigned char do_bench_mode13 = 0;
 unsigned char do_bench_modeY = 0;
 unsigned char do_bench_modeD = 0;
@@ -111,6 +114,12 @@ void launch_bench_mode8(void)
 {
     do_bench_mode8 = 1;
     execute_bench_mode8();
+}
+
+void launch_bench_mode9(void)
+{
+    do_bench_mode9 = 1;
+    execute_bench_mode9();
 }
 
 void launch_bench_mode13(void)
@@ -210,21 +219,14 @@ void select_benchmark(void)
         break;
     case VESA:
         break;
-    case Tandy1PCjr:
+    case TandyPCjr:
         launch_bench_mode1();
         launch_bench_mode3();
         launch_bench_modeC16();
         launch_bench_mode4();
         launch_bench_mode6();
         launch_bench_mode8();
-        break;
-    case Tandy2:
-        launch_bench_mode1();
-        launch_bench_mode3();
-        launch_bench_modeC16();
-        launch_bench_mode4();
-        launch_bench_mode6();
-        launch_bench_mode8();
+        launch_bench_mode9();
         break;
     case ATI:
         launch_bench_mode1();
@@ -245,6 +247,7 @@ void select_benchmark(void)
         break;
     default:
         printf("Invalid option :(");
+        exit(EXIT_FAILURE);
         return;
     }
 }
@@ -320,6 +323,12 @@ void show_results(void)
     if (do_bench_mode8)
     {
         show_results_mode8();
+        pause_keyboard();
+    }
+
+    if (do_bench_mode9)
+    {
+        show_results_mode9();
         pause_keyboard();
     }
 
@@ -400,6 +409,9 @@ void export_results(char *filename)
     if (do_bench_mode8)
         export_results_mode8();
 
+    if (do_bench_mode9)
+        export_results_mode9();
+
     if (do_bench_modePCP)
         export_results_modePCP();
 
@@ -448,9 +460,8 @@ int main(int argc, char **argv)
     printf("    6.  VGA\n");
     printf("    7.  VESA (not available)\n");
     printf("    8.  Tandy Video 1 / IBM PCjr\n");
-    printf("    9.  Tandy Video 2\n");
-    printf("    10. ATI Small Wonder\n");
-    printf("    11. Plantronics ColorPlus\n");
+    printf("    9.  ATI Small Wonder\n");
+    printf("    10. Plantronics ColorPlus\n");
     printf("\n");
 
     printf("Select option: ");
