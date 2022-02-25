@@ -27,7 +27,6 @@ void bench_r16_mode3(void);
 void bench_w32_mode3(void);
 void bench_r32_mode3(void);
 void execute_bench_mode3(void);
-void show_results_mode3(void);
-void export_results_mode3(void);
+void get_results_mode3(unsigned char to_file);
 
 #endif

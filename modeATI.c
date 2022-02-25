@@ -313,40 +313,34 @@ void execute_bench_modeATI(void)
 #endif
 }
 
-void show_results_modeATI(void)
+void get_results_modeATI(unsigned char to_file)
 {
     double total_result_w;
     double total_result_r;
 
     total_result_w = calc_kb_second(total_loops_modeATI, 62.5, timespent_w8_modeATI);
     total_result_r = calc_kb_second(total_loops_modeATI, 62.5, timespent_r8_modeATI);
-    printf(MSG_MODEATI_8BIT, total_result_w, total_result_r);
+
+    if (to_file)
+        fprintf(logFile, MSG_MODEATI_8BIT, total_result_w, total_result_r);
+    else
+        printf(MSG_MODEATI_8BIT, total_result_w, total_result_r);
+
     total_result_w = calc_kb_second(total_loops_modeATI, 62.5, timespent_w16_modeATI);
     total_result_r = calc_kb_second(total_loops_modeATI, 62.5, timespent_r16_modeATI);
-    printf(MSG_GENERIC_16BIT + 7, total_result_w, total_result_r);
+
+    if (to_file)
+        fprintf(logFile, MSG_GENERIC_16BIT + 7, total_result_w, total_result_r);
+    else
+        printf(MSG_GENERIC_16BIT + 7, total_result_w, total_result_r);
 
 #ifdef __386__
     total_result_w = calc_kb_second(total_loops_modeATI, 62.5, timespent_w32_modeATI);
     total_result_r = calc_kb_second(total_loops_modeATI, 62.5, timespent_r32_modeATI);
-    printf(MSG_GENERIC_32BIT + 7, total_result_w, total_result_r);
-#endif
-}
 
-void export_results_modeATI(void)
-{
-    double total_result_w;
-    double total_result_r;
-
-    total_result_w = calc_kb_second(total_loops_modeATI, 62.5, timespent_w8_modeATI);
-    total_result_r = calc_kb_second(total_loops_modeATI, 62.5, timespent_r8_modeATI);
-    fprintf(logFile, MSG_MODEATI_8BIT, total_result_w, total_result_r);
-    total_result_w = calc_kb_second(total_loops_modeATI, 62.5, timespent_w16_modeATI);
-    total_result_r = calc_kb_second(total_loops_modeATI, 62.5, timespent_r16_modeATI);
-    fprintf(logFile, MSG_GENERIC_16BIT + 7, total_result_w, total_result_r);
-
-#ifdef __386__
-    total_result_w = calc_kb_second(total_loops_modeATI, 62.5, timespent_w32_modeATI);
-    total_result_r = calc_kb_second(total_loops_modeATI, 62.5, timespent_r32_modeATI);
-    fprintf(logFile, MSG_GENERIC_32BIT + 7, total_result_w, total_result_r);
+    if (to_file)
+        fprintf(logFile, MSG_GENERIC_32BIT + 7, total_result_w, total_result_r);
+    else
+        printf(MSG_GENERIC_32BIT + 7, total_result_w, total_result_r);
 #endif
 }

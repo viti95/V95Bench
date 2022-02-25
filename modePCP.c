@@ -275,40 +275,34 @@ void execute_bench_modePCP(void)
 #endif
 }
 
-void show_results_modePCP(void)
+void get_results_modePCP(unsigned char to_file)
 {
     double total_result_w;
     double total_result_r;
 
     total_result_w = calc_kb_second(total_loops_modePCP, 31.25, timespent_w8_modePCP);
     total_result_r = calc_kb_second(total_loops_modePCP, 31.25, timespent_r8_modePCP);
-    printf(MSG_MODEPCP_8BIT, total_result_w, total_result_r);
+
+    if (to_file)
+        fprintf(logFile, MSG_MODEPCP_8BIT, total_result_w, total_result_r);
+    else
+        printf(MSG_MODEPCP_8BIT, total_result_w, total_result_r);
+
     total_result_w = calc_kb_second(total_loops_modePCP, 31.25, timespent_w16_modePCP);
     total_result_r = calc_kb_second(total_loops_modePCP, 31.25, timespent_r16_modePCP);
-    printf(MSG_GENERIC_16BIT + 7, total_result_w, total_result_r);
+
+    if (to_file)
+        fprintf(logFile, MSG_GENERIC_16BIT + 7, total_result_w, total_result_r);
+    else
+        printf(MSG_GENERIC_16BIT + 7, total_result_w, total_result_r);
 
 #ifdef __386__
     total_result_w = calc_kb_second(total_loops_modePCP, 31.25, timespent_w32_modePCP);
     total_result_r = calc_kb_second(total_loops_modePCP, 31.25, timespent_r32_modePCP);
-    printf(MSG_GENERIC_32BIT + 7, total_result_w, total_result_r);
-#endif
-}
 
-void export_results_modePCP(void)
-{
-    double total_result_w;
-    double total_result_r;
-
-    total_result_w = calc_kb_second(total_loops_modePCP, 31.25, timespent_w8_modePCP);
-    total_result_r = calc_kb_second(total_loops_modePCP, 31.25, timespent_r8_modePCP);
-    fprintf(logFile, MSG_MODEPCP_8BIT, total_result_w, total_result_r);
-    total_result_w = calc_kb_second(total_loops_modePCP, 31.25, timespent_w16_modePCP);
-    total_result_r = calc_kb_second(total_loops_modePCP, 31.25, timespent_r16_modePCP);
-    fprintf(logFile, MSG_GENERIC_16BIT + 7, total_result_w, total_result_r);
-
-#ifdef __386__
-    total_result_w = calc_kb_second(total_loops_modePCP, 31.25, timespent_w32_modePCP);
-    total_result_r = calc_kb_second(total_loops_modePCP, 31.25, timespent_r32_modePCP);
-    fprintf(logFile, MSG_GENERIC_32BIT + 7, total_result_w, total_result_r);
+    if (to_file)
+        fprintf(logFile, MSG_GENERIC_32BIT + 7, total_result_w, total_result_r);
+    else
+        printf(MSG_GENERIC_32BIT + 7, total_result_w, total_result_r);
 #endif
 }

@@ -27,7 +27,6 @@ void bench_r16_modeHGC(void);
 void bench_w32_modeHGC(void);
 void bench_r32_modeHGC(void);
 void execute_bench_modeHGC(void);
-void show_results_modeHGC(void);
-void export_results_modeHGC(void);
+void get_results_modeHGC(unsigned char to_file);
 
 #endif

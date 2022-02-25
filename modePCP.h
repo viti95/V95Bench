@@ -27,7 +27,6 @@ void bench_r16_modePCP(void);
 void bench_w32_modePCP(void);
 void bench_r32_modePCP(void);
 void execute_bench_modePCP(void);
-void show_results_modePCP(void);
-void export_results_modePCP(void);
+void get_results_modePCP(unsigned char to_file);
 
 #endif

@@ -41,6 +41,9 @@
 #include "modeHGC.h"
 #include "modeATI.h"
 
+#define FALSE 0
+#define TRUE  1
+
 unsigned char videomode;
 unsigned char menu_selection;
 
@@ -187,109 +190,109 @@ void show_results(void)
 
     if (do_bench_mode7)
     {
-        show_results_mode7();
+        get_results_mode7(FALSE);
         pause_keyboard();
     }
 
     if (do_bench_modeHGC)
     {
-        show_results_modeHGC();
+        get_results_modeHGC(FALSE);
         pause_keyboard();
     }
 
     if (do_bench_mode1)
     {
-        show_results_mode1();
+        get_results_mode1(FALSE);
         pause_keyboard();
     }
 
     if (do_bench_mode3)
     {
-        show_results_mode3();
+        get_results_mode3(FALSE);
         pause_keyboard();
     }
 
     if (do_bench_modeC16)
     {
-        show_results_modeC16();
+        get_results_modeC16(FALSE);
         pause_keyboard();
     }
 
     if (do_bench_mode4)
     {
-        show_results_mode4();
+        get_results_mode4(FALSE);
         pause_keyboard();
     }
 
     if (do_bench_mode6)
     {
-        show_results_mode6();
+        get_results_mode6(FALSE);
         pause_keyboard();
     }
 
     if (do_bench_mode8)
     {
-        show_results_mode8();
+        get_results_mode8(FALSE);
         pause_keyboard();
     }
 
     if (do_bench_mode9)
     {
-        show_results_mode9();
+        get_results_mode9(FALSE);
         pause_keyboard();
     }
 
     if (do_bench_modeA)
     {
-        show_results_modeA();
+        get_results_modeA(FALSE);
         pause_keyboard();
     }
 
     if (do_bench_modePCP)
     {
-        show_results_modePCP();
+        get_results_modePCP(FALSE);
         pause_keyboard();
     }
 
     if (do_bench_modeATI)
     {
-        show_results_modeATI();
+        get_results_modeATI(FALSE);
         pause_keyboard();
     }
 
     if (do_bench_modeD)
     {
-        show_results_modeD();
+        get_results_modeD(FALSE);
         pause_keyboard();
     }
 
     if (do_bench_modeE)
     {
-        show_results_modeE();
+        get_results_modeE(FALSE);
         pause_keyboard();
     }
 
     if (do_bench_mode10)
     {
-        show_results_mode10();
+        get_results_mode10(FALSE);
         pause_keyboard();
     }
 
     if (do_bench_modeV16)
     {
-        show_results_modeV16();
+        get_results_modeV16(FALSE);
         pause_keyboard();
     }
 
     if (do_bench_mode13)
     {
-        show_results_mode13();
+        get_results_mode13(FALSE);
         pause_keyboard();
     }
 
     if (do_bench_modeY)
     {
-        show_results_modeY();
+        get_results_modeY(FALSE);
         pause_keyboard();
     }
 }
@@ -299,58 +302,58 @@ void export_results(char *filename)
     open_results_file(filename);
 
     if (do_bench_mode7)
-        export_results_mode7();
+        get_results_mode7(TRUE);
 
     if (do_bench_modeHGC)
-        export_results_modeHGC();
+        get_results_modeHGC(TRUE);
 
     if (do_bench_mode1)
-        export_results_mode1();
+        get_results_mode1(TRUE);
 
     if (do_bench_mode3)
-        export_results_mode3();
+        get_results_mode3(TRUE);
 
     if (do_bench_modeC16)
-        export_results_modeC16();
+        get_results_modeC16(TRUE);
 
     if (do_bench_mode4)
-        export_results_mode4();
+        get_results_mode4(TRUE);
 
     if (do_bench_mode6)
-        export_results_mode6();
+        get_results_mode6(TRUE);
 
     if (do_bench_mode8)
-        export_results_mode8();
+        get_results_mode8(TRUE);
 
     if (do_bench_mode9)
-        export_results_mode9();
+        get_results_mode9(TRUE);
 
     if (do_bench_modeA)
-        export_results_modeA();
+        get_results_modeA(TRUE);
 
     if (do_bench_modePCP)
-        export_results_modePCP();
+        get_results_modePCP(TRUE);
 
     if (do_bench_modeATI)
-        export_results_modeATI();
+        get_results_modeATI(TRUE);
 
     if (do_bench_modeD)
-        export_results_modeD();
+        get_results_modeD(TRUE);
 
     if (do_bench_modeE)
-        export_results_modeE();
+        get_results_modeE(TRUE);
 
     if (do_bench_mode10)
-        export_results_mode10();
+        get_results_mode10(TRUE);
 
     if (do_bench_modeV16)
-        export_results_modeV16();
+        get_results_modeV16(TRUE);
 
     if (do_bench_mode13)
-        export_results_mode13();
+        get_results_mode13(TRUE);
 
     if (do_bench_modeY)
-        export_results_modeY();
+        get_results_modeY(TRUE);
 
     close_results_file();
 

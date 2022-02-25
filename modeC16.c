@@ -207,22 +207,16 @@ void execute_bench_modeC16(void)
     timespent_r8_modeC16 = profile_function(bench_r8_modeC16);
 }
 
-void show_results_modeC16(void)
+void get_results_modeC16(unsigned char to_file)
 {
     double total_result_w;
     double total_result_r;
 
     total_result_w = calc_kb_second(total_loops_modeC16, 7.8125, timespent_w8_modeC16);
     total_result_r = calc_kb_second(total_loops_modeC16, 7.8125, timespent_r8_modeC16);
-    printf(MSG_MODEC16_8BIT, total_result_w, total_result_r);
-}
 
-void export_results_modeC16(void)
-{
-    double total_result_w;
-    double total_result_r;
-
-    total_result_w = calc_kb_second(total_loops_modeC16, 7.8125, timespent_w8_modeC16);
-    total_result_r = calc_kb_second(total_loops_modeC16, 7.8125, timespent_r8_modeC16);
-    fprintf(logFile, MSG_MODEC16_8BIT, total_result_w, total_result_r);
+    if (to_file)
+        fprintf(logFile, MSG_MODEC16_8BIT, total_result_w, total_result_r);
+    else
+        printf(MSG_MODEC16_8BIT, total_result_w, total_result_r);
 }

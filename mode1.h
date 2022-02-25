@@ -27,7 +27,6 @@ void bench_r16_mode1(void);
 void bench_w32_mode1(void);
 void bench_r32_mode1(void);
 void execute_bench_mode1(void);
-void show_results_mode1(void);
-void export_results_mode1(void);
+void get_results_mode1(unsigned char to_file);
 
 #endif

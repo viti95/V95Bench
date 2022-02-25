@@ -23,7 +23,6 @@ void preheat_modeC16(unsigned long total_loops);
 void bench_w8_modeC16(void);
 void bench_r8_modeC16(void);
 void execute_bench_modeC16(void);
-void show_results_modeC16(void);
-void export_results_modeC16(void);
+void get_results_modeC16(unsigned char to_file);
 
 #endif

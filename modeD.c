@@ -617,40 +617,34 @@ void execute_bench_modeD(void)
 #endif
 }
 
-void show_results_modeD(void)
+void get_results_modeD(unsigned char to_file)
 {
     double total_result_w;
     double total_result_r;
 
     total_result_w = calc_kb_second(total_loops_modeD, 31.25, timespent_w8_modeD);
     total_result_r = calc_kb_second(total_loops_modeD, 31.25, timespent_r8_modeD);
-    printf(MSG_MODED_8BIT, total_result_w, total_result_r);
+
+    if (to_file)
+        fprintf(logFile, MSG_MODED_8BIT, total_result_w, total_result_r);
+    else
+        printf(MSG_MODED_8BIT, total_result_w, total_result_r);
+
     total_result_w = calc_kb_second(total_loops_modeD, 31.25, timespent_w16_modeD);
     total_result_r = calc_kb_second(total_loops_modeD, 31.25, timespent_r16_modeD);
-    printf(MSG_GENERIC_16BIT + 7, total_result_w, total_result_r);
+
+    if (to_file)
+        fprintf(logFile, MSG_GENERIC_16BIT + 7, total_result_w, total_result_r);
+    else
+        printf(MSG_GENERIC_16BIT + 7, total_result_w, total_result_r);
 
 #ifdef __386__
     total_result_w = calc_kb_second(total_loops_modeD, 31.25, timespent_w32_modeD);
     total_result_r = calc_kb_second(total_loops_modeD, 31.25, timespent_r32_modeD);
-    printf(MSG_GENERIC_32BIT + 7, total_result_w, total_result_r);
-#endif
-}
 
-void export_results_modeD(void)
-{
-    double total_result_w;
-    double total_result_r;
-
-    total_result_w = calc_kb_second(total_loops_modeD, 31.25, timespent_w8_modeD);
-    total_result_r = calc_kb_second(total_loops_modeD, 31.25, timespent_r8_modeD);
-    fprintf(logFile, MSG_MODED_8BIT, total_result_w, total_result_r);
-    total_result_w = calc_kb_second(total_loops_modeD, 31.25, timespent_w16_modeD);
-    total_result_r = calc_kb_second(total_loops_modeD, 31.25, timespent_r16_modeD);
-    fprintf(logFile, MSG_GENERIC_16BIT + 7, total_result_w, total_result_r);
-
-#ifdef __386__
-    total_result_w = calc_kb_second(total_loops_modeD, 31.25, timespent_w32_modeD);
-    total_result_r = calc_kb_second(total_loops_modeD, 31.25, timespent_r32_modeD);
-    fprintf(logFile, MSG_GENERIC_32BIT + 7, total_result_w, total_result_r);
+    if (to_file)
+        fprintf(logFile, MSG_GENERIC_32BIT + 7, total_result_w, total_result_r);
+    else
+        printf(MSG_GENERIC_32BIT + 7, total_result_w, total_result_r);
 #endif
 }

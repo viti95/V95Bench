@@ -617,40 +617,34 @@ void execute_bench_modeE(void)
 #endif
 }
 
-void show_results_modeE(void)
+void get_results_modeE(unsigned char to_file)
 {
     double total_result_w;
     double total_result_r;
 
     total_result_w = calc_kb_second(total_loops_modeE, 62.5, timespent_w8_modeE);
     total_result_r = calc_kb_second(total_loops_modeE, 62.5, timespent_r8_modeE);
-    printf(MSG_MODEE_8BIT, total_result_w, total_result_r);
+
+    if (to_file)
+        fprintf(logFile, MSG_MODEE_8BIT, total_result_w, total_result_r);
+    else
+        printf(MSG_MODEE_8BIT, total_result_w, total_result_r);
+
     total_result_w = calc_kb_second(total_loops_modeE, 62.5, timespent_w16_modeE);
     total_result_r = calc_kb_second(total_loops_modeE, 62.5, timespent_r16_modeE);
-    printf(MSG_GENERIC_16BIT + 7, total_result_w, total_result_r);
+
+    if (to_file)
+        fprintf(logFile, MSG_GENERIC_16BIT + 7, total_result_w, total_result_r);
+    else
+        printf(MSG_GENERIC_16BIT + 7, total_result_w, total_result_r);
 
 #ifdef __386__
     total_result_w = calc_kb_second(total_loops_modeE, 62.5, timespent_w32_modeE);
     total_result_r = calc_kb_second(total_loops_modeE, 62.5, timespent_r32_modeE);
-    printf(MSG_GENERIC_32BIT + 7, total_result_w, total_result_r);
-#endif
-}
 
-void export_results_modeE(void)
-{
-    double total_result_w;
-    double total_result_r;
-
-    total_result_w = calc_kb_second(total_loops_modeE, 62.5, timespent_w8_modeE);
-    total_result_r = calc_kb_second(total_loops_modeE, 62.5, timespent_r8_modeE);
-    fprintf(logFile, MSG_MODEE_8BIT, total_result_w, total_result_r);
-    total_result_w = calc_kb_second(total_loops_modeE, 62.5, timespent_w16_modeE);
-    total_result_r = calc_kb_second(total_loops_modeE, 62.5, timespent_r16_modeE);
-    fprintf(logFile, MSG_GENERIC_16BIT + 7, total_result_w, total_result_r);
-
-#ifdef __386__
-    total_result_w = calc_kb_second(total_loops_modeE, 62.5, timespent_w32_modeE);
-    total_result_r = calc_kb_second(total_loops_modeE, 62.5, timespent_r32_modeE);
-    fprintf(logFile, MSG_GENERIC_32BIT + 7, total_result_w, total_result_r);
+    if (to_file)
+        fprintf(logFile, MSG_GENERIC_32BIT + 7, total_result_w, total_result_r);
+    else
+        printf(MSG_GENERIC_32BIT + 7, total_result_w, total_result_r);
 #endif
 }
