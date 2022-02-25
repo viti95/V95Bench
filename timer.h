@@ -20,7 +20,10 @@
 
 extern unsigned char read_fix_8b_1, read_fix_8b_2, read_fix_8b_3, read_fix_8b_4, read_fix_8b_5, read_fix_8b_6, read_fix_8b_7, read_fix_8b_8;
 extern unsigned short read_fix_16b_1, read_fix_16b_2, read_fix_16b_3, read_fix_16b_4, read_fix_16b_5, read_fix_16b_6, read_fix_16b_7, read_fix_16b_8;
+
+#ifdef __386__
 extern unsigned int read_fix_32b_1, read_fix_32b_2, read_fix_32b_3, read_fix_32b_4, read_fix_32b_5, read_fix_32b_6, read_fix_32b_7, read_fix_32b_8;
+#endif
 
 unsigned long profile_function(void (*exec_function)(void));
 unsigned long profile_function_loops(void (*exec_function)(unsigned long), unsigned long loops);
