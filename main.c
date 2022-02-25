@@ -68,106 +68,10 @@ void pause_keyboard(void)
         ;
 }
 
-void launch_bench_mode1(void)
+void launch_bench_mode(unsigned char *do_bench_mode, void (*exececute_bench_mode)(void))
 {
-    do_bench_mode1 = 1;
-    execute_bench_mode1();
-}
-
-void launch_bench_mode3(void)
-{
-    do_bench_mode3 = 1;
-    execute_bench_mode3();
-}
-
-void launch_bench_mode4(void)
-{
-    do_bench_mode4 = 1;
-    execute_bench_mode4();
-}
-
-void launch_bench_modeC16(void)
-{
-    do_bench_modeC16 = 1;
-    execute_bench_modeC16();
-}
-
-void launch_bench_modeV16(void)
-{
-    do_bench_modeV16 = 1;
-    execute_bench_modeV16();
-}
-
-void launch_bench_mode6(void)
-{
-    do_bench_mode6 = 1;
-    execute_bench_mode6();
-}
-
-void launch_bench_mode7(void)
-{
-    do_bench_mode7 = 1;
-    execute_bench_mode7();
-}
-
-void launch_bench_mode8(void)
-{
-    do_bench_mode8 = 1;
-    execute_bench_mode8();
-}
-
-void launch_bench_mode9(void)
-{
-    do_bench_mode9 = 1;
-    execute_bench_mode9();
-}
-
-void launch_bench_mode13(void)
-{
-    do_bench_mode13 = 1;
-    execute_bench_mode13();
-}
-
-void launch_bench_modeY(void)
-{
-    do_bench_modeY = 1;
-    execute_bench_modeY();
-}
-
-void launch_bench_modeD(void)
-{
-    do_bench_modeD = 1;
-    execute_bench_modeD();
-}
-
-void launch_bench_modeE(void)
-{
-    do_bench_modeE = 1;
-    execute_bench_modeE();
-}
-
-void launch_bench_mode10(void)
-{
-    do_bench_mode10 = 1;
-    execute_bench_mode10();
-}
-
-void launch_bench_modePCP(void)
-{
-    do_bench_modePCP = 1;
-    execute_bench_modePCP();
-}
-
-void launch_bench_modeHGC(void)
-{
-    do_bench_modeHGC = 1;
-    execute_bench_modeHGC();
-}
-
-void launch_bench_modeATI(void)
-{
-    do_bench_modeATI = 1;
-    execute_bench_modeATI();
+    *do_bench_mode = 1;
+    exececute_bench_mode();
 }
 
 void select_benchmark(void)
@@ -175,75 +79,75 @@ void select_benchmark(void)
     switch (videomode)
     {
     case MDA:
-        launch_bench_mode7();
+        launch_bench_mode(&do_bench_mode7, execute_bench_mode7);
         break;
     case HGC:
-        launch_bench_mode7();
-        launch_bench_modeHGC();
+        launch_bench_mode(&do_bench_mode7, execute_bench_mode7);
+        launch_bench_mode(&do_bench_modeHGC, execute_bench_modeHGC);
         break;
     case CGA:
-        launch_bench_mode1();
-        launch_bench_mode3();
-        launch_bench_modeC16();
-        launch_bench_mode4();
-        launch_bench_mode6();
+        launch_bench_mode(&do_bench_mode1, execute_bench_mode1);
+        launch_bench_mode(&do_bench_mode3, execute_bench_mode3);
+        launch_bench_mode(&do_bench_modeC16, execute_bench_modeC16);
+        launch_bench_mode(&do_bench_mode4, execute_bench_mode4);
+        launch_bench_mode(&do_bench_mode6, execute_bench_mode6);
         break;
     case EGA:
-        launch_bench_mode1();
-        launch_bench_mode3();
-        launch_bench_mode4();
-        launch_bench_mode6();
-        launch_bench_modeD();
-        launch_bench_modeE();
-        launch_bench_mode10();
+        launch_bench_mode(&do_bench_mode1, execute_bench_mode1);
+        launch_bench_mode(&do_bench_mode3, execute_bench_mode3);
+        launch_bench_mode(&do_bench_mode4, execute_bench_mode4);
+        launch_bench_mode(&do_bench_mode6, execute_bench_mode6);
+        launch_bench_mode(&do_bench_modeD, execute_bench_modeD);
+        launch_bench_mode(&do_bench_modeE, execute_bench_modeE);
+        launch_bench_mode(&do_bench_mode10, execute_bench_mode10);
         break;
     case MCGA:
-        launch_bench_mode1();
-        launch_bench_mode3();
-        launch_bench_modeC16(); // ??
-        launch_bench_mode4();
-        launch_bench_mode6();
-        launch_bench_mode13();
+        launch_bench_mode(&do_bench_mode1, execute_bench_mode1);
+        launch_bench_mode(&do_bench_mode3, execute_bench_mode3);
+        launch_bench_mode(&do_bench_modeC16, execute_bench_modeC16);
+        launch_bench_mode(&do_bench_mode4, execute_bench_mode4);
+        launch_bench_mode(&do_bench_mode6, execute_bench_mode6);
+        launch_bench_mode(&do_bench_mode13, execute_bench_mode13);
         break;
     case VGA:
-        launch_bench_mode1();
-        launch_bench_mode3();
-        launch_bench_mode4();
-        launch_bench_mode6();
-        launch_bench_modeD();
-        launch_bench_modeE();
-        launch_bench_mode10();
-        launch_bench_modeV16();
-        launch_bench_mode13();
-        launch_bench_modeY();
+        launch_bench_mode(&do_bench_mode1, execute_bench_mode1);
+        launch_bench_mode(&do_bench_mode3, execute_bench_mode3);
+        launch_bench_mode(&do_bench_mode4, execute_bench_mode4);
+        launch_bench_mode(&do_bench_mode6, execute_bench_mode6);
+        launch_bench_mode(&do_bench_modeD, execute_bench_modeD);
+        launch_bench_mode(&do_bench_modeE, execute_bench_modeE);
+        launch_bench_mode(&do_bench_mode10, execute_bench_mode10);
+        launch_bench_mode(&do_bench_modeV16, execute_bench_modeV16);
+        launch_bench_mode(&do_bench_mode13, execute_bench_mode13);
+        launch_bench_mode(&do_bench_modeY, execute_bench_modeY);
         break;
     case VESA:
         break;
     case TandyPCjr:
-        launch_bench_mode1();
-        launch_bench_mode3();
-        launch_bench_modeC16();
-        launch_bench_mode4();
-        launch_bench_mode6();
-        launch_bench_mode8();
-        launch_bench_mode9();
+        launch_bench_mode(&do_bench_mode1, execute_bench_mode1);
+        launch_bench_mode(&do_bench_mode3, execute_bench_mode3);
+        launch_bench_mode(&do_bench_modeC16, execute_bench_modeC16);
+        launch_bench_mode(&do_bench_mode4, execute_bench_mode4);
+        launch_bench_mode(&do_bench_mode6, execute_bench_mode6);
+        launch_bench_mode(&do_bench_mode8, execute_bench_mode8);
+        launch_bench_mode(&do_bench_mode9, execute_bench_mode9);
         break;
     case ATI:
-        launch_bench_mode1();
-        launch_bench_mode3();
-        launch_bench_mode4();
-        launch_bench_modeC16();
-        launch_bench_mode6();
-        launch_bench_modePCP();
-        launch_bench_modeATI();
+        launch_bench_mode(&do_bench_mode1, execute_bench_mode1);
+        launch_bench_mode(&do_bench_mode3, execute_bench_mode3);
+        launch_bench_mode(&do_bench_modeC16, execute_bench_modeC16);
+        launch_bench_mode(&do_bench_mode4, execute_bench_mode4);
+        launch_bench_mode(&do_bench_mode6, execute_bench_mode6);
+        launch_bench_mode(&do_bench_modePCP, execute_bench_modePCP);
+        launch_bench_mode(&do_bench_modeATI, execute_bench_modeATI);
         break;
     case Plantronics:
-        launch_bench_mode1();
-        launch_bench_mode3();
-        launch_bench_mode4();
-        launch_bench_modeC16();
-        launch_bench_mode6();
-        launch_bench_modePCP();
+        launch_bench_mode(&do_bench_mode1, execute_bench_mode1);
+        launch_bench_mode(&do_bench_mode3, execute_bench_mode3);
+        launch_bench_mode(&do_bench_modeC16, execute_bench_modeC16);
+        launch_bench_mode(&do_bench_mode4, execute_bench_mode4);
+        launch_bench_mode(&do_bench_mode6, execute_bench_mode6);
+        launch_bench_mode(&do_bench_modePCP, execute_bench_modePCP);
         break;
     default:
         printf("Invalid option :(");
