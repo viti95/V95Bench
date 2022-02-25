@@ -212,8 +212,8 @@ void show_results_modeC16(void)
     double total_result_w;
     double total_result_r;
 
-    total_result_w = ((double)total_loops_modeC16 * 7.8125 * 1000.0) / ((double)timespent_w8_modeC16);
-    total_result_r = ((double)total_loops_modeC16 * 7.8125 * 1000.0) / ((double)timespent_r8_modeC16);
+    total_result_w = calc_kb_second(total_loops_modeC16, 7.8125, timespent_w8_modeC16);
+    total_result_r = calc_kb_second(total_loops_modeC16, 7.8125, timespent_r8_modeC16);
     printf(MSG_MODEC16_8BIT, total_result_w, total_result_r);
 }
 
@@ -222,7 +222,7 @@ void export_results_modeC16(void)
     double total_result_w;
     double total_result_r;
 
-    total_result_w = ((double)total_loops_modeC16 * 7.8125 * 1000.0) / ((double)timespent_w8_modeC16);
-    total_result_r = ((double)total_loops_modeC16 * 7.8125 * 1000.0) / ((double)timespent_r8_modeC16);
+    total_result_w = calc_kb_second(total_loops_modeC16, 7.8125, timespent_w8_modeC16);
+    total_result_r = calc_kb_second(total_loops_modeC16, 7.8125, timespent_r8_modeC16);
     fprintf(logFile, MSG_MODEC16_8BIT, total_result_w, total_result_r);
 }

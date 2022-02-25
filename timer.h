@@ -27,5 +27,6 @@ extern unsigned int read_fix_32b_1, read_fix_32b_2, read_fix_32b_3, read_fix_32b
 
 unsigned long profile_function(void (*exec_function)(void));
 unsigned long profile_function_loops(void (*exec_function)(unsigned long), unsigned long loops);
+double calc_kb_second(unsigned long num_loops, double kb_per_loop, unsigned long timespent_ms);
 
 #endif

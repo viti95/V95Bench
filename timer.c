@@ -46,3 +46,8 @@ unsigned long profile_function_loops(void (*exec_function)(unsigned long), unsig
     stop = clock();
     return (stop - start) / (CLOCKS_PER_SEC / 1000);
 }
+
+double calc_kb_second(unsigned long num_loops, double kb_per_loop, unsigned long timespent_ms)
+{
+    return ((double)num_loops * kb_per_loop * 1000.0) / (double)timespent_ms;
+}
